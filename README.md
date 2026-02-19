@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+# Clinic Management System
+A full-featured clinic management system that connects 'Admins, Doctors, and Patients' in one unified platform to streamline appointment booking and medical schedule management.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+This system is designed to simplify clinic operations by providing:
 
-Currently, two official plugins are available:
+- Centralized management for administrators
+- Flexible scheduling tools for doctors
+- Real-time appointment booking for patients
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Built with a modern full-stack architecture using React and Supabase.
 
-## React Compiler
+## Core Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Admin Dashboard
+- Manage doctors
+- Manage patients
+- Monitor appointments
+- View system statistics
 
-## Expanding the ESLint configuration
+###  Doctor Dashboard
+- Set weekly availability
+- Manage time-off days
+- View and manage booked appointments
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+###  Patient Booking System
+- Real-time appointment booking
+- Dynamic availability based on doctor's schedule
+- Prevent double booking
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- ## Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Frontend
+- React.js
+- TypeScript
+- Tailwind CSS
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Backend & Database
+- Supabase (PostgreSQL + Edge Functions + Auth)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### State Management
+- TanStack Query (React Query)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+
+Create a `.env` file in the root directory and add:
+
+VITE_APP_SUPABASE_URL=your_supabase_url
+VITE_APP_SUPABASE_KEY=your_anon_public_key
+
+
+> Make sure you use the **anon public key**, not the service role key.
+
+---
+
+##  Installation & Setup
+
+1. Install dependencies:
+  
+   pnpm install
+Add your Supabase environment variables.
+
+Run the development server:
+
+
+pnpm run dev
+Open:
+http://localhost:5173
+
