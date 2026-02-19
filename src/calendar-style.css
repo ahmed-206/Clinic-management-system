@@ -1,0 +1,102 @@
+/* calendar-style.css */
+
+/* التنسيق العام للتقويم */
+.custom-calendar {
+    width: 100% !important;
+    border: none !important;
+    font-family: 'Inter', sans-serif !important;
+    background: white;
+    border-radius: 20px;
+}
+
+/* الأيام التي حددها الدكتور كإجازة (تظهر في صفحة الدكتور والمريض) */
+.holiday-tile {
+    background-color: #fee2e2 !important; /* خلفية حمراء فاتحة */
+    color: #ef4444 !important; /* نص أحمر */
+    font-weight: bold !important;
+    border: 1px solid #fca5a5 !important;
+    border-radius: 12px !important;
+}
+
+/* اليوم المختار (Active) */
+.react-calendar__tile--active {
+    background: #8B7E7E !important;
+    color: white !important;
+    border-radius: 12px !important;
+}
+
+/* تداخل اليوم المختار مع كونه إجازة */
+.react-calendar__tile--active.holiday-tile {
+    background: #ef4444 !important;
+    color: white !important;
+}
+
+/* تأثير الحوّام (Hover) */
+.react-calendar__tile:enabled:hover, 
+.react-calendar__tile:enabled:focus {
+    background-color: #17B890 !important;
+    color: white;
+    border-radius: 12px !important;
+}
+
+/* تعطيل الأيام (الماضي، الإجازات، أيام خارج العمل) */
+.react-calendar__tile:disabled {
+    background-color: #f9fafb !important;
+    color: #d1d5db !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important; /* منع النقر تماماً */
+    text-decoration: line-through; /* اختيار بصرى لتمييز اليوم الملغي */
+}
+
+/* تنسيق أسماء الأيام (Sat, Sun...) */
+.react-calendar__month-view__weekdays__weekday abbr {
+    text-decoration: none !important;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+/* أزرار التنقل (الشهر القادم/السابق) */
+.react-calendar__navigation button {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #374151;
+}
+
+.react-calendar__navigation button:enabled:hover {
+    background-color: #f9fafb !important;
+    border-radius: 10px;
+}
+
+/* جعل مربعات الأيام متساوية الأبعاد */
+.react-calendar__tile {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    aspect-ratio: 1/1 !important;
+    padding: 10px !important;
+}
+
+.holiday-tile {
+    background-color: #fee2e2 !important; /* أحمر فاتح جداً */
+    color: #ef4444 !important; /* لون النص أحمر */
+    font-weight: bold !important;
+    border: 1px solid #fca5a5 !important;
+    border-radius: 12px !important;
+    cursor: not-allowed !important;
+}
+
+.not-working-day {
+    opacity: 0.4;
+    background-color: #f9fafb !important;
+    cursor: pointer;
+}
+
+/* عند اختيار يوم إجازة أو يوم لا يعمل فيه، نحافظ على شكل الاختيار */
+.react-calendar__tile--active.holiday-tile,
+.react-calendar__tile--active.not-working-day {
+    background: #8B7E7E !important; /* نفس لون الاختيار الأساسي */
+    color: white !important;
+    opacity: 1;
+}
