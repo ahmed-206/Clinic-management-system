@@ -1,32 +1,36 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import type { AppointmentData, AppointmentStatus } from "../../types/types";
 import { doctorService } from "../../api/doctor/doctorService";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
+import { SearchBar } from "../../components/ui/SearchBar";
+import { toast } from "sonner";
 
 const DoctorAppointmentPage = () => {
   const { user } = useAuth();
   const [appointments, setAppointments] = useState<AppointmentData[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"upcoming" | "past">("upcoming");
+  // فلاتر البحث
   const [searchTerm, setSearchTerm] = useState("");
 
-  const loadData = async () => {
-    if (!user) return;
-
+  const loadData = useCallback(async () => {
+    if (!user?.id) return;
     try {
+      setLoading(true);
       const data = await doctorService.getAllAppointments(user.id);
       setAppointments(data);
     } catch (err) {
       console.error(err);
+      toast.error("Failed to load appointments");
     } finally {
       setLoading(false);
     }
-  };
+  }, [user?.id]);
 
   useEffect(() => {
     loadData();
-  }, [user]);
+  }, [loadData]);
 
   const handleStatusUpdate = async (id: string, status: AppointmentStatus) => {
     try {
@@ -35,7 +39,7 @@ const DoctorAppointmentPage = () => {
         prev.map((a) => (a.id === id ? { ...a, status } : a)),
       );
     } catch (err) {
-      alert("Failed to update status" + err);
+      toast.error("Failed to update status" + err);
     }
   };
 
@@ -62,7 +66,7 @@ const DoctorAppointmentPage = () => {
     return appointments.filter(app => {
       const isPast = new Date(app.appointment_date) < new Date() || app.status === 'completed' || app.status === 'cancelled';
       const matchesTab = activeTab === 'upcoming' ? !isPast : isPast;
-      const matchesSearch = app.patient?.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch = app.profiles?.name.toLowerCase().includes(searchTerm.toLowerCase());
       return matchesTab && matchesSearch;
     });
   }, [appointments, activeTab, searchTerm]);
@@ -76,14 +80,12 @@ const DoctorAppointmentPage = () => {
         <h1 className="text-2xl font-bold text-gray-700">My Appointments</h1>
 
         <div className="relative w-full md:w-64">
-          <input
-            type="text"
-            placeholder="Search by patient name..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <span className="absolute left-3 top-2.5 text-gray-400">🔍</span>
+          <SearchBar 
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          showAppointmentFilters={false}
+      
+        />
         </div>
         {/* أزرار التبويب (Tabs) */}
         <div className="flex bg-gray-200 p-1 rounded-lg">
