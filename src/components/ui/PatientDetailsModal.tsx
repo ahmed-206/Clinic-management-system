@@ -12,9 +12,9 @@ const PatientDetailsModal = ({ appointment, onClose }: Props) => {
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all">
       <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden transform transition-all scale-100">
         {/* Header */}
-        <div className="bg-indigo-600 p-4 text-white flex justify-between items-center">
+        <div className="bg-primary p-4 text-white flex justify-between items-center">
           <h3 className="text-lg font-bold">Patient Information</h3>
-          <button onClick={onClose} className="hover:text-gray-200 text-2xl">
+          <button onClick={onClose} className="hover:text-red-500  text-2xl ">
             &times;
           </button>
         </div>
@@ -34,7 +34,7 @@ const PatientDetailsModal = ({ appointment, onClose }: Props) => {
               <span
                 className={`font-bold ${
                   appointment.status === "confirmed"
-                    ? "text-green-600"
+                    ? "text-primary"
                     : "text-yellow-600"
                 }`}
               >
@@ -56,7 +56,7 @@ const PatientDetailsModal = ({ appointment, onClose }: Props) => {
                 {new Date(appointment.appointment_date).toLocaleDateString()}
               </p>
             </div>
-            <p className="font-medium text-indigo-600">
+            <p className="font-medium text-primary">
               {new Date(appointment.appointment_date).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
@@ -69,7 +69,7 @@ const PatientDetailsModal = ({ appointment, onClose }: Props) => {
         <div className="p-4 bg-gray-50 text-right">
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-md"
+            className="px-6 py-2 bg-primary text-white rounded-lg hover:scale-105 transition-colors shadow-md cursor-pointer"
           >
             Close
           </button>
