@@ -1,8 +1,13 @@
 import { useAuth } from "../../hooks/useAuth";
 import { useDoctorDashboard } from "../../hooks/useDoctorDashboard";
+import { StatCard } from "../../features/doctor/StateCard";
 import { type AppointmentData } from "../../types/types";
 import PatientDetailsModal from "../../components/ui/PatientDetailsModal";
+import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
+import { LuCalendar, LuClock3, LuCircleX, LuStar, LuUsersRound } from "react-icons/lu";
 import { useState } from "react";
+
+
 export const DoctorDashboardPage = () => {
   const [selectedApp, setSelectedApp] = useState<AppointmentData | null>(null);
   const { user } = useAuth();
@@ -12,53 +17,64 @@ export const DoctorDashboardPage = () => {
     isError,
   } = useDoctorDashboard(user?.id || "");
 
-  if (isLoading)
-    return <div className="p-8 text-center">Loading Dashboard...</div>;
+ if (isLoading)
+    return (
+      <div className="h-[80vh] flex flex-col items-center justify-center gap-4">
+        <LoadingSpinner size="lg" />
+        <p className="text-gray-500 animate-pulse font-medium">Preparing your dashboard...</p>
+      </div>
+    );
   if (isError)
     return (
-      <div className="p-8 text-red-500">Error fetching dashboard data.</div>
+      <div className="p-8 text-center text-red-500 bg-red-50 rounded-xl border border-red-100 m-6">
+        <LuCircleX className="mx-auto mb-2" />
+        <p className="font-bold">Error fetching dashboard data. Please try again.</p>
+      </div>
     );
-
   return (
     <div className="p-6 bg-white min-h-screen rounded-xl">
-      <h1 className="text-2xl font-bold mb-8 text-gray-700">Dashboard</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-12">
-        <div className="bg-white p-8 rounded-lg text-center flex flex-col justify-center shadow-lg  border border-gray-200  hover:bg-primary hover:text-white">
-          <span className="text-4xl font-bold block mb-2">
-            {stats?.todayCount}
-          </span>
-          <span className="text-lg font-semibold">Today's Appointments</span>
-        </div>
+      <div className="flex flex-col">
+        <h1 className="text-3xl font-black text-gray-800">Welcome Back,</h1>
+        <p className="text-gray-500 font-medium">Here's what's happening today.</p>
+      </div>
 
-        {/* Upcoming */}
-        <div className="bg-white p-8 rounded-lg text-center flex flex-col justify-center shadow-lg border border-gray-200  hover:bg-primary hover:text-white">
-          <span className="text-4xl font-bold block mb-2">
-            {stats?.upcomingCount}
-          </span>
-          <span className="text-lg font-semibold">Upcoming</span>
-        </div>
-
-        {/* Canceled */}
-        <div className="bg-white p-8 rounded-lg text-center flex flex-col justify-center shadow-lg  border border-gray-200  hover:bg-primary hover:text-white">
-          <span className="text-4xl font-bold block mb-2">
-            {stats?.cancelledCount}
-          </span>
-          <span className="text-lg font-semibold">Canceled</span>
-        </div>
-
-        {/* Rating - ثابت حالياً كما اتفقنا */}
-        <div className="bg-white p-8 rounded-lg text-center flex flex-col justify-center shadow-lg border border-gray-200 hover:bg-primary hover:text-white ">
-          <span className="text-4xl font-bold block mb-2">4.7</span>
-          <span className="text-lg font-semibold">Rating</span>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StatCard 
+          label="Today's Appointments" 
+          value={stats?.todayCount} 
+          icon={<LuClock3 className="text-primary group-hover:text-white" size={28} />}
+        />
+        <StatCard 
+          label="Upcoming Total" 
+          value={stats?.upcomingCount} 
+          icon={<LuCalendar className="text-primary group-hover:text-white" size={28} />}
+        />
+        <StatCard 
+          label="Canceled" 
+          value={stats?.cancelledCount} 
+          icon={<LuCircleX className="text-primary group-hover:text-white" size={28} />}
+        />
+        <StatCard 
+          label="Doctor Rating" 
+          value="4.7" 
+          icon={<LuStar className="text-primary group-hover:text-white fill-primary group-hover:fill-white" size={28} />}
+        />
       </div>
 
       {/* 2. جدول المرضى القادمين (Next Patients Today) */}
       <div className="mt-12">
-        <h2 className="text-xl font-bold mb-4">Next Patients Today</h2>
-        <div className="overflow-x-auto">
+      <div className="p-6 border-b border-gray-50 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+             <h2 className="text-xl font-bold text-gray-800">Next Patients Today</h2>
+             <LuUsersRound className="text-primary" size={20} />
+          </div>
+          <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">
+             Live Updates
+          </span>
+        </div>
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
           <table className="w-full text-left border-collapse">
-            <thead>
+            <thead className="bg-primary text-white">
               <tr className="border-b-2 border-gray-200">
                 <th className="py-3 px-4 font-bold">Time</th>
                 <th className="py-3 px-4 font-bold">Patient</th>
