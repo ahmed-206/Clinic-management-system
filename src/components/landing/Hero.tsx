@@ -2,6 +2,7 @@ import doc1 from '../../assets/heroImg/doc1.jpg'
 import doc2 from '../../assets/heroImg/doc2.jpg'
 import doc3 from '../../assets/heroImg/doc3.jpg'
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 export const Hero = () => {
   const images = [doc1, doc2, doc3];
 
@@ -24,9 +25,9 @@ export const Hero = () => {
       <p className="text-xl text-gray-500 max-w-md leading-relaxed">
         Simple, fast, and reliable scheduling for patients and clinics. Experience healthcare management at its best.
       </p>
-      <button className="bg-primary text-white px-8 py-4 rounded-2xl font-bold text-lg  hover:scale-105 transition-all shadow-lg shadow-shadow cursor-pointer">
+      <Link to='/dashboard/book' className="bg-primary text-white px-8 py-4 rounded-lg font-bold text-lg  hover:scale-105 transition-all shadow-lg shadow-shadow cursor-pointer">
         Book an Appointment
-      </button>
+      </Link>
     </div>
     <div className="relative">
       <div className="w-full aspect-square bg-gray-100 rounded-[40px] overflow-hidden shadow-2xl border-8 border-white">

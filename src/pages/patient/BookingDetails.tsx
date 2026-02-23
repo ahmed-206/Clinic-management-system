@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState,useMemo } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import Calendar from "react-calendar";
 import { toast } from "sonner";
 import { useAuth } from "../../hooks/useAuth";
-import { PriceSummary } from "../../features/patient/PriceSummary";
+// import { PriceSummary } from "../../features/patient/PriceSummary";
+import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import "react-calendar/dist/Calendar.css";
 import "../../calendar-style.css";
 import { ErrorFallback } from "../../components/ui/ErrorBoundary";
@@ -11,21 +12,25 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useAppointment } from "../../hooks/useAppointment";
 import { getErrorMessage } from "../../utils/getErrorMessage";
 import { useDoctorSchedule } from "../../hooks/useDoctorSchedule";
+import { LuTriangleAlert, LuFilePenLine  } from "react-icons/lu";
+import { LiaMoneyBillWaveSolid } from "react-icons/lia";
+import { Button } from "../../components/ui/Button";
+
 import {
   combineDateAndTime,
   getLocalDateString,
   getDayStatus,
   buildSlotsWithStatus,
 } from "../../utils/appointmentLogic";
-import type { DayOfWeek} from "../../types/types";
+import { LuCalendarX } from "react-icons/lu";
+import type { DayOfWeek } from "../../types/types";
 
 const BookingDetailsContent = () => {
   const navigate = useNavigate();
   const { doctorId } = useParams();
   const [searchParams] = useSearchParams();
   const { user, profile } = useAuth();
-  
-  
+
   const rescheduleId = searchParams.get("rescheduleId");
   const editId = searchParams.get("editId");
   const activeAppointmentId = rescheduleId || editId;
@@ -35,41 +40,36 @@ const BookingDetailsContent = () => {
   const { doctorAvailability, isDoctorAvailabilityLoading } =
     useDoctorSchedule(doctorId);
 
-  const [availableSlots, setAvailableSlots] = useState<
-    { time: string; isBooked: boolean }[]
-  >([]);
+
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
-  useEffect(() => {
-    if (!selectedDate || !doctorAvailability) return;
+ const availableSlots = useMemo(() => {
+  if (!selectedDate || !doctorAvailability) return [];
 
-    const availability = doctorAvailability.availability || [];
-    const bookedAppointments = doctorAvailability.bookedAppointments || [];
-    const timeOff = doctorAvailability.timeOff || [];
+  const availability = doctorAvailability.availability || [];
+  const bookedAppointments = doctorAvailability.bookedAppointments || [];
+  const timeOff = doctorAvailability.timeOff || [];
+  const dayOfWeek = selectedDate.getDay() as DayOfWeek;
 
-    const dayOfWeek = selectedDate.getDay() as DayOfWeek;
+  const { isHoliday } = getDayStatus(selectedDate, timeOff, availability);
+  const dayConfig = availability.find(
+    (d) => d.day_of_week === dayOfWeek && d.is_available,
+  );
 
+  if (isHoliday || !dayConfig) return [];
+
+  return buildSlotsWithStatus(
+    dayConfig,
+    bookedAppointments,
+    selectedDate,
+  );
+}, [selectedDate, doctorAvailability]);
+
+  const handleDateChange = (date: Date) => {
+    setSelectedDate(date);
     setSelectedTime(null);
-
-    const { isHoliday } = getDayStatus(selectedDate, timeOff, availability);
-    const dayConfig = availability.find(
-      (d) => d.day_of_week === dayOfWeek && d.is_available,
-    );
-
-    if (isHoliday || !dayConfig) {
-      setAvailableSlots([]);
-      return;
-    }
-
-    const slots = buildSlotsWithStatus(
-      dayConfig,
-      bookedAppointments,
-      selectedDate,
-    );
-    setAvailableSlots(slots);
-  }, [selectedDate, doctorAvailability]);
-
+  };
   const tileClassName = ({ date, view }: { date: Date; view: string }) => {
     if (view === "month" && doctorAvailability) {
       const { isHoliday, isWorkDay } = getDayStatus(
@@ -87,9 +87,9 @@ const BookingDetailsContent = () => {
 
   const handleConfirmBooking = () => {
     if (!profile?.is_active) {
-    toast.error("عذراً، لا يمكنك الحجز لأن حسابك غير نشط.");
-    return;
-  }
+      toast.error("عذراً، لا يمكنك الحجز لأن حسابك غير نشط.");
+      return;
+    }
     // 1. التأكد من وجود البيانات الأساسية
     if (!selectedDate || !selectedTime || !user || !doctorId) {
       toast.error("Please select both date and time");
@@ -112,7 +112,7 @@ const BookingDetailsContent = () => {
       toast.error(
         "⚠️ عذراً، هذا اليوم إجازة رسمية للطبيب. برجاء اختيار يوم آخر.",
       );
-      return; // سيمنع تنفيذ mutate تماماً
+      return; 
     }
 
     if (!isWorkDay) {
@@ -121,7 +121,10 @@ const BookingDetailsContent = () => {
     }
 
     // 5. إذا نجح الفحص، يتم الحجز
-    const finalDate = combineDateAndTime(selectedDate, selectedTime);
+    const finalDate = combineDateAndTime(
+      selectedDate,
+      selectedTime,
+    ).toISOString();
 
     const handleSuccess = () => {
       toast.success(
@@ -134,18 +137,18 @@ const BookingDetailsContent = () => {
 
     const handleError = (err: unknown) => {
       const message = getErrorMessage(err);
-    // 2. فحص الأخطاء الخاصة بقاعدة البيانات (بشكل نظيف وبدون any)
-    if (err && typeof err === "object" && "code" in err) {
-      const dbError = err as { code: string };
-      if (dbError.code === "23505") {
-        toast.error("This slot was just taken! Please choose another time.");
-        return;
+      // 2. فحص الأخطاء الخاصة بقاعدة البيانات (بشكل نظيف وبدون any)
+      if (err && typeof err === "object" && "code" in err) {
+        const dbError = err as { code: string };
+        if (dbError.code === "23505") {
+          toast.error("This slot was just taken! Please choose another time.");
+          return;
+        }
       }
-    }
 
-    // 3. عرض أي رسالة خطأ أخرى راجعة من السيرفر أو النظام
-    toast.error(message);
-    }
+      // 3. عرض أي رسالة خطأ أخرى راجعة من السيرفر أو النظام
+      toast.error(message);
+    };
 
     if (activeAppointmentId) {
       updateAppointment(
@@ -154,11 +157,10 @@ const BookingDetailsContent = () => {
           appointment_date: finalDate,
           status: "pending",
         },
-        { 
+        {
           onSuccess: handleSuccess,
-          onError : handleError
-         },
-        
+          onError: handleError,
+        },
       );
     } else {
       createAppointment(
@@ -179,7 +181,7 @@ const BookingDetailsContent = () => {
   if (isDoctorAvailabilityLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        Loading Schedule...
+        <LoadingSpinner />
       </div>
     );
   }
@@ -189,13 +191,13 @@ const BookingDetailsContent = () => {
       {/* Back Button */}
       <button
         onClick={() => navigate(-1)}
-        className="text-[#8B7E7E] font-semibold flex items-center gap-2 hover:underline cursor-pointer"
+        className="text-primary font-semibold flex items-center gap-2 hover:underline cursor-pointer"
       >
         ← Back to Doctors List
       </button>
 
       {/* Doctor Header Card */}
-      
+
       <div
         className={`rounded-[30px] p-6 shadow-sm border flex flex-col md:flex-row gap-6 items-center transition-all duration-500 ${
           rescheduleId
@@ -205,8 +207,6 @@ const BookingDetailsContent = () => {
               : "bg-white border-gray-100"
         }`}
       >
-
-        
         {/* صورة الطبيب / الأيقونة */}
         <div
           className={`w-24 h-24 rounded-full shrink-0 flex items-center justify-center text-2xl transition-colors ${
@@ -214,10 +214,10 @@ const BookingDetailsContent = () => {
               ? "bg-orange-200 text-orange-600"
               : editId
                 ? "bg-blue-200 text-blue-600"
-                : "bg-[#C5B4B4] text-white"
+                : "bg-primary text-white"
           }`}
         >
-          {rescheduleId ? "⚠️" : editId ? "✏️" : "👨‍⚕️"}
+          {rescheduleId ? <LuTriangleAlert /> : editId ? <LuFilePenLine /> : "👨‍⚕️"}
         </div>
 
         <div className="flex-1 text-center md:text-left space-y-1">
@@ -236,20 +236,20 @@ const BookingDetailsContent = () => {
                 : `You are booking a new session with Dr. ${doctorAvailability?.doctorName}`}
           </p>
           {doctorAvailability?.doctorBio && (
- 
-  
-    <p className="text-gray-600 leading-relaxed italic">
-      "{doctorAvailability.doctorBio}"
-    </p>
- 
-)}
+            <p className="text-gray-500 leading-relaxed italic">
+              "{doctorAvailability.doctorBio}"
+            </p>
+          )}
         </div>
-       
+        <div>
+          <div className="flex justify-between flex-col items-center text-gray-600">
+          <LiaMoneyBillWaveSolid className="text-primary" size={28}/>
+          <span>Session Price {doctorAvailability?.doctorPrice}</span>
+          
+        </div>
+           </div>
       </div>
-      {/* <div>
-        <PriceSummary basePrice={doctorAvailability?.doctorPrice}/>
-      </div> */}
- 
+
       {/* Selection Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         {/* Date Section */}
@@ -257,7 +257,7 @@ const BookingDetailsContent = () => {
           <h2 className="text-xl font-bold text-gray-800 ml-2">Select Date</h2>
           <div className="calendar-card shadow-xl rounded-[25px] p-4 bg-white border border-gray-50">
             <Calendar
-              onChange={(value) => setSelectedDate(value as Date)}
+              onChange={(value) => handleDateChange(value as Date)}
               value={selectedDate}
               tileDisabled={({ date }) =>
                 date < new Date(new Date().setHours(0, 0, 0, 0))
@@ -281,12 +281,12 @@ const BookingDetailsContent = () => {
                   key={time}
                   onClick={() => !isBooked && setSelectedTime(time)}
                   disabled={isBooked}
-                  className={`py-4 rounded-2xl text-sm font-bold transition-all duration-300 ${
+                  className={`py-4 rounded-md text-sm font-bold transition-all duration-300 ${
                     isBooked
                       ? "bg-gray-200 text-gray-400 cursor-not-allowed line-through"
                       : selectedTime === time
-                        ? "bg-[#8B7E7E] text-white shadow-lg scale-105"
-                        : "bg-white text-gray-600 border hover:bg-gray-50"
+                        ? "bg-primary text-white shadow-lg scale-105"
+                        : "bg-white text-gray-600  hover:bg-gray-50"
                   }`}
                 >
                   {time}
@@ -297,7 +297,7 @@ const BookingDetailsContent = () => {
             /* الحالة الثانية: لا توجد مواعيد (إجازة أو يوم غير متاح) */
             <div className="flex flex-col items-center justify-center p-12 bg-white border border-gray-100 rounded-3xl shadow-sm space-y-3 animate-fade-in">
               <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-2">
-                <span className="text-3xl">🗓️</span>
+                <LuCalendarX className="text-red-500" size={24} />
               </div>
 
               <h3 className="text-lg font-bold text-gray-800">
@@ -330,26 +330,32 @@ const BookingDetailsContent = () => {
 
       {/* Confirm Button */}
       <div className="pt-6 flex justify-center">
-        {profile?.is_active ? (<button
-          onClick={handleConfirmBooking}
-          disabled={
-            !selectedDate ||
-            !selectedTime ||
-            isCreating ||
-            isUpdating ||
-            availableSlots.length === 0
-          }
-          className="w-full max-w-md bg-[#8B7E7E] text-white py-5 rounded-lg font-bold text-xl hover:bg-[#6D6161] transition-all disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed shadow-xl active:scale-[0.98]"
-        >
-          {isCreating || isUpdating
-            ? "Processing..."
-            : rescheduleId
-              ? "Confirm New Time"
-              : "Confirm My Appointment"}
-        </button>) : <div className="flex justify-center flex-col items-center">
-            <h3 className="text-red-800 text-2xl">Your account is suspended.</h3>
+        {profile?.is_active ? (
+          <Button
+            onClick={handleConfirmBooking}
+            disabled={
+              !selectedDate ||
+              !selectedTime ||
+              isCreating ||
+              isUpdating ||
+              availableSlots.length === 0
+            }
+            className="w-full max-w-md py-5 text-xl"
+          >
+            {isCreating || isUpdating
+              ? "Processing..."
+              : rescheduleId
+                ? "Confirm New Time"
+                : "Confirm My Appointment"}
+          </Button>
+        ) : (
+          <div className="flex justify-center flex-col items-center">
+            <h3 className="text-red-800 text-2xl">
+              Your account is suspended.
+            </h3>
             <p>Please call the clinic</p>
-          </div>}
+          </div>
+        )}
       </div>
     </div>
   );

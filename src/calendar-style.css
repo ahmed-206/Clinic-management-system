@@ -96,7 +96,7 @@
 /* عند اختيار يوم إجازة أو يوم لا يعمل فيه، نحافظ على شكل الاختيار */
 .react-calendar__tile--active.holiday-tile,
 .react-calendar__tile--active.not-working-day {
-    background: #8B7E7E !important; /* نفس لون الاختيار الأساسي */
+    background: #17B890 !important; /* نفس لون الاختيار الأساسي */
     color: white !important;
     opacity: 1;
 }

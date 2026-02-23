@@ -3,6 +3,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useSettings } from "../../hooks/admin/useSettings"; 
 import { HashLink } from "react-router-hash-link";
 import { LuCircleUser } from "react-icons/lu";
+import { Button } from "../ui/Button";
 
 export const Navbar = () => {
   const { logout, user, profile } = useAuth();
@@ -23,7 +24,7 @@ const getDashboardPath = () => {
     }
   }
   return (
-    <nav className="w-full h-18 bg-primary border-b border-gray-200 flex items-center sticky top-0 z-50">
+    <nav className="w-full h-18 bg-primary border-b border-gray-200 flex items-center sticky top-0 z-50 shadow-md">
       <div className="container mx-auto px-4 lg:px-12 grid grid-cols-12 items-center w-full">
         <div className="col-span-3">
           <h1 className="text-2xl font-bold text-white tracking-tight">
@@ -49,12 +50,12 @@ const getDashboardPath = () => {
             <Link to={getDashboardPath()} className="px-4 py-2 font-medium text-white">
               <LuCircleUser size={24} />
             </Link>
-            <button
+            <Button
               onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors cursor-pointer"
+              className="bg-red-500 text-white hover:bg-red-600 transition-colors cursor-pointer"
             >
               Logout
-            </button>
+            </Button>
           </div>
         ) : (
           <div className="col-span-3 flex justify-end gap-3">

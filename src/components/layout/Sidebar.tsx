@@ -26,7 +26,7 @@ export const Sidebar = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-4 px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
+              className={`flex items-center gap-4 px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                 isActive
                   ? "bg-shadow text-white shadow-lg translate-x-1"
                   : "text-white/70 hover:bg-white/5 hover:text-white"

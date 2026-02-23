@@ -26,7 +26,7 @@ interface StatCardProps {
 
 const StatCard = ({ title, value, icon, color }: StatCardProps) => (
   <div
-    className={`bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center gap-4 ${color}`}
+    className={`bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center gap-4 hover:translate-y-1 transition-all duration-300 ${color}`}
   >
     <div className="text-primary">
       {icon}

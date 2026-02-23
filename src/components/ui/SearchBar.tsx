@@ -1,8 +1,10 @@
+import { LuSearch } from "react-icons/lu";
+
 interface SearchBarProps {
   searchTerm: string;
   onSearchChange: (value: string) => void;
   // فلاتر صفحة المرضى
-  statusFilter?: string; 
+  statusFilter?: string;
   onStatusChange?: (value: string) => void;
   showStatusFilter?: boolean;
 
@@ -12,13 +14,12 @@ interface SearchBarProps {
   specialties?: string[];
   showSpecialtyFilter?: boolean;
 
- // فلاتر صفحة الحجوزات
+  // فلاتر صفحة الحجوزات
   statusAppointmentFilter?: string;
   onStatusAppointmentFilter?: (value: string) => void;
   dateFilter?: string;
   onDateChange?: (value: string) => void;
   showAppointmentFilters?: boolean;
-  
 }
 
 export const SearchBar = ({
@@ -35,44 +36,52 @@ export const SearchBar = ({
   onStatusAppointmentFilter,
   onDateChange,
   dateFilter,
-  showAppointmentFilters = false
+  showAppointmentFilters = false,
 }: SearchBarProps) => {
   return (
     <div className="flex flex-col md:flex-row gap-4 w-full mb-6">
-      <input
-        type="text"
-        placeholder="Search by name..."
-        className="flex-1 p-3 border border-gray-700 rounded-xl focus:ring-2 focus:ring-primary outline-none transition"
-        value={searchTerm}
-        onChange={(e) => onSearchChange(e.target.value)}
-      />
-      
+      <div className="relative flex-1 max-w-md group">
+        <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+          <LuSearch
+            className="text-gray-400 group-focus-within:text-primary transition-colors"
+            size={20}
+          />
+        </div>
+        <input
+          type="text"
+          placeholder="Search by name..."
+          className=" w-full pl-12 pr-4 py-3 border border-gray-400 rounded-3xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm"
+          value={searchTerm}
+          onChange={(e) => onSearchChange(e.target.value)}
+        />
+      </div>
+
       {/* فلاتر الحجوزات (تظهر فقط في صفحة الحجوزات) */}
       {showAppointmentFilters && (
-  <div className="flex gap-2 flex-wrap">
-    <select 
-      className="p-3 border border-gray-200 rounded-xl bg-white"
-      value={ statusAppointmentFilter}
-      onChange={(e) => onStatusAppointmentFilter?.(e.target.value)}
-    >
-      <option value="all">All Status</option>
-      <option value="pending"> Pending</option>
-      <option value="confirmed"> Confirmed</option>
-      <option value="cancelled"> Cancelled</option>
-    </select>
+        <div className="flex gap-2 flex-wrap">
+          <select
+            className="p-3 border border-gray-200 rounded-xl bg-white"
+            value={statusAppointmentFilter}
+            onChange={(e) => onStatusAppointmentFilter?.(e.target.value)}
+          >
+            <option value="all">All Status</option>
+            <option value="pending"> Pending</option>
+            <option value="confirmed"> Confirmed</option>
+            <option value="cancelled"> Cancelled</option>
+          </select>
 
-    <select 
-      className="p-3 border border-gray-200 rounded-xl bg-white"
-      value={dateFilter}
-      onChange={(e) => onDateChange?.(e.target.value)}
-    >
-      <option value="all">Any Time</option>
-      <option value="today">Today</option>
-      <option value="tomorrow">Tomorrow</option>
-      <option value="this-week">This Week</option>
-    </select>
-  </div>
-)}
+          <select
+            className="p-3 border border-gray-200 rounded-xl bg-white"
+            value={dateFilter}
+            onChange={(e) => onDateChange?.(e.target.value)}
+          >
+            <option value="all">Any Time</option>
+            <option value="today">Today</option>
+            <option value="tomorrow">Tomorrow</option>
+            <option value="this-week">This Week</option>
+          </select>
+        </div>
+      )}
       {/* فلتر الحالة (يظهر في صفحة المرضى) */}
       {showStatusFilter && (
         <select

@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useAdminAppointments } from "../../hooks/admin/useAdminAppointments";
 import { SearchBar } from "../../components/ui/SearchBar";
 import { exportToExcel } from "../../utils/exportUtils";
+import { Button } from "../../components/ui/Button";
 import {
   formatDisplayDate,
   formatDisplayTime,
@@ -85,12 +86,11 @@ export const AppointmentsManagementPage = () => {
         <h1 className="text-2xl font-bold mb-6 text-gray-700">
           Appointments Mangement
         </h1>
-        <button
+        <Button
           onClick={handleExportToExcel}
-          className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-xl hover:scale-105 transition shadow-sm font-medium cursor-pointer"
         >
           Export to Excel
-        </button>
+        </Button>
       </div>
       <SearchBar
         searchTerm={searchTerm}

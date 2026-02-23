@@ -5,6 +5,7 @@ import {AddDoctorModal} from "../../features/admin/AddDoctorModal"
 import { LuSquarePen, LuUserRoundCheck, LuUserRoundX, LuBadgeCheck  } from 'react-icons/lu';
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import {LoadingWrapper } from "../../components/ui/LoadingWrapper";
+import { Button } from "../../components/ui/Button";
 import {type UserProfile } from "../../types/types";
 import { useState } from "react";
 
@@ -26,12 +27,12 @@ export const DoctorsMangementPage = () => {
     <div className="p-8">
      <div className="flex justify-between items-center mb-6">
        <h1 className="text-2xl font-bold text-gray-700">Doctors Management</h1>
-       <button 
+       <Button 
          onClick={() => setIsAddModalOpen(true)}
-         className="bg-primary text-white px-6 py-2 rounded-xl flex items-center gap-2 hover:scale-105 transition"
+         
        >
          + Add New Doctor
-       </button>
+       </Button>
     </div>
       
       <SearchBar

@@ -4,6 +4,7 @@ import { type LoginFormData, loginSchema } from "../../validation/authSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
+import { Button } from "../../components/ui/Button";
 
 export const LoginForm = () => {
   const { login, user, profile } = useAuth();
@@ -85,9 +86,9 @@ useEffect(() => {
               Remember me
             </label>
           </div>
-          <button className="w-full md:w-1/2 mx-auto mt-6 h-14 bg-primary text-white rounded-xl font-bold text-lg  transition-colors shadow-md cursor-pointer">
+          <Button >
             Login
-          </button>
+          </Button>
           <div className="text-center mt-4 text-gray-700 font-medium">
             You don't have an account?
             <Link

@@ -25,10 +25,10 @@ export type UserProfile = {
   email: string;
   role: "admin" | "doctor" | "patient";
   specialty?: string;
-  bio?: string; 
+  bio?: string;
   price_per_session?: number;
-  is_verified? : boolean,
-  is_active? :boolean
+  is_verified?: boolean;
+  is_active?: boolean;
 };
 
 // محتوى الـ context المقدم لاى صفحة فى الموقع
@@ -49,7 +49,7 @@ export interface PatientProfile {
 export interface BaseAppointment {
   doctor_id: string;
   patient_id: string;
-  appointment_date: string; 
+  appointment_date: string;
   status: AppointmentStatus;
 }
 
@@ -60,16 +60,14 @@ export interface AppointmentData extends BaseAppointment {
   profiles?: { name: string };
   patient: PatientProfile | null;
   doctor?: { name: string; specialty: string }; // للإظهار في كرت المريض
-  
 }
 
 // 3. البيانات عند الإرسال (Mutation Input) - الحل اللي يغنينا عن any
-export type AppointmentMutationInput = 
+export type AppointmentMutationInput =
   | (BaseAppointment & { id?: never }) // حالة الحجز الجديد
   | (Partial<BaseAppointment> & { id: string }); // حالة التعديل
 
-
-  // تعريف حالة الداشبورد للدكتور
+// تعريف حالة الداشبورد للدكتور
 
 export interface DoctorDashboardStats {
   todayCount: number;
@@ -78,9 +76,14 @@ export interface DoctorDashboardStats {
   nextPatients: AppointmentData[];
 }
 
-
-
-export type AppointmentStatus = "pending" | "confirmed" | "cancelled" | "completed" | "reschedule_needed";
+export type AppointmentStatus =
+  | "pending"
+  | "confirmed"
+  | "cancelled"
+  | "completed"
+  | "reschedule_needed"
+  | "no_show "
+  | "expired";
 // ايام الاسبوع المتاحة للدكتور
 export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -89,9 +92,9 @@ export interface DoctorAvailability {
   id?: string;
   doctor_id: string;
   day_of_week: DayOfWeek;
-  start_time: string; 
-  end_time: string;  
-  slot_duration: number; 
+  start_time: string;
+  end_time: string;
+  slot_duration: number;
   is_available: boolean;
 }
 
@@ -99,7 +102,7 @@ export interface DoctorAvailability {
 export interface TimeOff {
   id?: string;
   doctor_id: string;
-  off_date: string; 
+  off_date: string;
 }
 
 // البيانات المرسلة عند اضافة دكتور جديد
@@ -109,7 +112,6 @@ export interface DoctorCreateInput {
   specialty: string;
   password?: string;
 }
-
 
 // تعريف واجهة البيانات (Interface) بناءً على جدول SQL
 export interface ClinicSettings {

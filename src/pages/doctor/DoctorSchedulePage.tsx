@@ -217,7 +217,7 @@ const DoctorSchedulePage = () => {
 
   return (
     <div className="space-y-10">
-      {/* استخدام key هنا هو الحل السحري لمشكلة الـ useEffect */}
+      
       <LoadingWrapper isLoading={isLoading}>
         <ScheduleForm
           key={scheduleData ? "data-loaded" : "still-loading"}
