@@ -38,8 +38,7 @@ export const buildSlotsWithStatus = (
   const { start_time, end_time, slot_duration } = dayConfig;
   const slots = [];
   const dateString = getLocalDateString(selectedDate);
-  console.log("1. التاريخ المختار (dateString):", dateString);
-  console.log("2. المواعيد القادمة من السيرفر:", bookedAppointments);
+  
   // 1.  استخراج دقائق المواعيد المحجوزة لهذا اليوم
   const bookedMinutesSet = new Set(
     bookedAppointments
@@ -61,12 +60,12 @@ export const buildSlotsWithStatus = (
           minute: "2-digit",
           hour12: true,
         });
-          console.log("🏷️ الموعد بعد تحويله لنص للمقارنة:", timeLabel);
+          
         return timeLabel;
       })
   );
 
-  console.log("3. محتوى Set المواعيد المحجوزة النهائي:", Array.from(bookedMinutesSet));
+  
   // 2. توليد الساعات وفحص الحجز
   const [startHour, startMinutes] = start_time.split(":").map(Number);
   const [endHour, endMinute] = end_time.split(":").map(Number);
@@ -89,6 +88,6 @@ export const buildSlotsWithStatus = (
 
     currentMinutes += slot_duration;
   }
-  console.log("4. إجمالي الـ Slots التي تم توليدها:", slots.length);
+  
   return slots;
 };
