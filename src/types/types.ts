@@ -5,7 +5,7 @@ export interface AppointmentCardProps {
     id: string;
     doctor_id?: string;
     appointment_date: string;
-    status: string;
+    status: AppointmentStatus;
     doctor: {
       name: string;
       specialty: string;
@@ -82,7 +82,7 @@ export type AppointmentStatus =
   | "cancelled"
   | "completed"
   | "reschedule_needed"
-  | "no_show "
+  | "no_show"
   | "expired";
 // ايام الاسبوع المتاحة للدكتور
 export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
