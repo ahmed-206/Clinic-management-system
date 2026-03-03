@@ -37,8 +37,8 @@ Built with a modern full-stack architecture focusing on speed, security, and typ
 | **Backend/DB** | Supabase (Postgres, Auth, Edge Functions)|
 | **State Management**| TanStack Query (React Query)            |
 | **Icons & UI** | Lucide React, React Icons               |
+| **Testing** | Vitest, React Testing Library |
 
----
 
 ## ⚙️ Installation & Setup
 
@@ -60,4 +60,13 @@ Run the development server:
 
 pnpm run dev
 Open http://localhost:5173 in your browser.
+```
+## 🧪 Testing
+To ensure the quality and stability of the system, we use Vitest and React Testing Library.
+
+Run all tests:
+pnpm test
+
+Watch mode (for development):
+pnpm test:ui
 
