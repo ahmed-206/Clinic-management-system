@@ -124,3 +124,10 @@ export interface ClinicSettings {
   service_fee: number;
   is_maintenance_mode: boolean;
 }
+
+
+export interface SettingsFormsProps {
+  settings: ClinicSettings;
+  updateSettings: (data: Partial<ClinicSettings>) => void;
+  isUpdating: boolean;
+}

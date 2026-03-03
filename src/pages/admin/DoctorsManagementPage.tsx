@@ -79,6 +79,7 @@ export const DoctorsMangementPage = () => {
                   <button onClick={() => setSelectedDoctor(doc)} className="text-gray-500 hover:text-primary"><LuSquarePen size={18} /></button>
                   {selectedDoctor && (
         <EditDoctorModal 
+          key={selectedDoctor.id}
           doctor={selectedDoctor}
           isOpen={!!selectedDoctor}
           onClose={() => setSelectedDoctor(null)}

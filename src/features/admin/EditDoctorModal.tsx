@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import {type UserProfile } from "../../types/types";
 
 interface EditDoctorModalProps {
@@ -23,14 +23,15 @@ export const EditDoctorModal = ({
     price_per_session: doctor.price_per_session || 0,
   });
 
-  // تحديث البيانات لو تغير الدكتور المختار
-  useEffect(() => {
-    setFormData({
-      name: doctor.name,
-      specialty: doctor.specialty || "",
-      price_per_session: doctor.price_per_session || 0,
-    });
-  }, [doctor]);
+  // استخدام Key لتجنب rerender 
+  // // تحديث البيانات لو تغير الدكتور المختار
+  // useEffect(() => {
+  //   setFormData({
+  //     name: doctor.name,
+  //     specialty: doctor.specialty || "",
+  //     price_per_session: doctor.price_per_session || 0,
+  //   });
+  // }, [doctor]);
 
   if (!isOpen) return null;
 
@@ -41,8 +42,9 @@ export const EditDoctorModal = ({
         
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+            <label htmlFor="full_name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
             <input 
+            id="full_name"
               type="text" 
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -51,8 +53,9 @@ export const EditDoctorModal = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Specialty</label>
+            <label htmlFor="specialty" className="block text-sm font-medium text-gray-700 mb-1">Specialty</label>
             <input 
+            id="specialty"
               type="text" 
               value={formData.specialty}
               onChange={(e) => setFormData({...formData, specialty: e.target.value})}
@@ -61,8 +64,9 @@ export const EditDoctorModal = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Price per Session</label>
+            <label htmlFor="price_per_session" className="block text-sm font-medium text-gray-700 mb-1">Price per Session</label>
             <input 
+            id="price_per_session"
               type="number" 
               value={formData.price_per_session}
               onChange={(e) => setFormData({...formData, price_per_session: Number(e.target.value)})}
