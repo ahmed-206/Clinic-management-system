@@ -9,10 +9,10 @@
   /* إذا أردت استخدامه كاسم مخصص بجانب الخط الافتراضي */
   --font-main: "Inter", sans-serif;
 
-  --color-primary: #17B890;
+  --color-primary: #44ACFF;
   --color-backG : #DEE5E5;
-  --color-shadow: #9DC5BB;
-  --color-customOrange : #ED6A5A
+  --color-shadow: #89D4FF;
+  --color-customOrange : #ED6A5A;
 }
 
 @layer base {

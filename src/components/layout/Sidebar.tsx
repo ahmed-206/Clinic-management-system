@@ -1,10 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { menuConfig } from "../../constants/menuConfig";
 import { useSettings } from "../../hooks/admin/useSettings";
 import { BiLogOutCircle } from "react-icons/bi";
+import { LuMenu, LuX } from "react-icons/lu";
 
 export const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const { profile, logout } = useAuth();
   const {settings} = useSettings()
   const location = useLocation();
@@ -12,7 +15,28 @@ export const Sidebar = () => {
   // الحصول على القائمة بناءً على الدور الحالي
   const currentMenu = menuConfig[profile?.role as keyof typeof menuConfig] || [];
   return (
-    <aside className="w-64 bg-primary text-white flex flex-col h-full shadow-xl">
+    <>
+    <button
+        onClick={() => setIsOpen(true)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-primary text-white rounded-md shadow-md"
+      >
+        <LuMenu size={24} />
+      </button>
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+      <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-primary text-white flex flex-col h-full shadow-xl transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}>
+          <button 
+           onClick={() => setIsOpen(false)}
+           className="lg:hidden absolute top-4 right-4 text-white/70 hover:text-white"
+        >
+          <LuX size={24} />
+        </button>
       <div className="p-8">
         <Link to='/' className="text-2xl font-bold tracking-tight">{settings?.clinic_name}</Link>
       </div>
@@ -26,6 +50,7 @@ export const Sidebar = () => {
             <Link
               key={item.path}
               to={item.path}
+              onClick={() => setIsOpen(false)}
               className={`flex items-center gap-4 px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                 isActive
                   ? "bg-shadow text-white shadow-lg translate-x-1"
@@ -58,5 +83,6 @@ export const Sidebar = () => {
         </button>
       </div>
     </aside>
+    </>
   );
 };

@@ -14,7 +14,7 @@ export const DoctorCard = ({id, name, specialty, price_per_session}: DoctorProps
       
       {/* دائرة الصورة الشخصية */}
       <div className="relative mb-4 group">
-        <div className="w-24 h-24 bg-linear-to-br from-[#C5B4B4] to-[#8B7E7E] rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-md group-hover:shadow-primary/20 transition-all">
+        <div className="w-24 h-24 bg-linear-to-br from-[#44ACFF] to-[#89D4FF] rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-md group-hover:shadow-primary/20 transition-all">
           {name.charAt(0).toUpperCase()}
         </div>
         {/* السعر كـ Badge أنيق */}

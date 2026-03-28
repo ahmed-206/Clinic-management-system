@@ -111,16 +111,16 @@ export const AdminDashboard = () => {
               <Tooltip
                 contentStyle={{
                   backgroundColor: "#fff",
-                  border: "1px solid #17B890",
+                  border: "1px solid #44ACFF",
                   borderRadius: "8px",
                 }}
-                labelStyle={{ color: "#17B890", fontWeight: "bold" }}
+                labelStyle={{ color: "#44ACFF", fontWeight: "bold" }}
                 itemStyle={{ color: "#555" }}
               />
               <Line
                 type="monotone"
                 dataKey="count"
-                stroke="#17B890"
+                stroke="#44ACFF"
                 strokeWidth={3}
                 dot={{ r: 5 }}
                 activeDot={{ r: 8 }}

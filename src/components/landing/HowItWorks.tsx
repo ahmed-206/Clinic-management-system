@@ -1,3 +1,4 @@
+import {motion} from 'framer-motion'
 export const HowItWorks = () => {
   const steps = [
     { number: "01", title: "Choose a doctor", desc: "Browse our list of professional specialists." },
@@ -9,14 +10,25 @@ export const HowItWorks = () => {
   return (
     <section id="how-it-works" className=" py-24 bg-white shadow-sm rounded-xl my-3">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16 space-y-4">
+        <motion.div
+        initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+        className="text-center mb-16 space-y-4">
           <h2 className="text-4xl font-black text-gray-700">How It Works</h2>
           <p className="text-gray-500">Booking your next medical appointment is easier than ever.</p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, i) => (
-            <div key={i} className="relative group">
+            <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ 
+    delay: i * 0.3,
+    duration: 0.8 
+  }}
+              viewport={{ once: true }}
+            key={i} className="relative group">
               {/* السهم الموصل بين الخطوات (يظهر في الشاشات الكبيرة فقط) */}
               {i < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-10 left-full w-full border-t-2 border-dashed border-gray-200 -translate-x-12 z-0"></div>
@@ -31,7 +43,7 @@ export const HowItWorks = () => {
                   {step.desc}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

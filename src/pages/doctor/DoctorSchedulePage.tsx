@@ -106,7 +106,10 @@ const ScheduleForm = ({
               <div className="flex justify-center">
                 <input
                   type="checkbox"
-                  className="w-6 h-6 accent-primary cursor-pointer"
+                  className="w-6 h-6  cursor-pointer appearance-none border-2 border-gray-300 rounded-md
+    checked:bg-primary checked:border-primary
+    checked:after:content-['✔'] checked:after:text-white checked:after:flex checked:after:justify-center checked:after:items-center
+    cursor-pointer transition-all"
                   checked={isAvailable}
                   onChange={(e) =>
                     handleInputChange(day.id, "is_available", e.target.checked)
