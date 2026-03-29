@@ -113,15 +113,27 @@ async getDoctorBasicInfo(doctorId: string) {
     if (error) throw error;
   },
 
-  // دالة ارسال الجدول الاسبوعى للدكتور 
+  // دالة ارسال الجدول الاسبوعى للدكتور
   async saveWeeklyAvailability(availability: DoctorAvailability[]) {
-  const { data, error } = await supabase
-    .from("doctor_availability")
-    .upsert(availability, { onConflict: 'doctor_id,day_of_week'}); // يمنع تكرار نفس اليوم للدكتور
+    const toUpdate = availability.filter((row) => !!row.id);
+    const toInsert = availability.filter((row) => !row.id);
 
-  if (error) throw error;
-  return data;
-},
+    // Update existing rows one-by-one (or batch via upsert with id)
+    if (toUpdate.length > 0) {
+      const { error } = await supabase
+        .from("doctor_availability")
+        .upsert(toUpdate, { onConflict: "id" });
+      if (error) throw error;
+    }
+
+    // Insert brand-new rows
+    if (toInsert.length > 0) {
+      const { error } = await supabase
+        .from("doctor_availability")
+        .upsert(toInsert, { onConflict: "doctor_id,day_of_week" });
+      if (error) throw error;
+    }
+  },
 
 
 // دالة ارسال ايام التى لا يعمل فيها الدكتور
