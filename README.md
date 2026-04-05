@@ -19,7 +19,9 @@ Built with a modern full-stack architecture focusing on speed, security, and typ
 - Manage patients database.
 - Monitor real-time clinic statistics and revenue.
 
-### 👨‍⚕️ Doctor Dashboard
+### 👨‍⚕️ Doctor Dashboard (Updated ✨)
+* **Prescription System:** Doctors can now issue digital prescriptions directly from the dashboard.
+* **Smart Workflow:** Appointments are automatically marked as `Completed` once a prescription is generated, streamlining the clinic's operations.
 - **Smart Scheduling:** Set weekly availability with custom time slots.
 - **Time-off Management:** Select vacation days via an interactive calendar.
 - View and manage upcoming appointments.
