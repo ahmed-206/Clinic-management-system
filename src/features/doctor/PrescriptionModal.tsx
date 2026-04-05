@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { AppointmentData, Medicine } from '../../types/types';
 import { useDoctorPrescription } from '../../hooks/doctor/useDoctordPrescription';
 import { FaPlus, FaTrash, FaTimes } from 'react-icons/fa';
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
   appointment: AppointmentData;
@@ -44,17 +45,59 @@ const PrescriptionModal = ({ appointment, onClose }: Props) => {
     savePrescription(payload);
   };
 
+  const backdropVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
+
+  const modalVariants = {
+    hidden: { 
+      opacity: 0, 
+      scale: 0.9, 
+      y: 20 
+    },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.3, 
+        ease: "easeOut" 
+      } 
+    },
+    exit: { 
+      opacity: 0, 
+      scale: 0.9, 
+      y: 20, 
+      transition: { duration: 0.2, ease: "easeIn" } 
+    }
+  };
   return (
+    <AnimatePresence>
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center p-6 border-b sticky top-0 bg-white z-10">
-          <h2 className="text-xl font-bold text-gray-800">Write Prescription</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-red-500"><FaTimes /></button>
+    <motion.div
+          className="fixed inset-0 bg-black/50"
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          variants={backdropVariants}
+          onClick={onClose} // يغلق عند الضغط على الخلفية
+        />
+      <motion.div
+            className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-fit overflow-hidden relative z-10"
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={modalVariants}
+          >
+        <div className="flex justify-between items-center p-4 border-b sticky top-0 z-10 text-white bg-primary">
+          <h2 className="text-xl font-bold">Write Prescription</h2>
+          <button onClick={onClose} className="text-white hover:text-red-500"><FaTimes /></button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="p-4 space-y-4">
           {/* Patient Info Summary */}
-          <div className="bg-blue-50 p-3 rounded-lg text-sm text-blue-800">
+          <div className="bg-blue-50 p-3 rounded-lg text-sm text-primary">
             Patient: <strong>{appointment.profiles?.name}</strong> | Date: {new Date().toLocaleDateString()}
           </div>
 
@@ -156,8 +199,10 @@ const PrescriptionModal = ({ appointment, onClose }: Props) => {
             </button>
           </div>
         </form>
+        </motion.div>
       </div>
-    </div>
+   
+    </AnimatePresence>
   );
 }
 

@@ -23,24 +23,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
   // دالة واحدة تتعامل مع كل شيء
   const refreshAuth = async (session: Session | null) => {
-    
+    setLoading(true); // always mark as loading while we fetch
     if (session?.user) {
-      setUser(session.user);
+      // Fetch profile FIRST, then set user+profile together in one render.
+      // If we set user before profile is ready, RequireRole sees
+      // user=set/profile=null/loading=false and redirects to /unauthorized.
       const userProfile = await fetchProfile(session.user.id);
+      setUser(session.user);
       setProfile(userProfile);
     } else {
       setUser(null);
       setProfile(null);
     }
-    setLoading(false); // نضمن توقف التحميل هنا
+    setLoading(false);
   };
 
-  // 1. فحص الجلسة الحالية فوراً
-  supabase.auth.getSession().then(({ data: { session } }) => {
-    refreshAuth(session);
-  });
-
-  // 2. الاستماع لأي تغيير (دخول/خروج)
+  // onAuthStateChange fires INITIAL_SESSION on startup, so we don't need
+  // a separate getSession() call. Having both caused a race condition:
+  // the listener would re-run refreshAuth while the first async fetchProfile
+  // was still in flight, briefly setting loading=false with profile=null
+  // and triggering the /unauthorized redirect.
   const { data: authListener } = supabase.auth.onAuthStateChange(
     (_event, session) => {
       refreshAuth(session);
@@ -54,16 +56,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
  
 
   const login = async (email: string, password: string) => {
-    const {data, error } = await supabase.auth.signInWithPassword({
+    // Only trigger the sign-in. onAuthStateChange (SIGNED_IN event)
+    // will call refreshAuth which handles setting user, profile, and loading.
+    // Having a second fetchProfile here caused a concurrent state race.
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     if (error) throw error;
-    if (data.user) {
-    const userProfile = await fetchProfile(data.user.id);
-    setProfile(userProfile);
-    setUser(data.user);
-  }
   };
 
   const signup = async (name: string, email: string, password: string) => {

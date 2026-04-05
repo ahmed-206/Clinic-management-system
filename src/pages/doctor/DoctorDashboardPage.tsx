@@ -84,7 +84,7 @@ export const DoctorDashboardPage = () => {
             <tbody>
               {stats?.nextPatients && stats.nextPatients.length > 0 ? (
                 stats.nextPatients.map((app: AppointmentData) => {
-                  console.log("بيانات الموعد بالكامل:", app);
+                  
                   return (
                     <tr
                       key={app.id}

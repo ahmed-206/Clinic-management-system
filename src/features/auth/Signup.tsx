@@ -6,6 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { type SignupFormData, signupSchema } from "../../validation/authSchema"; 
 import { Button } from "../../components/ui/Button";
 import { useSettings } from "../../hooks/admin/useSettings";
+import { toast } from "sonner";
 
 
 
@@ -29,10 +30,11 @@ export const SignupForm = () => {
     await signup(data.name, data.email, data.password);
     console.log("Success! Check your email for verification.");
     navigate('/dashboard')
-  } catch (err: any) {
+  } catch (err) {
     
-    console.error("Signup failed:", err.message);
-    alert(err.message); 
+   const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred";
+    console.error("Signup failed:", errorMessage);
+    toast.error(errorMessage);
   }
   };
   const divStyle = "flex flex-col gap-2 items-start";
