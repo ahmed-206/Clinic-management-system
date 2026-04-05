@@ -137,7 +137,7 @@ const BookingDetailsContent = () => {
 
     const handleError = (err: unknown) => {
       const message = getErrorMessage(err);
-      // 2. فحص الأخطاء الخاصة بقاعدة البيانات (بشكل نظيف وبدون any)
+      // 2. فحص الأخطاء الخاصة بقاعدة البيانات 
       if (err && typeof err === "object" && "code" in err) {
         const dbError = err as { code: string };
         if (dbError.code === "23505") {
@@ -244,7 +244,7 @@ const BookingDetailsContent = () => {
         <div>
           <div className="flex justify-between flex-col items-center text-gray-600">
           <LiaMoneyBillWaveSolid className="text-primary" size={28}/>
-          <span>Session Price {doctorAvailability?.doctorPrice}</span>
+          <span>Session Price <span className="text-primary ">{doctorAvailability?.doctorPrice} EGP</span></span>
           
         </div>
            </div>

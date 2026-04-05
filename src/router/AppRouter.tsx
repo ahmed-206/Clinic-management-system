@@ -3,6 +3,7 @@ import { PublicLayout } from "../components/layout/PublicLayout";
 import { Signup } from "../pages/SignupPage";
 import { Login } from "../pages/LoginPage";
 import { RequireRole } from "../components/RequireRole";
+import { GuestOnly } from "../components/GuestOnly";
 import { DashboardLayout } from "../components/layout/DashboardLayout";
 import { PatientAppointmentsPage } from "../pages/patient/PatientAppointmentsPage";
 import { BookAppointmentPage } from "../pages/patient/BookAppointmentPage";
@@ -18,6 +19,9 @@ import { DoctorsMangementPage } from "../pages/admin/DoctorsManagementPage";
 import { PatientsManagementPage } from "../pages/admin/PatientsManagementPage";
 import { AppointmentsManagementPage } from "../pages/admin/AppointmentsManagementPage";
 import SettingsPage from "../pages/admin/SettingsPage/SettingsPage";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+import TermsOfService from "../pages/TermsOfService";
+import ContactUs from "../pages/ContactUs";
 
 const rout = createBrowserRouter([
   {
@@ -25,9 +29,19 @@ const rout = createBrowserRouter([
     element: <PublicLayout />,
     children: [
       {index: true, element: <HomePage /> },
-      { path: "signup", element: <Signup /> },
-      { path: "login", element: <Login /> },
+      {
+        path: "",
+        element: <GuestOnly />,
+        children: [
+          { path: "signup", element: <Signup /> },
+          { path: "login", element: <Login /> },
+        ],
+      },
       { path: "unauthorized", element: <Unauthorized /> },
+      {path: "privacy", element: <PrivacyPolicy />},
+      {path: "terms", element: <TermsOfService />},
+      {path: "contactus", element: <ContactUs />},
+
     ],
   },
   {

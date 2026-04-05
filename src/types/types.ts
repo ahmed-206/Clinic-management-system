@@ -131,3 +131,23 @@ export interface SettingsFormsProps {
   updateSettings: (data: Partial<ClinicSettings>) => void;
   isUpdating: boolean;
 }
+
+// تعريف شكل الدواء الواحد
+export interface Medicine {
+  name: string;      // اسم الدواء
+  dosage: string;    // الجرعة (مثلاً 500mg)
+  frequency: string; // التكرار (مثلاً 3 مرات يومياً)
+  duration: string;  // المدة (مثلاً لمدة أسبوع)
+}
+
+// تعريف الروشتة بالكامل
+export interface Prescription {
+  id?: string;
+  appointment_id: string;
+  patient_id: string;
+  doctor_id: string;
+  diagnosis: string;
+  medicines: Medicine[]; 
+  notes?: string;
+  created_at?: string;
+}

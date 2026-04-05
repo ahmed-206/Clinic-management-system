@@ -19,7 +19,7 @@ export const Button = ({
 }: ButtonProps) => {
   
   // الكلاسات الأساسية لكل الزراير
-  const baseStyles = "px-6 py-3 rounded-[8px] font-bold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed active:scale-[0.98]";
+  const baseStyles = "px-6 py-2 rounded-[8px] font-bold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed active:scale-[0.98]";
 
   // أشكال الزراير المختلفة
   const variants = {

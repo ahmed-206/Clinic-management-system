@@ -4,11 +4,13 @@ import { HowItWorks } from "../components/landing/HowItWorks"
 import { Stats } from "../components/landing/Stats"
 export const HomePage = () => {
     return (
-        <main className="container mx-auto px-4">
+         <>
             <Hero />
+        <main className="container mx-auto px-4">
             <Stats />
             <Features />
             <HowItWorks />
         </main>
+         </>
     )
 }

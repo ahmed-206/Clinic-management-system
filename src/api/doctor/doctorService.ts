@@ -1,7 +1,8 @@
 import supabase from "../../supabase";
 import type {
    DoctorDashboardStats,
-   AppointmentData, AppointmentStatus, DoctorAvailability
+   AppointmentData, AppointmentStatus, DoctorAvailability,
+   Prescription
 } from "../../types/types";
 
 export const doctorService = {
@@ -167,6 +168,42 @@ async getWeeklyAvailability(doctorId: string) {
 
   if (error) throw error;
   return data as DoctorAvailability[];
+},
+
+
+
+// كتابة الروشتة للمريض
+async getPatientHistory(patientId: string){
+const { data: history,error } = await supabase
+  .from('prescriptions')
+  .select(`
+  *,
+  profiles!fk_doctor ( name )
+`) // لجلب اسم الدكتور اللي كتب الروشتة السابقة
+  .eq('patient_id', patientId)
+  .order('created_at', { ascending: false });
+  if (error) {
+    console.error("Error fetching patient history:", error.message);
+    throw error;
+  }
+  return history;
+},
+
+
+// دالة إضافية: حفظ روشتة جديدة
+async createPrescription(payload: Prescription) {
+  const { data: { user } } = await supabase.auth.getUser();
+  const { data, error } = await supabase
+    .from('prescriptions')
+    .insert({
+      ...payload,
+      doctor_id: user!.id  // 👈 override with real auth UID
+    })
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
 }
 };
 

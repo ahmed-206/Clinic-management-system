@@ -38,7 +38,7 @@ export const HowItWorks = () => {
                 <div className="text-4xl font-black text-blue-100 group-hover:text-primary transition-colors duration-300">
                   {step.number}
                 </div>
-                <h3 className="text-lg font-bold text-gray-700">{step.title}</h3>
+                <h3 className="text-lg font-bold text-primary">{step.title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">
                   {step.desc}
                 </p>

@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { doctorService } from "../api/doctor/doctorService";
 import { appointmentService } from "../api/appointmentService";
 import { type DoctorAvailability } from "../types/types";
+import { toast } from "sonner";
 
 export const useDoctorSchedule = (doctorId: string | undefined) => {
   const queryClient = useQueryClient();
@@ -22,7 +23,7 @@ export const useDoctorSchedule = (doctorId: string | undefined) => {
       queryClient.invalidateQueries({ queryKey: ["doctorSchedule", doctorId] });
       alert("Schedule saved!");
     },
-    onError: () => alert("Failed to save schedule"),
+    onError: () => toast.error("Failed to save schedule"),
   });
 
   //  جلب الإجازات
@@ -66,7 +67,7 @@ export const useDoctorSchedule = (doctorId: string | undefined) => {
         await Promise.all([
           doctorService.getWeeklyAvailability(doctorId!),
           doctorService.getTimeOff(doctorId!),
-          doctorService.getAllAppointments(doctorId!), // تأكد من وجود هذه الدالة في الـ service
+          doctorService.getAllAppointments(doctorId!),
           doctorService.getDoctorBasicInfo(doctorId!),
         ]);
 

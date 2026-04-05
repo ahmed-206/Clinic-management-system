@@ -42,7 +42,7 @@ export const Features = () => {
           <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-blue-50 group-hover:scale-110 transition-transform">
             {f.icon}
           </div>
-          <h3 className="text-xl font-bold text-gray-700 mb-4">{f.title}</h3>
+          <h3 className="text-xl font-bold text-primary mb-4">{f.title}</h3>
           <p className="text-gray-500 leading-relaxed text-sm">{f.desc}</p>
         </motion.div>
       ))}

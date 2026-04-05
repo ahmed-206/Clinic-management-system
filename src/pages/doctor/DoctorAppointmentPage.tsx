@@ -4,11 +4,17 @@ import type { AppointmentData, AppointmentStatus } from "../../types/types";
 import { doctorService } from "../../api/doctor/doctorService";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import { SearchBar } from "../../components/ui/SearchBar";
+import PrescriptionModal from "../../features/doctor/PrescriptionModal";
+import { FaFilePrescription } from "react-icons/fa";
 import { toast } from "sonner";
 
 const DoctorAppointmentPage = () => {
   const { user } = useAuth();
   const [appointments, setAppointments] = useState<AppointmentData[]>([]);
+  // للموعد المختار
+  const [selectedAppointment, setSelectedAppointment] =
+    useState<AppointmentData | null>(null);
+  const [isPrescriptionModalOpen, setIsPrescriptionModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"upcoming" | "past">("upcoming");
   // فلاتر البحث
@@ -43,49 +49,57 @@ const DoctorAppointmentPage = () => {
     }
   };
 
-  const counts = useMemo(() => (
-    {
-     upcomingAppointments : appointments.filter(
-    (app) =>
-      new Date(app.appointment_date) >= new Date() &&
-      app.status !== "completed" &&
-      app.status !== "cancelled",
-  ).length,
+  const counts = useMemo(
+    () => ({
+      upcomingAppointments: appointments.filter(
+        (app) =>
+          new Date(app.appointment_date) >= new Date() &&
+          app.status !== "completed" &&
+          app.status !== "cancelled",
+      ).length,
 
-   pastAppointments : appointments.filter(
-    (app) =>
-      new Date(app.appointment_date) < new Date() ||
-      app.status === "completed" ||
-      app.status === "cancelled",
-  ).length
-  }
-  ),[appointments])
+      pastAppointments: appointments.filter(
+        (app) =>
+          new Date(app.appointment_date) < new Date() ||
+          app.status === "completed" ||
+          app.status === "cancelled",
+      ).length,
+    }),
+    [appointments],
+  );
 
   // مصفوفات العرض (القادمة - الارشيف)
   const filteredList = useMemo(() => {
-    return appointments.filter(app => {
-      const isPast = new Date(app.appointment_date) < new Date() || app.status === 'completed' || app.status === 'cancelled';
-      const matchesTab = activeTab === 'upcoming' ? !isPast : isPast;
-      const matchesSearch = app.profiles?.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return appointments.filter((app) => {
+      const isPast =
+        new Date(app.appointment_date) < new Date() ||
+        app.status === "completed" ||
+        app.status === "cancelled";
+      const matchesTab = activeTab === "upcoming" ? !isPast : isPast;
+      const matchesSearch = app.profiles?.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
       return matchesTab && matchesSearch;
     });
   }, [appointments, activeTab, searchTerm]);
 
-  if (loading) return <div className="h-[60vh] flex items-center justify-center">
+  if (loading)
+    return (
+      <div className="h-[60vh] flex items-center justify-center">
         <LoadingSpinner size="lg" />
-      </div>;
+      </div>
+    );
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-700">My Appointments</h1>
 
         <div className="relative w-full md:w-64">
-          <SearchBar 
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          showAppointmentFilters={false}
-      
-        />
+          <SearchBar
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            showAppointmentFilters={false}
+          />
         </div>
         {/* أزرار التبويب (Tabs) */}
         <div className="flex bg-gray-200 p-1 rounded-lg">
@@ -157,12 +171,14 @@ const DoctorAppointmentPage = () => {
                     {activeTab === "upcoming" ? (
                       <div className="flex gap-2">
                         <button
-                          onClick={() =>
-                            handleStatusUpdate(app.id!, "completed")
-                          }
-                          className="bg-primary text-white px-3 py-1.5 rounded-md text-sm "
+                          onClick={() => {
+                            setSelectedAppointment(app); // تخزين الموعد الحالي لفتح الروشتة له
+                            setIsPrescriptionModalOpen(true);
+                          }}
+                          className="bg-primary text-white px-3 py-1.5 rounded-md text-sm flex items-center gap-1"
                         >
-                          Complete
+                          <FaFilePrescription className="w-4 h-4" />
+                          Complete & Prescribe
                         </button>
                         <button
                           onClick={() =>
@@ -193,6 +209,15 @@ const DoctorAppointmentPage = () => {
             )}
           </tbody>
         </table>
+        {isPrescriptionModalOpen && selectedAppointment && (
+          <PrescriptionModal
+            appointment={selectedAppointment}
+            onClose={() => {
+              setIsPrescriptionModalOpen(false);
+              setSelectedAppointment(null);
+            }}
+          />
+        )}
       </div>
     </div>
   );

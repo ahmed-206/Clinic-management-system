@@ -41,7 +41,7 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
       }`}
     >
       {/* 1. دائرة الحرف */}
-      <div className={`w-20 h-20 rounded-full shrink-0 flex items-center justify-center text-white text-3xl font-black shadow-inner transition-colors ${isFinalStatus ? "bg-gray-400" : "bg-linear-to-br from-[#D9CDCD] to-[#B8A8A8]"}`}>
+      <div className={`w-20 h-20 rounded-full shrink-0 flex items-center justify-center text-white text-3xl font-black shadow-inner transition-colors ${isFinalStatus ? "bg-gray-400" : "bg-primary"}`}>
         {appointment.doctor.name.charAt(0).toUpperCase()}
       </div>
 

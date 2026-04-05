@@ -38,7 +38,7 @@ export const Footer = () => {
             <nav className="flex flex-col gap-3">
               <Link to="/terms" className="text-base font-medium hover:text-white/70 transition-colors">Terms of Service</Link>
               <Link to="/privacy" className="text-base font-medium hover:text-white/70 transition-colors">Privacy Policy</Link>
-              <a href="mailto:support@clinic.com" className="text-base font-medium hover:text-white/70 transition-colors">Contact Us</a>
+              <Link to="contactus" className="text-base font-medium hover:text-white/70 transition-colors">Contact Us</Link>
             </nav>
           </div>
         </div>

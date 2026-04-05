@@ -5,9 +5,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { Button } from "../../components/ui/Button";
+import { useSettings } from "../../hooks/admin/useSettings";
 
 export const LoginForm = () => {
   const { login, user, profile } = useAuth();
+  const {settings} = useSettings();
   const navigate = useNavigate();
 useEffect(() => {
   // بمجرد أن يكتمل الـ profile، قم بالتوجيه فوراً
@@ -39,10 +41,10 @@ useEffect(() => {
   const inputSyle =
     "w-full h-12 rounded-xl border border-gray-400 bg-transparent px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all";
   return (
-    <div className="min-h-screen bg-backG flex  justify-center font-sans p-4">
+    <div className="min-h-screen bg-backG flex  justify-center font-sans p-4 pt-20">
       <div className="w-full max-w-120 bg-white rounded-lg p-8 md:p-12 shadow-sm">
         <h2 className="text-3xl font-bold text-center text-gray-700 mb-10">
-          ClinciSystem
+          {settings?.clinic_name}
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <div className={divStyle}>
