@@ -5,6 +5,7 @@ import {
   combineDateAndTime,
   buildSlotsWithStatus,
 } from "./appointmentLogic";
+import { toLocalISODate } from "./dateTimeFormate";
 import type {
   TimeOff,
   DoctorAvailability,
@@ -135,4 +136,94 @@ describe("buildSlotsWithStatus", () => {
 
     expect(result[0].isBooked).toBe(false); // المفروض يرجع متاح تاني
 });
+});
+
+// ============================================================
+// New tests for timezone / DST fixes
+// ============================================================
+
+describe("toLocalISODate", () => {
+  it("should return the LOCAL date, not the UTC date, for a UTC timestamp", () => {
+    // Simulate a timestamp that is 2026-04-10T23:30:00Z (UTC)
+    // In UTC+2 that is 2026-04-11T01:30:00 local => local date is 2026-04-11
+    // toISOString().split('T')[0] would wrongly return '2026-04-10'
+    const utcDate = new Date("2026-04-10T23:30:00Z");
+    const result = toLocalISODate(utcDate);
+    // The expected value depends on the test runner's timezone.
+    // We just verify it matches what the Date object considers the local date.
+    const expected = `${utcDate.getFullYear()}-${String(utcDate.getMonth() + 1).padStart(2, "0")}-${String(utcDate.getDate()).padStart(2, "0")}`;
+    expect(result).toBe(expected);
+  });
+
+  it("should accept a string and return a YYYY-MM-DD string", () => {
+    const result = toLocalISODate("2026-06-15T08:00:00Z");
+    expect(result).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+});
+
+describe("getDayStatus — DST / timezone edge cases", () => {
+  it("should correctly identify a holiday when off_date has a timezone offset", () => {
+    // off_date stored as ISO with offset (e.g. midnight UTC+2)
+    const testDate = new Date("2026-10-25"); // local date
+    const mockTimeOff: TimeOff[] = [
+      // This is midnight local time stored with UTC offset
+      { id: "1", doctor_id: "d1", off_date: "2026-10-25T00:00:00+02:00" },
+    ];
+    const result = getDayStatus(testDate, mockTimeOff, []);
+    // toLocalISODate on both sides should match correctly
+    expect(result.isHoliday).toBe(true);
+  });
+
+  it("should NOT incorrectly mark adjacent day as holiday due to UTC conversion", () => {
+    // Build a timestamp that is exactly midnight local time today
+    // and verify its local date string matches today's date.
+    const now = new Date();
+    // Create a Date for the start of today in local time
+    const localMidnightToday = new Date(
+      now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0
+    );
+    const expectedLocalDate = toLocalISODate(localMidnightToday);
+
+    const mockTimeOff: TimeOff[] = [
+      { id: "1", doctor_id: "d1", off_date: localMidnightToday.toISOString() },
+    ];
+
+    const result = getDayStatus(localMidnightToday, mockTimeOff, []);
+    // toLocalISODate must agree on both sides — no off-by-one day
+    expect(result.isHoliday).toBe(true);
+    expect(toLocalISODate(localMidnightToday)).toBe(expectedLocalDate);
+  });
+});
+
+describe("buildSlotsWithStatus — timezone-aware booking detection", () => {
+  it("should have consistent slot label and booked flag (no DST key mismatch)", () => {
+    // This test verifies that the slot generator and the booked-key extractor
+    // both use the same timeZone, so a booked appointment always matches its slot.
+    // We build the appointment datetime from the selected date so it is always
+    // locally correct regardless of what timezone the test runner is in.
+    const testDate = new Date("2026-06-15");
+    // 09:00 local time on testDate
+    const localAppDate = new Date(testDate);
+    localAppDate.setHours(9, 0, 0, 0);
+
+    const mockDayConfig = {
+      start_time: "09:00",
+      end_time: "09:30",
+      slot_duration: 30,
+    } as DoctorAvailability;
+
+    const mockAppointments = [
+      {
+        id: "app1",
+        appointment_date: localAppDate.toISOString(), // store as UTC
+        status: "confirmed",
+      },
+    ] as AppointmentData[];
+
+    const result = buildSlotsWithStatus(mockDayConfig, mockAppointments, testDate);
+
+    expect(result.length).toBe(1);
+    // The slot at 09:00 local must be detected as booked
+    expect(result[0].isBooked).toBe(true);
+  });
 });
