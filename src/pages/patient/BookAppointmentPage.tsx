@@ -42,15 +42,15 @@ export const BookAppointmentPage = () => {
     <div className="max-w-6xl mx-auto animate-fade-in">
       {/* العنوان وشريط البحث العلوي */}
       <div className="mb-10 text-center md:text-left">
-        <h2 className="text-4xl font-black text-gray-800 mb-2">Book an Appointment</h2>
-        <p className="text-gray-500 font-medium">Choose a specialty or search for your doctor.</p>
+        <h2 className="text-4xl font-black text-secondary mb-2">Book an Appointment</h2>
+        <p className="text-secondary/50 font-medium">Choose a specialty or search for your doctor.</p>
       </div>
 
       <div className="mb-8">
         <SearchBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          showSpecialtyFilter={false} // أغلقنا الدروب داون هنا
+          showSpecialtyFilter={false}
         />
       </div>
 
@@ -64,7 +64,7 @@ export const BookAppointmentPage = () => {
               className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${
                 selectedSpecialty === spec
                   ? "bg-primary text-white shadow-lg shadow-primary/30 scale-105"
-                  : "bg-white text-gray-600 border border-gray-200 hover:border-primary hover:text-primary"
+                  : "bg-white text-secondary border border-secondary/20 hover:border-primary hover:text-primary"
               }`}
             >
               {spec === "All" ? "All Specialties" : spec}
@@ -74,7 +74,7 @@ export const BookAppointmentPage = () => {
       </div>
       {/* الفلتر أو شريط بحث إضافي (كما في الصورة) */}
       <div className="mb-12">
-        <p className="mt-4 text-gray-800 font-semibold text-lg italic">
+        <p className="mt-4 text-secondary/80 font-semibold text-lg ">
           Find Your Doctors
         </p>
       </div>

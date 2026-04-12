@@ -2,33 +2,37 @@
 
 const TermsOfService = () => {
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto bg-white p-10 rounded-2xl shadow-sm border border-gray-100">
-        <h1 className="text-3xl font-bold text-primary mb-8 flex items-center gap-3">
-          
-          Terms of Service / شروط الاستخدام
-        </h1>
+    <div className="min-h-screen bg-neutral-50 py-20 px-4">
+      <div className="max-w-5xl mx-auto bg-white rounded-[32px] overflow-hidden shadow-sm border border-neutral-100">
+        <div className="bg-primary p-12 text-center text-white">
+          <h1 className="text-3xl font-black font-headline">Terms of Service</h1>
+          <p className="opacity-80 mt-2 font-medium">شروط وأحكام الاستخدام</p>
+        </div>
 
-        <div className="grid md:grid-cols-2 gap-10">
+        <div className="grid md:grid-cols-2 divide-x divide-neutral-100">
           {/* English Column */}
-          <div className="space-y-6 border-r pr-6">
-            <h2 className="font-bold text-lg text-primary">General Terms</h2>
-            <p className="text-sm text-gray-600">By using this platform, you agree that we are a management tool, not a medical provider. Emergency cases should contact local hospitals immediately.</p>
-            <ul className="list-disc ml-5 text-sm text-gray-500 space-y-2">
-              <li>Users must provide accurate personal info.</li>
-              <li>Prescriptions are the sole responsibility of the issuing doctor.</li>
-              <li>Unauthorized access attempt is strictly prohibited.</li>
+          <div className="p-10 space-y-6">
+            <h2 className="font-bold text-xl text-neutral-900">General Rules</h2>
+            <p className="text-neutral-600 leading-relaxed">By using our platform, you agree that we are a management tool, not a direct medical provider.</p>
+            <ul className="space-y-4">
+              {['Provide accurate info', 'Prescriptions belong to doctors', 'No unauthorized access'].map((item) => (
+                <li key={item} className="flex items-center gap-3 text-sm text-neutral-500">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary" /> {item}
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Arabic Column */}
-          <div className="space-y-6 text-right" dir="rtl">
-            <h2 className="font-bold text-lg text-primary">الشروط العامة</h2>
-            <p className="text-sm text-gray-600">باستخدامك لهذه المنصة، فإنك توافق على أننا أداة إدارة ولسنا مزوداً طبياً. يجب على حالات الطوارئ الاتصال بالمستشفيات المحلية فوراً.</p>
-            <ul className="list-disc mr-5 text-sm text-gray-500 space-y-2">
-              <li>يجب على المستخدمين تقديم معلومات دقيقة.</li>
-              <li>الروشتات هي مسؤولية الطبيب المصدر لها وحده.</li>
-              <li>محاولات الدخول غير المصرح بها ممنوعة تماماً.</li>
+          <div className="p-10 space-y-6 text-right" dir="rtl">
+            <h2 className="font-bold text-xl text-neutral-900">القواعد العامة</h2>
+            <p className="text-neutral-600 leading-relaxed">باستخدامك للمنصة، أنت توافق على أننا أداة تقنية لتنظيم المواعيد ولسنا جهة طبية مباشرة.</p>
+            <ul className="space-y-4">
+              {['تقديم معلومات دقيقة وصحيحة', 'الروشتات مسؤولية الطبيب فقط', 'يمنع محاولة الدخول غير المصرح'].map((item) => (
+                <li key={item} className="flex items-center gap-3 text-sm text-neutral-500">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary" /> {item}
+                </li>
+              ))}
             </ul>
           </div>
         </div>

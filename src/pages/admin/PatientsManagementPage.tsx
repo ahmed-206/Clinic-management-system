@@ -37,7 +37,7 @@ export const PatientsManagementPage = () => {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-[#333]">Patients Management</h1>
+        <h1 className="text-2xl font-bold text-secondary">Patients Management</h1>
         <span className="bg-primary text-white px-4 py-1 rounded-xl text-sm">
           Total: {filteredPatients.length}
         </span>
@@ -71,10 +71,10 @@ export const PatientsManagementPage = () => {
                 key={patient.id}
                 className="shadow-sm"
               >
-                <td className="p-4 font-medium text-gray-700">
+                <td className="p-4 font-medium text-secondary/90">
                   {patient.name}
                 </td>
-                <td className="p-4 text-gray-600">{patient.email}</td>
+                <td className="p-4 text-secondary/90">{patient.email}</td>
                 <td className="p-4">
                   {/* عرض حالة المريض بشكل بصري */}
                   <span
@@ -87,7 +87,7 @@ export const PatientsManagementPage = () => {
                     {patient.is_active ? "Active" : "Banned"}
                   </span>
                 </td>
-                <td className="p-4 text-gray-500">
+                <td className="p-4 text-secondary/90">
                   {new Date(patient.created_at).toLocaleDateString()}
                 </td>
                 <td className="p-4">

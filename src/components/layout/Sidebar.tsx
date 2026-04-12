@@ -53,7 +53,7 @@ export const Sidebar = () => {
               onClick={() => setIsOpen(false)}
               className={`flex items-center gap-4 px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                 isActive
-                  ? "bg-shadow text-white shadow-lg translate-x-1"
+                  ? "bg-neutral-200 text-primary shadow-lg translate-x-1"
                   : "text-white/70 hover:bg-white/5 hover:text-white"
               }`}
             >

@@ -50,7 +50,7 @@ export const SearchBar = ({
         <input
           type="text"
           placeholder="Search by name..."
-          className=" w-full pl-12 pr-4 py-3 border border-gray-400 rounded-3xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm"
+          className=" w-full pl-12 pr-4 py-3 border border-gray-400 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm"
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
         />

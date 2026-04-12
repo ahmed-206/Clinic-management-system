@@ -6,7 +6,10 @@ import { Button } from "../../components/ui/Button";
 import {
   formatDisplayDate,
   formatDisplayTime,
+  toLocalISODate,
 } from "../../utils/dateTimeFormate";
+import { StatusBadge } from "../../components/ui/StatusBadge";
+import type { AppointmentStatus } from "../../types/types";
 import { toast } from "sonner";
 export const AppointmentsManagementPage = () => {
   const { appointmentsQuery, updateStatusMutation } = useAdminAppointments();
@@ -17,16 +20,13 @@ export const AppointmentsManagementPage = () => {
   const filteredData = useMemo(() => {
     let result = appointmentsQuery.data || [];
 
-    // إعداد التواريخ للمقارنة
-    const now = new Date();
-    const todayStr = now.toISOString().split("T")[0];
-
+    // Use local date — toISOString() gives UTC which is wrong for UTC+ clinics
+    const todayStr = toLocalISODate(new Date());
     const tomorrow = new Date();
-    tomorrow.setDate(now.getDate() + 1);
-    const tomorrowStr = tomorrow.toISOString().split("T")[0];
-
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowStr = toLocalISODate(tomorrow);
     const nextWeek = new Date();
-    nextWeek.setDate(now.getDate() + 7);
+    nextWeek.setDate(nextWeek.getDate() + 7);
 
     // فلترة البحث (اسم المريض أو الدكتور)
     if (searchTerm) {
@@ -42,18 +42,22 @@ export const AppointmentsManagementPage = () => {
       result = result.filter((a) => a.status === statusFilter);
     }
 
-    // فلترة التاريخ
+    // فلترة التاريخ — compare local dates, not raw ISO string prefixes
     switch (dateFilter) {
       case "today":
-        result = result.filter((a) => a.appointment_date === todayStr);
+        result = result.filter(
+          (a) => toLocalISODate(a.appointment_date) === todayStr,
+        );
         break;
       case "tomorrow":
-        result = result.filter((a) => a.appointment_date === tomorrowStr);
+        result = result.filter(
+          (a) => toLocalISODate(a.appointment_date) === tomorrowStr,
+        );
         break;
       case "this-week":
         result = result.filter((a) => {
           const appDate = new Date(a.appointment_date);
-          return appDate >= now && appDate <= nextWeek;
+          return appDate >= new Date() && appDate <= nextWeek;
         });
         break;
       default:
@@ -70,23 +74,22 @@ export const AppointmentsManagementPage = () => {
     }
     exportToExcel(filteredData, "Clinic_Appointments");
   };
-  const getStatusBadge = (status: string) => {
-    const styles: Record<string, string> = {
-      pending: "text-amber-700",
-      confirmed: "text-primary",
-      cancelled: " text-red-500",
-      reschedule_needed: " text-red-700 animate-pulse",
-    };
-    return styles[status] || "bg-blue-100 text-blue-700";
-  };
+  // Final statuses that should not allow further action
+  const FINAL_STATUSES: AppointmentStatus[] = [
+    "completed",
+    "cancelled",
+    "expired",
+    "no_show",
+  ];
 
   return (
     <div className="p-6 bg-[#FAF9F9] min-h-screen">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold mb-6 text-gray-700">
+        <h1 className="text-2xl font-bold mb-6 text-secondary">
           Appointments Mangement
         </h1>
         <Button
+        variant="primary"
           onClick={handleExportToExcel}
         >
           Export to Excel
@@ -117,39 +120,36 @@ export const AppointmentsManagementPage = () => {
             {filteredData.map((app) => (
               <tr key={app.id} className="shadow-sm">
                 <td className="p-4">
-                  <div className="font-bold text-gray-800">
+                  <div className="font-bold text-secondary/90">
                     {app.patient?.name}
                   </div>
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs text-secondary/90">
                     {app.patient?.email}
                   </div>
                 </td>
                 <td className="p-4">
-                  <div className="text-[#8B7E7E] font-medium">
+                  <div className="text-secondary/90 font-medium">
                     {app.doctor?.name}
                   </div>
                   <div className="text-[10px] bg-gray-100 inline-block px-1 rounded">
                     {app.doctor?.specialty}
                   </div>
                 </td>
-                <td className="p-4 text-sm text-gray-700">
+                <td className="p-4 text-sm text-secondary/90">
                   <div className="font-semibold">
                     {formatDisplayDate(app.appointment_date)}
                   </div>
-                  <div className="text-gray-500">
+                  <div className="text-secondary/90">
                     {formatDisplayTime(app.appointment_date)}
                   </div>
                 </td>
                 <td className="p-4">
-                  <span
-                    className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${getStatusBadge(app.status)}`}
-                  >
-                    {app.status.replace("_", " ")}
-                  </span>
+                  <StatusBadge status={app.status} />
                 </td>
                 <td className="p-4 flex gap-2">
                   {app.status === "pending" && (
-                    <button
+                    <Button
+                    variant="primary"
                       onClick={(e) => {
                         e.preventDefault();
 
@@ -158,22 +158,24 @@ export const AppointmentsManagementPage = () => {
                           status: "confirmed",
                         });
                       }}
-                      className="bg-primary text-white px-3 py-1 rounded-lg text-xs transition cursor-pointer"
                     >
                       Confirm
-                    </button>
+                    </Button>
                   )}
-                  <button
-                    onClick={() =>
-                      updateStatusMutation.mutate({
-                        id: app.id,
-                        status: "cancelled",
-                      })
-                    }
-                    className="bg-white border border-red-200 text-red-500 px-3 py-1 rounded-lg text-xs hover:bg-red-50 transition cursor-pointer"
-                  >
-                    Cancel
-                  </button>
+                  {/* Hide Cancel for final statuses — cancelled/completed/expired/no_show */}
+                  {!FINAL_STATUSES.includes(app.status as AppointmentStatus) && (
+                    <Button variant="danger"
+                      onClick={() =>
+                        updateStatusMutation.mutate({
+                          id: app.id,
+                          status: "cancelled",
+                        })
+                      }
+                      className=" cursor-pointer"
+                    >
+                      Cancel
+                    </Button>
+                  )}
                 </td>
               </tr>
             ))}

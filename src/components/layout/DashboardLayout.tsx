@@ -6,7 +6,7 @@ export const DashboardLayout = () => {
       
       <Sidebar /> 
       
-      <div className="flex-1 flex flex-col overflow-y-auto bg-backG">
+      <div className="flex-1 flex flex-col overflow-y-auto bg-neutral-200">
         
         <main className="flex-1 overflow-y-auto p-8 relative">
         <Outlet /> 

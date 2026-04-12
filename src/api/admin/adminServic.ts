@@ -1,5 +1,6 @@
 import supabase from "../../supabase";
 import type { UserProfile, AppointmentData } from "../../types/types";
+import { toLocalISODate } from "../../utils/dateTimeFormate";
 
 export interface AdminDashboardData {
   mainStats: {
@@ -9,14 +10,14 @@ export interface AdminDashboardData {
     revenue: number;
   };
   chartData: { date: string; count: number }[];
-  // نستخدم AppointmentData التي عرفتها أنت مسبقاً بدلاً من تعريف جديد
   topDoctors: { name: string; count: number }[];
   recentActivity: AppointmentData[];
 }
 
 class AdminService {
   async getDashboardStats(): Promise<AdminDashboardData> {
-    const today = new Date().toISOString().split("T")[0];
+    // Use local date — toISOString() gives UTC which is wrong for UTC+ clinics
+    const today = toLocalISODate(new Date());
 
     // 1. جلب الأدوار (استخدام نوع UserProfile للحصول على التلميحات)
     const { data: profilesData } = await supabase
@@ -29,8 +30,8 @@ class AdminService {
       profiles?.filter((p) => p.role === "doctor").length || 0;
     const patientsCount =
       profiles?.filter((p) => p.role === "patient").length || 0;
-    console.log("Total Profiles Found:", profiles.length);
-    console.log("Patients Counted:", patientsCount);
+    
+    
     // 2. جلب الحجوزات (استخدام AppointmentData التي تملكها)
     const { data, error } = await supabase.from("appointments").select(`
         id,
@@ -49,13 +50,15 @@ class AdminService {
       profiles: UserProfile | null;
     })[];
 
-    const todayAppsCount = appointments.filter((a) =>
-      a.appointment_date.startsWith(today),
+    // Compare using LOCAL date of appointment, not the raw ISO string prefix
+    const todayAppsCount = appointments.filter(
+      (a) => toLocalISODate(a.appointment_date) === today,
     ).length;
 
-    //  حساب الدخل من الحجوزات المؤكدة
+    // حساب الدخل من الحجوزات المؤكدة والمكتملة
+    // Bug fix: was only counting 'confirmed', missing all 'completed' revenue
     const revenue = appointments
-      .filter((a) => a.status === "confirmed")
+      .filter((a) => a.status === "confirmed" || a.status === "completed")
       .reduce(
         (sum, a) => sum + (Number(a.profiles?.price_per_session) || 0),
         0,
@@ -70,7 +73,10 @@ class AdminService {
       },
       chartData: this.prepareChartData(appointments),
       topDoctors: this.getTopDoctors(appointments),
-      recentActivity: appointments.slice(0, 5), // استغلال نفس البيانات للنشاطات الأخيرة
+      // Sort by created_at descending before slicing so "recent" is actually recent
+      recentActivity: [...appointments]
+        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+        .slice(0, 5),
     };
   }
 
@@ -108,8 +114,10 @@ class AdminService {
 
     return last7Days.map((date) => ({
       date: date.split("-").slice(1).join("/"),
-      count: appointments.filter((a) => a.appointment_date.startsWith(date))
-        .length,
+      // Use local date comparison — startsWith(date) breaks for UTC-stored timestamps
+      count: appointments.filter(
+        (a) => toLocalISODate(a.appointment_date) === date,
+      ).length,
     }));
   }
 

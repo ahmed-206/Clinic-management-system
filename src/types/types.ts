@@ -150,4 +150,5 @@ export interface Prescription {
   medicines: Medicine[]; 
   notes?: string;
   created_at?: string;
+  profiles?: { name: string };
 }

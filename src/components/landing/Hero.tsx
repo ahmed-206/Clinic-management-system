@@ -1,105 +1,104 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from "framer-motion";
-
-// 1. تعريف الصور المستوردة
-import doc1 from '../../assets/heroImg/doc1.jpg';
-import doc2 from '../../assets/heroImg/doc2.jpg';
-import doc3 from '../../assets/heroImg/doc3.jpg';
+import { motion, AnimatePresence } from 'framer-motion';
+import d1 from '../../assets/heroImg/d1.jpg';
+import d2 from '../../assets/heroImg/d2.jpg';
+import d3 from '../../assets/heroImg/d3.jpg';
+import { FaArrowRight } from 'react-icons/fa';
 
 export const Hero = () => {
-  // 2. وضع الصور في مصفوفة لسهولة التنقل
-  const images = [doc1, doc2, doc3];
+  const images = [d1, d2, d3];
   const [currentImage, setCurrentImage] = useState(0);
+  const total = images.length;
 
-  // 3. تأثير التبديل التلقائي كل 5 ثوانٍ
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 5000);
+    const timer = setInterval(() => setCurrentImage(p => (p + 1) % total), 5000);
     return () => clearInterval(timer);
-  }, [images.length]);
+  }, [total]);
 
   return (
-    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-neutral-100 px-4 py-20">
+
       
-      {/* Background Layer - الصور المتحركة */}
-      <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentImage}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute inset-0 w-full h-full"
-          >
-            {/* التدرج اللوني فوق الصورة لجعل النص واضحاً (Overlay) */}
-            <div className="absolute inset-0 bg-primary/90 z-10" />
-            
-            <img
-              src={images[currentImage]}
-              className="w-full h-full object-cover"
-              alt={`Medical Care ${currentImage + 1}`}
-            />
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Content Layer - النصوص في المنتصف */}
-      <div className="relative z-20 w-full px-6 text-center">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex flex-col items-center justify-center space-y-8"
-        >
-       
-
-          {/* العنوان الضخم */}
-          <h1 className="text-2xl md:text-7xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight max-w-5xl">
-            Book Your Clinic <br /> 
-            
-              Appointment
-            in Seconds
-          </h1>
-
-          {/* وصف يخدم المريض والطبيب */}
-          <p className="text-lg md:text-xl text-white/50 max-w-2xl leading-relaxed mx-auto font-light">
-            Empowering patients with easy booking and providing doctors with 
-            advanced clinic management. The future of healthcare is here.
-          </p>
-
-          {/* أزرار الأكشن */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link 
-                to='/dashboard/book' 
-                className="px-10 py-4 bg-white text-primary rounded-full font-bold text-lg shadow-2xl hover:bg-blue-50 transition-all"
-              >
-                Book an Appointment
-              </Link>
-            </motion.div>
-            
-           
-          </div>
-
-          {/* Slide Indicators - النقط السفلية */}
-          <div className="flex gap-3 mt-12">
-            {images.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentImage(idx)}
-                className={`h-1.5 transition-all duration-500 rounded-full ${
-                  idx === currentImage ? "w-12 bg-white" : "w-3 bg-white/30"
-                }`}
-              />
-            ))}
-          </div>
-        </motion.div>
-      </div>
-
      
+
+      {/* ── 1. Text block ── */}
+      <div className="relative z-10 flex flex-col items-center text-center gap-3 mb-8">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-3xl md:text-5xl font-bold text-secondary leading-[1.15] tracking-tight max-w-none md:whitespace-nowrap"
+        >
+          <span className="text-primary">Book</span> Your Clinic Appointment{' '} 
+          <span className="text-primary">in Seconds</span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="text-md md:text-base text-secondary/60  leading-relaxed max-w-none md:whitespace-nowrap"
+        >
+          Smart booking for patients. 
+  Powerful management tools for doctors & clinics.
+        </motion.p>
+      </div>
+
+      {/* ── 2. Wide image with button overlaid ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="relative z-10 w-full max-w-5xl"
+      >
+        {/* Card frame */}
+        <div className="relative w-full aspect-21/9  overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.13)] border border-white/70">
+          
+          {/* Sliding images */}
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentImage}
+              src={images[currentImage]}
+              alt={`Clinic ${currentImage + 1}`}
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 1.2, ease: 'easeInOut' }}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </AnimatePresence>
+
+          {/* Inner vignette */}
+          <div className="absolute inset-0 bg-linear-to-t from-neutral-900/30 via-transparent to-transparent" />
+
+          {/* ── CTA button — floating on image bottom center ── */}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20">
+          
+            <Link
+              to="/dashboard/book"
+              className="inline-flex items-center gap-2 bg-primary  backdrop-blur-md  text-white text-sm font-medium px-8 py-3.5 rounded-xl transition-all duration-200 hover:gap-3 shadow-lg"
+            >
+              Book an Appointment
+              <FaArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Slide indicators */}
+        <div className="flex justify-center gap-2 mt-5">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentImage(i)}
+              className={`h-[3px] rounded-full transition-all duration-500 ${
+                i === currentImage ? 'w-8 bg-primary' : 'w-2 bg-[#1a1a2e]/20'
+              }`}
+            />
+          ))}
+        </div>
+      </motion.div>
+
     </section>
   );
 };

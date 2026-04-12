@@ -37,6 +37,7 @@
     background-color: var(--color-primary) !important;
     color: white;
     border-radius: 12px !important;
+    
 }
 
 /* تعطيل الأيام (الماضي، الإجازات، أيام خارج العمل) */

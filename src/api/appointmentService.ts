@@ -7,13 +7,20 @@ import type{ BaseAppointment } from "../types/types";
 export const appointmentService = {
 
  async markAppointmentsForReschedule(doctorId: string, date: string) {
+  // date is a local YYYY-MM-DD string (e.g. "2026-04-11").
+  // Supabase stores appointment_date in UTC, so we must build a UTC range
+  // that covers the ENTIRE local day. For example, UTC+2 local midnight is
+  // 2026-04-10T22:00:00Z, and local 23:59 is 2026-04-11T21:59:59Z.
+  const localMidnight = new Date(`${date}T00:00:00`);
+  const localEndOfDay = new Date(`${date}T23:59:59.999`);
+
   const { data, error } = await supabase
     .from("appointments")
     .update({ status: "reschedule_needed" })
     .eq("doctor_id", doctorId)
     .in("status", ["pending", "confirmed"])
-    .gte("appointment_date", `${date}T00:00:00.000`)
-    .lte("appointment_date", `${date}T23:59:59.999`);
+    .gte("appointment_date", localMidnight.toISOString())
+    .lte("appointment_date", localEndOfDay.toISOString());
 
   if (error) throw error;
   return data;

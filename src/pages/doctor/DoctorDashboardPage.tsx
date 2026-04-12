@@ -33,9 +33,9 @@ export const DoctorDashboardPage = () => {
     );
   return (
     <div className="p-6 bg-white min-h-screen rounded-xl">
-      <div className="flex flex-col">
-        <h1 className="text-3xl font-black text-gray-800">Welcome Back,</h1>
-        <p className="text-gray-500 font-medium">Here's what's happening today.</p>
+      <div className="flex flex-col mb-2">
+        <h1 className="text-3xl font-black text-secondary">Welcome Back,</h1>
+        <p className="text-secondary/50 font-medium">Here's what's happening today.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -65,7 +65,7 @@ export const DoctorDashboardPage = () => {
       <div className="mt-12">
       <div className="p-6 border-b border-gray-50 flex justify-between items-center">
           <div className="flex items-center gap-2">
-             <h2 className="text-xl font-bold text-gray-800">Next Patients Today</h2>
+             <h2 className="text-xl font-bold text-secondary/80">Next Patients Today</h2>
              <LuUsersRound className="text-primary" size={20} />
           </div>
           <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">
@@ -102,9 +102,9 @@ export const DoctorDashboardPage = () => {
                       <td className="py-4 px-4">
                         <button
                           onClick={() => setSelectedApp(app)}
-                          className="bg-gray-200 px-4 py-1 rounded hover:bg-gray-300 transition-colors"
+                          className="text-primary hover:text-primary/80 font-medium text-sm transition-colors cursor-pointer"
                         >
-                          View
+                          View Details
                         </button>
                       </td>
                     </tr>

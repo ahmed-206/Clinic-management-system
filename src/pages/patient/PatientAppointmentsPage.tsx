@@ -36,7 +36,7 @@ export const PatientAppointmentsPage = () => {
   return (
     <div className="max-w-6xl mx-auto p-8 animate-fade-in">
      <div className="flex items-center justify-between">
-       <h1 className="text-3xl font-bold text-gray-700 mb-12">
+       <h1 className="text-3xl font-bold text-secondary mb-12">
         My Appointments
       </h1>
     <div className="flex p-1.5 bg-gray-100 rounded-lg w-fit shadow-inner">

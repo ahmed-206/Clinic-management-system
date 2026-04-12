@@ -7,6 +7,7 @@ import { DAYS } from "../../utils/constants";
 import { getLocalDateString } from "../../utils/appointmentLogic";
 import Calendar from "react-calendar";
 import { toast } from "sonner";
+import { Button } from "../../components/ui/Button";
 
 // عزلها خارج المكون لتقليل الرندر
 const transformSchedule = (data: DoctorAvailability[] | undefined) => {
@@ -72,20 +73,28 @@ const ScheduleForm = ({
     onSave(payload as DoctorAvailability[]);
   };
   return (
-    <div className="p-6 bg-white rounded-xl shadow-lg max-w-4xl mx-auto">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-700">
-          My Weekly Availability
-        </h2>
-        {isSaving && (
-          <span className="text-sm text-indigo-600 animate-pulse">
-            Saving...
-          </span>
-        )}
+    <div className="p-6 md:p-8 bg-white rounded-2xl shadow-md max-w-5xl mx-auto border border-gray-100">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+        <div>
+      <h2 className="text-2xl md:text-3xl font-bold text-secondary">
+        Weekly Availability
+      </h2>
+      <p className="text-secondary/50 text-sm mt-1">
+        Set your working hours and session durations
+      </p>
+    </div>
+       {isSaving && (
+      <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-full">
+        <div className="w-2 h-2 bg-primary rounded-full animate-ping" />
+        <span className="text-xs font-medium text-primary">
+          Saving changes...
+        </span>
+      </div>
+    )}
       </div>
 
       <div className="space-y-4">
-        <div className="hidden md:grid grid-cols-5 gap-4 font-bold text-gray-600 border-b pb-2 text-center">
+        <div className="hidden md:grid grid-cols-5 gap-4 text-sm font-semibold text-secondary/80 border-b pb-3 px-2">
           <span className="text-left">Day</span>
           <span>Available</span>
           <span>From</span>
@@ -100,69 +109,68 @@ const ScheduleForm = ({
           return (
             <div
               key={day.id}
-              className={`grid grid-cols-2 md:grid-cols-5 gap-4 items-center py-4 border-b last:border-0 ${!isAvailable ? "bg-gray-50/50" : ""}`}
+               className={`grid grid-cols-2 md:grid-cols-5 gap-4 items-center rounded-2xl bg-primary/10 hover:scale-102 shadow-md py-4 px-2 transition-all ${
+            !isAvailable ? "opacity-60" : ""
+          }`}
             >
-              <span className="font-semibold text-gray-700">{day.name}</span>
-              <div className="flex justify-center">
+              <span className="font-medium text-secondary/80">{day.name}</span>
+              <div className="flex justify-items-center">
                 <input
-                  type="checkbox"
-                  className="w-6 h-6  cursor-pointer appearance-none border-2 border-gray-300 rounded-md
-    checked:bg-primary checked:border-primary
-    checked:after:content-['✔'] checked:after:text-white checked:after:flex checked:after:justify-center checked:after:items-center
-    cursor-pointer transition-all"
-                  checked={isAvailable}
-                  onChange={(e) =>
-                    handleInputChange(day.id, "is_available", e.target.checked)
-                  }
-                />
+              type="checkbox"
+              className="w-5 h-5 accent-primary cursor-pointer transition-all"
+              checked={isAvailable}
+              onChange={(e) =>
+                handleInputChange(day.id, "is_available", e.target.checked)
+              }
+            />
               </div>
-              <input
-                type="time"
-                disabled={!isAvailable}
-                value={dayData.start_time || "10:00"}
-                onChange={(e) =>
-                  handleInputChange(day.id, "start_time", e.target.value)
-                }
-                className="border rounded-md p-2 disabled:bg-gray-100 focus:ring-2 focus:ring-primary outline-none"
-              />
-              <input
-                type="time"
-                disabled={!isAvailable}
-                value={dayData.end_time || "17:00"}
-                onChange={(e) =>
-                  handleInputChange(day.id, "end_time", e.target.value)
-                }
-                className="border rounded-md p-2 disabled:bg-gray-100 focus:ring-2 focus:ring-primary outline-none"
-              />
-              <select
-                disabled={!isAvailable}
-                value={dayData.slot_duration || 30}
-                onChange={(e) =>
-                  handleInputChange(
-                    day.id,
-                    "slot_duration",
-                    parseInt(e.target.value),
-                  )
-                }
-                className="border rounded-md p-2 disabled:bg-gray-100 focus:ring-2 focus:ring-primary outline-none"
-              >
-                <option value={15}>15 min</option>
-                <option value={30}>30 min</option>
-                <option value={45}>45 min</option>
-                <option value={60}>1 hour</option>
-              </select>
+             <input
+            type="time"
+            disabled={!isAvailable}
+            value={dayData.start_time || "10:00"}
+            onChange={(e) =>
+              handleInputChange(day.id, "start_time", e.target.value)
+            }
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm 
+            focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none
+            disabled:bg-gray-50 disabled:text-gray-400 transition-all"
+          />
+              {/* End Time */}
+          <input
+            type="time"
+            disabled={!isAvailable}
+            value={dayData.end_time || "17:00"}
+            onChange={(e) =>
+              handleInputChange(day.id, "end_time", e.target.value)
+            }
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm 
+            focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none
+            disabled:bg-gray-50 disabled:text-secondary/50 transition-all"
+          />
+             {/* End Time */}
+          <input
+            type="time"
+            disabled={!isAvailable}
+            value={dayData.end_time || "17:00"}
+            onChange={(e) =>
+              handleInputChange(day.id, "end_time", e.target.value)
+            }
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm 
+            focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none
+            disabled:bg-gray-50 disabled:text-gray-400 transition-all"
+          />
             </div>
           );
         })}
       </div>
 
-      <button
+      <Button
         onClick={onInternalSave}
         disabled={isSaving}
         className={`mt-8 w-full py-4 rounded-xl font-bold text-white shadow-lg transition-all ${isSaving ? "bg-gray-400" : "bg-primary hover:scale-[1.02] cursor-pointer"}`}
       >
         {isSaving ? "Updating Schedule..." : "Save Weekly Schedule"}
-      </button>
+      </Button>
     </div>
   );
 };
@@ -232,44 +240,63 @@ const DoctorSchedulePage = () => {
       </LoadingWrapper>
 
       {/* القسم الثاني: إجازات الدكتور (Time Off) */}
-      <div className="p-6 bg-white rounded-xl shadow-lg max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6 text-gray-700">
-          Manage Time Off
-        </h2>
+      <div className="p-6 bg-white rounded-xl shadow-lg max-w-5xl mx-auto">
+       <div className="mb-8">
+    <h2 className="text-2xl font-extrabold text-secondary tracking-tight">
+      Manage Time Off
+    </h2>
+    <p className="text-secondary/50 text-sm mt-1">Select dates from the calendar to mark your holidays</p>
+  </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="flex justify-center">
             <Calendar
               onChange={handleDateChange}
               tileClassName={tileClassName}
               minDate={new Date()}
-              className="rounded-lg border-gray-200 shadow-sm"
+              className="custom-calendar shadow-xl"
             />
           </div>
-          <div>
-            <h3 className="font-bold mb-4 text-gray-600">Selected Holidays</h3>
+          <div className="shadow-xl rounded-[20px] p-3">
+            <div className="flex items-center justify-between mb-4 px-1">
+        <h3 className="font-bold text-secondary flex items-center gap-2">
+          Selected Holidays
+          <span className="bg-primary text-white text-xs py-0.5 px-2 rounded-xl">
+            {timeOffData?.length || 0}
+          </span>
+        </h3>
+      </div>
             <LoadingWrapper isLoading={isTimeOffLoading}>
-              <div className="space-y-3 max-h-80 overflow-y-auto">
-                {timeOffData?.map((off) => (
-                  <div
-                    key={off.id}
-                    className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-100"
-                  >
-                    <span className="text-red-700 font-medium">
-                      {new Date(off.off_date).toLocaleDateString()}
-                    </span>
-                    <button
-                      onClick={() => removeTimeOff(off.id)}
-                      className="text-red-400 hover:text-red-600 font-bold cursor-pointer"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                ))}
-                {timeOffData?.length === 0 && (
-                  <p className="text-gray-400 italic">No holidays selected.</p>
-                )}
+        <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+          {timeOffData?.map((off) => (
+            <div
+              key={off.id}
+              className="group flex justify-between items-center p-4 bg-white border border-secondary/30 rounded-2xl transition-all hover:border-red-200 hover:shadow-sm"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-red-400 rounded-full group-hover:animate-pulse" />
+                <span className="text-secondary/80 font-semibold tracking-wide">
+                  {new Date(off.off_date).toLocaleDateString('en-US', { 
+                    month: 'short', day: 'numeric', year: 'numeric' 
+                  })}
+                </span>
               </div>
-            </LoadingWrapper>
+              <button
+                onClick={() => removeTimeOff(off.id)}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-red-50 text-red-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500 hover:text-white cursor-pointer"
+                title="Remove"
+              >
+                <span className="text-xs">✕</span>
+              </button>
+            </div>
+          ))}
+
+          {timeOffData?.length === 0 && (
+            <div className="flex flex-col items-center justify-center py-10 bg-gray-50/50 rounded-2xl border border-dashed border-gray-200">
+              <p className="text-gray-400 text-sm italic">No holidays selected yet.</p>
+            </div>
+          )}
+        </div>
+      </LoadingWrapper>
           </div>
         </div>
       </div>

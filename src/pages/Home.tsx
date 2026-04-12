@@ -6,7 +6,7 @@ export const HomePage = () => {
     return (
          <>
             <Hero />
-        <main className="container mx-auto px-4">
+        <main className=" mx-auto px-4 bg-neutral-100">
             <Stats />
             <Features />
             <HowItWorks />

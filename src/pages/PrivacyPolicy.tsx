@@ -1,39 +1,60 @@
-
-
-
 const PrivacyPolicy = () => {
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-        <h1 className="text-3xl font-bold text-primary mb-6 border-b pb-4">
-            
-            Privacy Policy / سياسة الخصوصية
-            </h1>
+    <div className="min-h-screen bg-neutral-50 py-20 px-4">
+      <div className="max-w-3xl mx-auto bg-white p-10 rounded-[24px] shadow-sm border border-neutral-100">
+        <header className="border-b border-neutral-100 pb-8 mb-10 text-center">
+          <h1 className="text-3xl font-black text-neutral-900 font-headline mb-2">
+            Privacy Policy
+          </h1>
+          <p className="text-primary font-bold">سياسة الخصوصية</p>
+        </header>
         
-        <div className="space-y-8 text-gray-600 leading-relaxed">
-          {/* English Section */}
-          <section>
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">1. Data Collection</h2>
-            <p>We collect personal information (name, email) and medical records (prescriptions, history) solely to provide our healthcare management services. All data is stored securely using Row Level Security (RLS) technology.</p>
-          </section>
+        <div className="space-y-12">
+          {/* Section 1 */}
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <section className="space-y-3">
+              <h2 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-primary " /> 
+                1. Data Collection
+              </h2>
+              <p className="text-neutral-600 text-sm leading-relaxed">
+                We collect personal information and medical records solely to provide healthcare services. All data is secured via RLS technology.
+              </p>
+            </section>
+            <section className="text-right space-y-3" dir="rtl">
+              <h2 className="text-lg font-bold text-neutral-900 flex items-center justify-end gap-2">
+                1. جمع البيانات
+                <span className="w-1.5 h-6 bg-primary " />
+              </h2>
+              <p className="text-neutral-600 text-sm leading-relaxed">
+                نجمع معلوماتك الشخصية وسجلك الطبي لتقديم خدماتنا فقط. بياناتك محمية تماماً بتقنيات تشفير متطورة.
+              </p>
+            </section>
+          </div>
 
-          {/* Arabic Section */}
-          <section className="text-right" dir="rtl">
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">1. جمع البيانات</h2>
-            <p>نحن نجمع المعلومات الشخصية (الاسم، البريد الإلكتروني) والسجلات الطبية (الروشتات، التاريخ المرضي) فقط لتقديم خدمات إدارة الرعاية الصحية لدينا. يتم تخزين جميع البيانات بشكل آمن باستخدام تقنية RLS.</p>
-          </section>
+          <hr className="border-neutral-50" />
 
-          <hr />
-
-          <section>
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">2. Data Sharing</h2>
-            <p>Your medical history is strictly confidential. It is only visible to you and the doctors you have booked appointments with. We never sell or share your data with third-party advertisers.</p>
-          </section>
-
-          <section className="text-right" dir="rtl">
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">2. مشاركة البيانات</h2>
-            <p>تاريخك الطبي سري للغاية. لا يمكن رؤيته إلا من قبلك ومن قبل الأطباء الذين حجزت مواعيد معهم. نحن لا نبيع أو نشارك بياناتك أبداً مع معلنين خارجيين.</p>
-          </section>
+          {/* Section 2 */}
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <section className="space-y-3">
+              <h2 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-primary " /> 
+                2. Data Sharing
+              </h2>
+              <p className="text-neutral-600 text-sm leading-relaxed">
+                Your medical history is confidential. It is only visible to you and your booked doctors. We never sell your data.
+              </p>
+            </section>
+            <section className="text-right space-y-3" dir="rtl">
+              <h2 className="text-lg font-bold text-neutral-900 flex items-center justify-end gap-2">
+                2. مشاركة البيانات
+                <span className="w-1.5 h-6 bg-primary " />
+              </h2>
+              <p className="text-neutral-600 text-sm leading-relaxed">
+                تاريخك الطبي سري ولن يراه إلا طبيبك المختص. نحن لا نقوم ببيع أو مشاركة بياناتك مع أي طرف ثالث.
+              </p>
+            </section>
+          </div>
         </div>
       </div>
     </div>

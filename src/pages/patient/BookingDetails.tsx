@@ -1,5 +1,6 @@
 import { useState,useMemo } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { FaUserDoctor } from "react-icons/fa6";
 import Calendar from "react-calendar";
 import { toast } from "sonner";
 import { useAuth } from "../../hooks/useAuth";
@@ -199,7 +200,7 @@ const BookingDetailsContent = () => {
       {/* Doctor Header Card */}
 
       <div
-        className={`rounded-[30px] p-6 shadow-sm border flex flex-col md:flex-row gap-6 items-center transition-all duration-500 ${
+        className={`rounded-[30px] p-6 shadow-sm   flex flex-col md:flex-row gap-6 items-center transition-all duration-500 ${
           rescheduleId
             ? "bg-orange-50 border-orange-200"
             : editId
@@ -214,21 +215,21 @@ const BookingDetailsContent = () => {
               ? "bg-orange-200 text-orange-600"
               : editId
                 ? "bg-blue-200 text-blue-600"
-                : "bg-primary text-white"
+                : "bg-neutral-200 text-primary"
           }`}
         >
-          {rescheduleId ? <LuTriangleAlert /> : editId ? <LuFilePenLine /> : "👨‍⚕️"}
+          {rescheduleId ? <LuTriangleAlert /> : editId ? <LuFilePenLine /> : <FaUserDoctor size={48}/>}
         </div>
 
         <div className="flex-1 text-center md:text-left space-y-1">
-          <h2 className="text-2xl font-bold text-gray-800">
+          <h2 className="text-2xl font-bold text-secondary">
             {rescheduleId
               ? "Reschedule Your Appointment"
               : editId
                 ? "Modify Your Appointment"
                 : "Confirm Appointment"}
           </h2>
-          <p className="text-gray-500 text-lg">
+          <p className="text-secondary text-lg">
             {rescheduleId
               ? "The doctor is unavailable on your original date. Please pick a new slot."
               : editId
@@ -236,15 +237,15 @@ const BookingDetailsContent = () => {
                 : `You are booking a new session with Dr. ${doctorAvailability?.doctorName}`}
           </p>
           {doctorAvailability?.doctorBio && (
-            <p className="text-gray-500 leading-relaxed italic">
-              "{doctorAvailability.doctorBio}"
+            <p className="text-secondary/50 leading-relaxed ">
+              {doctorAvailability.doctorBio}
             </p>
           )}
         </div>
         <div>
-          <div className="flex justify-between flex-col items-center text-gray-600">
+          <div className="flex justify-between flex-col items-center text-secondary/50">
           <LiaMoneyBillWaveSolid className="text-primary" size={28}/>
-          <span>Session Price <span className="text-primary ">{doctorAvailability?.doctorPrice} EGP</span></span>
+          <span>Session Price {doctorAvailability?.doctorPrice} EGP</span>
           
         </div>
            </div>
@@ -254,7 +255,7 @@ const BookingDetailsContent = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         {/* Date Section */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-gray-800 ml-2">Select Date</h2>
+          <h2 className="text-xl font-bold text-secondary ml-2">Select Date</h2>
           <div className="calendar-card shadow-xl rounded-[25px] p-4 bg-white border border-gray-50">
             <Calendar
               onChange={(value) => handleDateChange(value as Date)}
@@ -271,7 +272,7 @@ const BookingDetailsContent = () => {
 
         {/* Time Section */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-gray-800 ml-2">Select Time</h2>
+          <h2 className="text-xl font-bold text-secondary ml-2">Select Time</h2>
 
           {/* الحالة الأولى: وجود مواعيد متاحة */}
           {availableSlots.length > 0 ? (
@@ -281,12 +282,12 @@ const BookingDetailsContent = () => {
                   key={time}
                   onClick={() => !isBooked && setSelectedTime(time)}
                   disabled={isBooked}
-                  className={`py-4 rounded-md text-sm font-bold transition-all duration-300 ${
+                  className={`py-4 rounded-md text-sm font-bold hover:bg-primary hover:text-white transition-all duration-300 ${
                     isBooked
                       ? "bg-gray-200 text-gray-400 cursor-not-allowed line-through"
                       : selectedTime === time
                         ? "bg-primary text-white shadow-lg scale-105"
-                        : "bg-white text-gray-600  hover:bg-gray-50"
+                        : "bg-white text-secondary/80 border border-secondary/30  hover:bg-gray-50"
                   }`}
                 >
                   {time}
@@ -300,7 +301,7 @@ const BookingDetailsContent = () => {
                 <LuCalendarX className="text-red-500" size={24} />
               </div>
 
-              <h3 className="text-lg font-bold text-gray-800">
+              <h3 className="text-lg font-bold text-secondary">
                 {doctorAvailability?.timeOff?.some(
                   (off) =>
                     off.off_date.split("T")[0] ===
@@ -310,7 +311,7 @@ const BookingDetailsContent = () => {
                   : "Not a working day"}
               </h3>
 
-              <p className="text-gray-500 text-sm text-center max-w-62.5">
+              <p className="text-secondary/50 text-sm text-center max-w-62.5">
                 {doctorAvailability?.timeOff?.some(
                   (off) =>
                     off.off_date.split("T")[0] ===
@@ -320,7 +321,7 @@ const BookingDetailsContent = () => {
                   : "The doctor does not have scheduled hours for this day of the week."}
               </p>
 
-              <div className="mt-4 px-4 py-1 bg-red-50 text-red-500 text-xs font-bold rounded-full border border-red-100 uppercase tracking-wider">
+              <div className="mt-4 px-4 py-1 bg-red-50 text-red-500 text-xs font-bold rounded-[8px] border border-red-100 uppercase tracking-wider">
                 No Slots Available
               </div>
             </div>
@@ -333,6 +334,7 @@ const BookingDetailsContent = () => {
         {profile?.is_active ? (
           <Button
             onClick={handleConfirmBooking}
+            variant="primary"
             disabled={
               !selectedDate ||
               !selectedTime ||

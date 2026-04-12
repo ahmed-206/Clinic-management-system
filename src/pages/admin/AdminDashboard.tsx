@@ -26,14 +26,14 @@ interface StatCardProps {
 
 const StatCard = ({ title, value, icon, color }: StatCardProps) => (
   <div
-    className={`bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center gap-4 hover:translate-y-1 transition-all duration-300 ${color}`}
+    className={`bg-white rounded-2xl p-6 shadow-sm border border-secondary/10 flex flex-col items-center justify-center text-center gap-4 hover:translate-y-1 transition-all duration-300 ${color}`}
   >
     <div className="text-primary">
       {icon}
     </div>
     <div>
-      <p className="text-sm text-gray-500 font-medium">{title}</p>
-      <h3 className="text-2xl font-bold text-gray-700">{value}</h3>
+      <p className="text-sm text-secondary/70 font-medium">{title}</p>
+      <h3 className="text-2xl font-bold text-secondary">{value}</h3>
     </div>
   </div>
 );
@@ -62,7 +62,7 @@ export const AdminDashboard = () => {
   }
   return (
     <div className="p-8 bg-gray-50 min-h-screen rounded-xl">
-      <h1 className="text-3xl font-bold text-gray-700 mb-8">Admin Dashboard</h1>
+      <h1 className="text-3xl font-bold text-secondary mb-8">Admin Dashboard</h1>
       {/* --- القسم الأول: الكروت الإحصائية الأربعة (Grid Layout) --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
@@ -96,7 +96,7 @@ export const AdminDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         {/* الرسم البياني (سيتخذ 2/3 المساحة على الشاشات الكبيرة) */}
         <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-96">
-          <h2 className="text-xl font-bold text-gray-700 mb-6">
+          <h2 className="text-xl font-bold text-secondary/90 mb-6">
             Appointments Trend (Last 7 Days)
           </h2>
           <ResponsiveContainer width="100%" height="80%">
@@ -106,21 +106,21 @@ export const AdminDashboard = () => {
                 vertical={false}
                 stroke="#e0e0e0"
               />
-              <XAxis dataKey="date" tick={{ fill: "#6b7280" }} />
-              <YAxis tick={{ fill: "#6b7280" }} />
+              <XAxis dataKey="date" tick={{ fill: "#0D9488"}} />
+              <YAxis tick={{ fill: "#0D9488" }} />
               <Tooltip
                 contentStyle={{
                   backgroundColor: "#fff",
-                  border: "1px solid #09637E",
+                  border: "1px solid #0D9488",
                   borderRadius: "8px",
                 }}
-                labelStyle={{ color: "#09637E", fontWeight: "bold" }}
+                labelStyle={{ color: "#0D9488", fontWeight: "bold" }}
                 itemStyle={{ color: "#555" }}
               />
               <Line
                 type="monotone"
                 dataKey="count"
-                stroke="#09637E"
+                stroke="#0D9488"
                 strokeWidth={3}
                 dot={{ r: 5 }}
                 activeDot={{ r: 8 }}
@@ -131,12 +131,12 @@ export const AdminDashboard = () => {
 
         {/* قائمة النشاطات الأخيرة (سيتخذ 1/3 المساحة) */}
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h2 className="text-xl font-bold text-gray-700 mb-6">
+          <h2 className="text-xl font-bold text-secondary/90 mb-6">
             Recent Activity
           </h2>
           {isActivityLoading ? (
             <div className="flex justify-center items-center h-full">
-              <FaSpinner className="animate-spin text-2xl text-gray-500" />
+              <FaSpinner className="animate-spin text-2xl text-secondary/50" />
             </div>
           ) : (
             <ul className="space-y-4">
@@ -147,17 +147,17 @@ export const AdminDashboard = () => {
               ) : (
                 stats?.recentActivity?.map((activity) => (
                   <li key={activity.id} className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-primary text-sm font-semibold shrink-0">
+                    <div className="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center text-primary text-sm font-semibold shrink-0">
                       {activity.profiles?.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <p className="text-gray-700 font-medium">
+                      <p className="text-secondary/80 font-medium">
                         <span className="font-bold">
                           {activity.profiles?.name}
                         </span>{" "}
                         booked an appointment.
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-secondary/50">
                         {new Date(activity.created_at).toLocaleString()}
                       </p>
                     </div>
@@ -171,11 +171,11 @@ export const AdminDashboard = () => {
 
       {/* --- القسم الثالث: Top Doctors (أو أي إحصائية أخرى) --- */}
       <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-        <h2 className="text-xl font-bold text-gray-700 mb-6">
+        <h2 className="text-xl font-bold text-secondary/90 mb-6">
           Top 3 Doctors by Appointments
         </h2>
         {stats?.topDoctors?.length === 0 ? (
-          <p className="text-gray-500 text-center py-4">
+          <p className="text-secondary/50 text-center py-4">
             No doctors with appointments yet.
           </p>
         ) : (
@@ -189,10 +189,10 @@ export const AdminDashboard = () => {
                   {index + 1}.
                 </span>
                 <div>
-                  <p className="text-lg font-bold text-gray-700">
+                  <p className="text-lg font-bold text-secondary/70">
                     {doctor.name}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-secondary/50">
                     {doctor.count} Appointments
                   </p>
                 </div>

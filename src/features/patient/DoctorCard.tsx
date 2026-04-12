@@ -25,8 +25,8 @@ export const DoctorCard = ({id, name, specialty, price_per_session}: DoctorProps
       
       {/* اسم الدكتور والتخصص */}
       <div className="text-center mb-6">
-        <h3 className="text-gray-800 font-black text-lg leading-tight">{name}</h3>
-        <p className="text-gray-400 text-sm font-medium uppercase tracking-wider">{specialty}</p>
+        <h3 className="text-secondary font-black text-lg leading-tight">{name}</h3>
+        <p className="text-secondary/50 text-sm font-medium uppercase tracking-wider">{specialty}</p>
       </div>
     
       {/* زر الحجز باستخدام المكون الموحد */}

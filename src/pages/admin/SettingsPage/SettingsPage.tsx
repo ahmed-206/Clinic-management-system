@@ -20,7 +20,7 @@ const SettingsPage = () => {
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-700 mb-8">System Settings</h1>
+      <h1 className="text-2xl font-bold text-secondary mb-8">System Settings</h1>
 
       <div className="flex flex-col md:flex-row gap-8 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         

@@ -7,6 +7,24 @@ import { SearchBar } from "../../components/ui/SearchBar";
 import PrescriptionModal from "../../features/doctor/PrescriptionModal";
 import { FaFilePrescription } from "react-icons/fa";
 import { toast } from "sonner";
+import PatientDetailsModal from "../../components/ui/PatientDetailsModal";
+import { Button } from "../../components/ui/Button";
+import { StatusBadge } from "../../components/ui/StatusBadge";
+import { formatDisplayDate, formatDisplayTime } from "../../utils/dateTimeFormate";
+
+// Statuses that belong in the "upcoming" tab
+const UPCOMING_STATUSES: AppointmentStatus[] = [
+  "pending",
+  "confirmed",
+  "reschedule_needed",
+];
+// Statuses that belong in the "past/history" tab regardless of date
+const HISTORY_STATUSES: AppointmentStatus[] = [
+  "completed",
+  "cancelled",
+  "no_show",
+  "expired",
+];
 
 const DoctorAppointmentPage = () => {
   const { user } = useAuth();
@@ -15,6 +33,7 @@ const DoctorAppointmentPage = () => {
   const [selectedAppointment, setSelectedAppointment] =
     useState<AppointmentData | null>(null);
   const [isPrescriptionModalOpen, setIsPrescriptionModalOpen] = useState(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"upcoming" | "past">("upcoming");
   // فلاتر البحث
@@ -51,18 +70,14 @@ const DoctorAppointmentPage = () => {
 
   const counts = useMemo(
     () => ({
-      upcomingAppointments: appointments.filter(
-        (app) =>
-          new Date(app.appointment_date) >= new Date() &&
-          app.status !== "completed" &&
-          app.status !== "cancelled",
+      // Use explicit status sets — date-only comparison misclassified
+      // reschedule_needed, no_show, expired into the wrong tab
+      upcomingAppointments: appointments.filter((app) =>
+        UPCOMING_STATUSES.includes(app.status),
       ).length,
 
-      pastAppointments: appointments.filter(
-        (app) =>
-          new Date(app.appointment_date) < new Date() ||
-          app.status === "completed" ||
-          app.status === "cancelled",
+      pastAppointments: appointments.filter((app) =>
+        HISTORY_STATUSES.includes(app.status),
       ).length,
     }),
     [appointments],
@@ -71,11 +86,10 @@ const DoctorAppointmentPage = () => {
   // مصفوفات العرض (القادمة - الارشيف)
   const filteredList = useMemo(() => {
     return appointments.filter((app) => {
-      const isPast =
-        new Date(app.appointment_date) < new Date() ||
-        app.status === "completed" ||
-        app.status === "cancelled";
-      const matchesTab = activeTab === "upcoming" ? !isPast : isPast;
+      const matchesTab =
+        activeTab === "upcoming"
+          ? UPCOMING_STATUSES.includes(app.status)
+          : HISTORY_STATUSES.includes(app.status);
       const matchesSearch = app.profiles?.name
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
@@ -90,9 +104,9 @@ const DoctorAppointmentPage = () => {
       </div>
     );
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 bg-gray-50 min-h-screen rounded-xl">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-700">My Appointments</h1>
+        <h1 className="text-2xl font-bold text-secondary">My Appointments</h1>
 
         <div className="relative w-full md:w-64">
           <SearchBar
@@ -145,53 +159,49 @@ const DoctorAppointmentPage = () => {
                     {app.profiles?.name}
                   </td>
                   <td className="py-4 px-6 text-gray-600 text-sm">
-                    {new Date(app.appointment_date).toLocaleDateString("en-GB")}
+                    {formatDisplayDate(app.appointment_date)}
                   </td>
                   <td className="py-4 px-6 text-primary font-semibold text-sm">
-                    {new Date(app.appointment_date).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                    {formatDisplayTime(app.appointment_date)}
                   </td>
                   <td className="py-4 px-6 text-center">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-bold ${
-                        app.status === "completed"
-                          ? "bg-green-100 text-green-700"
-                          : app.status === "cancelled"
-                            ? " text-red-700"
-                            : " text-yellow-700"
-                      }`}
-                    >
-                      {app.status.toUpperCase()}
-                    </span>
+                    <StatusBadge status={app.status} />
                   </td>
-                  <td className="py-4 px-6">
+                  <td className="py-4 px-4">
                     {/* أزرار التحكم تظهر فقط في التبويب القادم وللمواعيد غير المنتهية */}
                     {activeTab === "upcoming" ? (
                       <div className="flex gap-2">
-                        <button
+                        <Button
                           onClick={() => {
                             setSelectedAppointment(app); // تخزين الموعد الحالي لفتح الروشتة له
                             setIsPrescriptionModalOpen(true);
                           }}
-                          className="bg-primary text-white px-3 py-1.5 rounded-md text-sm flex items-center gap-1"
+                          variant="primary"
                         >
                           <FaFilePrescription className="w-4 h-4" />
                           Complete & Prescribe
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                          variant="danger"
                           onClick={() =>
                             handleStatusUpdate(app.id!, "cancelled")
                           }
-                          className="border border-red-200 text-red-600 px-3 py-1.5 rounded-md text-sm hover:bg-red-50"
                         >
                           Cancel
+                        </Button>
+                        <button
+                          onClick={() => {
+                            setSelectedAppointment(app);
+                            setIsDetailsModalOpen(true);
+                          }}
+                          className="text-primary hover:text-primary/80 font-medium text-sm transition-colors cursor-pointer"
+                        >
+                          View medical history
                         </button>
                       </div>
                     ) : (
                       <button className="text-gray-400 hover:text-primary">
-                        View Details
+                        View medical history
                       </button>
                     )}
                   </td>
@@ -209,6 +219,13 @@ const DoctorAppointmentPage = () => {
             )}
           </tbody>
         </table>
+        <PatientDetailsModal
+          appointment={isDetailsModalOpen ? selectedAppointment : null}
+          onClose={() => {
+            setIsDetailsModalOpen(false);
+            setSelectedAppointment(null);
+          }}
+        />
         {isPrescriptionModalOpen && selectedAppointment && (
           <PrescriptionModal
             appointment={selectedAppointment}

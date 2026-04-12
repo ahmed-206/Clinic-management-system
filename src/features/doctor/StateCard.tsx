@@ -11,7 +11,7 @@ export const StatCard = ({ label, value, icon, colorClass = "hover:bg-primary" }
       {icon}
     </div>
     <div>
-      <span className="text-3xl font-black block leading-none mb-1">
+      <span className="text-3xl font-black text-secondary  block leading-none mb-1">
         {value ?? 0}
       </span>
       <span className="text-sm font-medium opacity-70">{label}</span>

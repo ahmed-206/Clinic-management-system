@@ -7,10 +7,7 @@ const ROLE_REDIRECTS: Record<string, string> = {
   admin: "/admin",
 };
 
-/**
- * Wraps guest-only routes (login, signup).
- * If the user is already authenticated, redirects them to their dashboard.
- */
+
 export const GuestOnly = () => {
   const { user, profile, loading } = useAuth();
 

@@ -1,9 +1,12 @@
-import type{ ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+// افترضنا وجود مكتبة أيقونات مثل lucide-react لشكل التحميل
+// import { Loader2 } from "lucide-react"; 
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  variant?: "primary" | "outline" | "ghost" | "danger" | "select";
-  isActive?: boolean; // خاص للزراير اللي زي اختيارات الوقت
+  // تحديث الأشكال لتطابق الصورة المرجعية
+  variant?: "primary" | "secondary" | "outline" | "danger" | "select";
+  isActive?: boolean; 
   isLoading?: boolean;
   className?: string;
 }
@@ -18,30 +21,45 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   
-  // الكلاسات الأساسية لكل الزراير
-  const baseStyles = "px-6 py-2 rounded-[8px] font-bold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed active:scale-[0.98]";
+  // 1. الكلاسات الأساسية (Base Styles)
+  // تم ضبط الـ rounded ليكون 8px والخط Bold كما في الصورة
+  const baseStyles = "px-4 py-2 rounded-[8px] font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed active:scale-[0.98]";
 
-  // أشكال الزراير المختلفة
+  // 2. أشكال الزراير المختلفة (Variants) بناءً على الصورة المرجعية
   const variants = {
-    primary: "bg-primary text-white shadow-lg hover:bg-primary/90 disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-none",
-    outline: "bg-white border-2 border-gray-100 text-gray-600 hover:border-primary/30 hover:bg-gray-50",
-    ghost: "bg-transparent text-gray-500 hover:bg-gray-100",
-    danger: "bg-red-50 text-red-600 hover:bg-red-600 hover:text-white",
-    // متغير خاص للـ Slots (المواعيد)
+    // مطابق لزرار Primary الأخضر في الصورة
+    primary: "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 disabled:bg-neutral-200 disabled:text-neutral-400 disabled:shadow-none",
+    
+    // مطابق لزرار Secondary الرمادي في الصورة
+    secondary: "bg-neutral-100 text-neutral-900 hover:bg-neutral-200 disabled:bg-neutral-100 disabled:text-neutral-300",
+    
+    // مطابق لزرار Outlined في الصورة
+    outline: "bg-white border border-neutral-200 text-neutral-900 hover:border-neutral-300 hover:bg-neutral-50 disabled:border-neutral-100 disabled:text-neutral-300",
+    
+    // زرار الخطر (تم تعديله ليكون أكثر وضوحاً ومتناسقاً مع الباليت)
+    danger: "bg-danger text-danger-foreground hover:bg-danger/90 disabled:bg-neutral-200",
+    
+    // متغير خاص للـ Slots (المواعيد) - تم تحسين الألوان لتناسب الباليت الجديد
     select: isActive 
-      ? "bg-primary text-white shadow-lg scale-105" 
-      : "bg-white text-gray-600 border border-gray-100 hover:bg-gray-50 disabled:bg-gray-200 disabled:text-gray-400 disabled:line-through"
+      ? "bg-primary text-primary-foreground shadow-md scale-105 border border-primary" 
+      : "bg-white text-neutral-600 border border-neutral-100 hover:border-primary/30 hover:bg-neutral-50 disabled:bg-neutral-100 disabled:text-neutral-300 disabled:line-through"
   };
 
   return (
     <button
       disabled={disabled || isLoading}
+      // دمج الكلاسات الذكي
       className={`${baseStyles} ${variants[variant]} ${className}`}
       {...props}
     >
+      {/* أيقونة التحميل إذا كانت مفعلة */}
       {isLoading ? (
-        <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+        // <Loader2 className="w-4 h-4 animate-spin" />
+        // بديل مبسط إذا لم تستخدم مكتبة أيقونات:
+        <span className="w-4 h-4 border-2 border-current/30 border-t-current rounded-full animate-spin" />
       ) : null}
+      
+      {/* محتوى الزرار (نص أو أيقونة ونص) */}
       {children}
     </button>
   );

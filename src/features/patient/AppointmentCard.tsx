@@ -47,11 +47,11 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
 
       {/* 2. تفاصيل الموعد */}
       <div className="flex-1 text-center md:text-left space-y-1">
-        <h3 className={`text-xl font-bold ${isRescheduleNeeded ? "text-orange-700" : isFinalStatus ? "text-gray-500" : "text-gray-700"}`}>
+        <h3 className={`text-xl font-bold ${isRescheduleNeeded ? "text-orange-700" : isFinalStatus ? "text-secondary/50" : "text-secondary"}`}>
           Dr. {appointment.doctor.name}
         </h3>
         
-        <div className="flex items-center justify-center md:justify-start gap-2 text-gray-500 font-semibold">
+        <div className="flex items-center justify-center md:justify-start gap-2 text-secondary/50 font-semibold">
           <LuCalendarClock size={18} className={isFinalStatus ? "text-gray-400" : "text-primary"} />
           <span>{format(date, "dd MMM yyyy - hh:mm aa")}</span>
         </div>
@@ -77,7 +77,7 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
         
         {/* حالة ملغي */}
         {isCancelled && (
-          <div className="flex items-center gap-2 text-red-400 font-bold px-5 py-2 bg-red-50/50 rounded-2xl border border-red-100">
+          <div className="flex items-center gap-2 text-red-400 font-bold px-5 py-2 bg-red-50/50 rounded-[8px] border border-red-100">
             Cancelled <LuCircleX />
           </div>
         )}
@@ -91,14 +91,14 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
 
         {/* حالة مكتمل (Completed) */}
         {isCompleted && (
-          <div className="flex items-center gap-2 text-primary font-bold px-5 py-2 bg-primary/5 rounded-2xl border border-primary/10">
+          <div className="flex items-center gap-2 text-primary font-bold px-5 py-2 bg-primary/5 rounded-[8px] border border-primary/10">
             Completed <LuCircleCheck />
           </div>
         )}
 
         {/* حالة لم يحضر (No Show) */}
         {isNoShow && (
-          <div className="flex items-center gap-2 text-orange-700 font-bold px-5 py-2 bg-orange-50 rounded-2xl border border-orange-100">
+          <div className="flex items-center gap-2 text-orange-700 font-bold px-5 py-2 bg-orange-50 rounded-[8px] border border-orange-100">
             No Show <LuCircleAlert />
           </div>
         )}
@@ -119,11 +119,11 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
           <>
             <div className="mr-2">
               {appointment.status === "confirmed" ? (
-                <span className="flex items-center gap-1.5 text-sm font-black text-primary bg-primary/10 px-4 py-2 rounded-full">
+                <span className="flex items-center gap-1.5 text-sm font-black text-primary bg-primary/10 px-4 py-2 rounded-[8px]">
                   Confirmed <LuCircleCheck />
                 </span>
               ) : (
-                <span className="flex items-center gap-1.5 text-sm font-black text-orange-500 bg-orange-50 px-4 py-2 rounded-full">
+                <span className="flex items-center gap-1.5 text-sm font-black text-tertiary bg-orange-50 px-4 py-2 rounded-[8px]">
                   Pending <LuCircleAlert />
                 </span>
               )}
@@ -132,10 +132,9 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
             {canEditOrCancel && (
               <div className="flex gap-2">
                 <Button
-                  variant="outline"
+                  variant="danger"
                   isLoading={isPending}
                   onClick={() => cancel(appointment.id)}
-                  className="text-red-400 border-red-100 hover:border-red-400 hover:bg-red-50 px-4 py-2 text-sm"
                 >
                   Cancel
                 </Button>
@@ -143,7 +142,7 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
                 <Button
                   variant="outline"
                   onClick={() => navigate(`/dashboard/book/${appointment.doctor_id}?editId=${appointment.id}`)}
-                  className="bg-gray-100 border-transparent hover:bg-white text-gray-400 px-4 py-2 text-sm"
+                  className="text-tertiary border-tertiary hover:text-white hover:bg-tertiary"
                 >
                   Edit
                 </Button>

@@ -2,7 +2,7 @@ import { useAdminDoctors } from "../../hooks/admin/useAdminDoctors";
 import { SearchBar } from "../../components/ui/SearchBar";
 import { EditDoctorModal } from "../../features/admin/EditDoctorModal";
 import {AddDoctorModal} from "../../features/admin/AddDoctorModal"
-import { LuSquarePen, LuUserRoundCheck, LuUserRoundX, LuBadgeCheck  } from 'react-icons/lu';
+import { LuPencil, LuUserRoundCheck, LuUserRoundX, LuBadgeCheck  } from 'react-icons/lu';
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import {LoadingWrapper } from "../../components/ui/LoadingWrapper";
 import { Button } from "../../components/ui/Button";
@@ -26,7 +26,7 @@ export const DoctorsMangementPage = () => {
   return (
     <div className="p-8">
      <div className="flex justify-between items-center mb-6">
-       <h1 className="text-2xl font-bold text-gray-700">Doctors Management</h1>
+       <h1 className="text-2xl font-bold text-secondary">Doctors Management</h1>
        <Button 
          onClick={() => setIsAddModalOpen(true)}
          
@@ -59,24 +59,24 @@ export const DoctorsMangementPage = () => {
             {doctors.map((doc) => (
               <tr key={doc.id} className="shadow-sm">
                <td className="p-4">
-                <div className="font-bold text-gray-700">{doc.name}</div>
-                <div className="text-xs text-gray-500">{doc.email}</div>
+                <div className="font-bold text-secondary/90">{doc.name}</div>
+                <div className="text-xs text-secondary/90">{doc.email}</div>
               </td>
-              <td className="p-4 text-gray-600">{doc.specialty || 'N/A'}</td>
+              <td className="p-4 text-secondary/90">{doc.specialty || 'N/A'}</td>
               <td className="p-4">
                 {doc.is_active ? 
                   <span className="text-primary flex items-center gap-1"><LuUserRoundCheck /> Active</span> : 
-                  <span className="text-customOrange flex items-center gap-1"><LuUserRoundX  /> Inactive</span>
+                  <span className="text-tertiary flex items-center gap-1"><LuUserRoundX  /> Inactive</span>
                 }
               </td>
               <td className="p-4 text-center">
                 <button onClick={() => actions.toggleVerify(doc.id, !!doc.is_verified)}>
-                  <LuBadgeCheck className={doc.is_verified ? "text-primary" : "text-gray-300"} size={20} />
+                  <LuBadgeCheck className={doc.is_verified ? "text-primary" : "text-secondary/70"} size={20} />
                 </button>
               </td>
               <td className="p-4">
                 <div className="flex justify-center gap-3">
-                  <button onClick={() => setSelectedDoctor(doc)} className="text-gray-500 hover:text-primary"><LuSquarePen size={18} /></button>
+                  <button onClick={() => setSelectedDoctor(doc)} className="bg-tertiary p-2 rounded-[4px] text-white"><LuPencil size={14} /></button>
                   {selectedDoctor && (
         <EditDoctorModal 
           key={selectedDoctor.id}
