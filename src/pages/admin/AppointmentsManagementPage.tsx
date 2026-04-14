@@ -83,9 +83,9 @@ export const AppointmentsManagementPage = () => {
   ];
 
   return (
-    <div className="p-6 bg-[#FAF9F9] min-h-screen">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold mb-6 text-secondary">
+    <div className="p-4 md:p-6 min-h-screen">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+        <h1 className="text-xl md:text-2xl font-bold mb-6 text-secondary">
           Appointments Mangement
         </h1>
         <Button
@@ -106,7 +106,8 @@ export const AppointmentsManagementPage = () => {
       />
 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+        <div className="overflow-x-auto">
+           <table className="w-full text-left border-collapse min-w-[700]">
           <thead>
             <tr className="bg-primary text-white">
               <th className="p-4 text-sm font-semibold ">Patient</th>
@@ -146,7 +147,7 @@ export const AppointmentsManagementPage = () => {
                 <td className="p-4">
                   <StatusBadge status={app.status} />
                 </td>
-                <td className="p-4 flex gap-2">
+                <td className="p-4  flex flex-nowrap gap-2">
                   {app.status === "pending" && (
                     <Button
                     variant="primary"
@@ -181,6 +182,8 @@ export const AppointmentsManagementPage = () => {
             ))}
           </tbody>
         </table>
+        </div>
+       
       </div>
     </div>
   );

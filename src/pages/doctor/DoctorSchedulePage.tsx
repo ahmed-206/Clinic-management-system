@@ -109,15 +109,15 @@ const ScheduleForm = ({
           return (
             <div
               key={day.id}
-               className={`grid grid-cols-2 md:grid-cols-5 gap-4 items-center rounded-2xl bg-primary/10 hover:scale-102 shadow-md py-4 px-2 transition-all ${
+               className={`grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 items-center rounded-2xl bg-neutral-200 hover:scale-102 shadow-md py-4 px-2 transition-all ${
             !isAvailable ? "opacity-60" : ""
           }`}
             >
-              <span className="font-medium text-secondary/80">{day.name}</span>
-              <div className="flex justify-items-center">
+              <span className="font-bold md:font-medium text-secondary/80">{day.name}</span>
+              <div className="flex justify-end md:justify-start">
                 <input
               type="checkbox"
-              className="w-5 h-5 accent-primary cursor-pointer transition-all"
+              className="w-6 h-6 md:w-5 md:h-5 accent-primary cursor-pointer transition-all"
               checked={isAvailable}
               onChange={(e) =>
                 handleInputChange(day.id, "is_available", e.target.checked)
@@ -131,7 +131,7 @@ const ScheduleForm = ({
             onChange={(e) =>
               handleInputChange(day.id, "start_time", e.target.value)
             }
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm 
+            className="w-full border border-primary bg-white text-secondary rounded-lg px-2 py-2 text-sm 
             focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none
             disabled:bg-gray-50 disabled:text-gray-400 transition-all"
           />
@@ -143,22 +143,27 @@ const ScheduleForm = ({
             onChange={(e) =>
               handleInputChange(day.id, "end_time", e.target.value)
             }
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm 
+            className="w-full border border-primary bg-white text-secondary rounded-lg px-2 py-2 text-sm 
             focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none
             disabled:bg-gray-50 disabled:text-secondary/50 transition-all"
           />
-             {/* End Time */}
-          <input
-            type="time"
+             {/* Duration */}
+          <select
             disabled={!isAvailable}
-            value={dayData.end_time || "17:00"}
+            value={dayData.slot_duration ?? 30}
             onChange={(e) =>
-              handleInputChange(day.id, "end_time", e.target.value)
+              handleInputChange(day.id, "slot_duration", parseInt(e.target.value))
             }
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm 
+            className="w-full col-span-2 md:col-span-1 border border-primary bg-white text-secondary rounded-lg px-2 py-2 text-sm 
             focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none
             disabled:bg-gray-50 disabled:text-gray-400 transition-all"
-          />
+          >
+            <option value={15}>15 min</option>
+            <option value={20}>20 min</option>
+            <option value={30}>30 min</option>
+            <option value={45}>45 min</option>
+            <option value={60}>60 min</option>
+          </select>
             </div>
           );
         })}
@@ -242,7 +247,7 @@ const DoctorSchedulePage = () => {
       {/* القسم الثاني: إجازات الدكتور (Time Off) */}
       <div className="p-6 bg-white rounded-xl shadow-lg max-w-5xl mx-auto">
        <div className="mb-8">
-    <h2 className="text-2xl font-extrabold text-secondary tracking-tight">
+    <h2 className="text-2xl font-bold text-secondary tracking-tight">
       Manage Time Off
     </h2>
     <p className="text-secondary/50 text-sm mt-1">Select dates from the calendar to mark your holidays</p>

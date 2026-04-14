@@ -5,6 +5,7 @@ import {
   LuLockKeyhole,
   LuClock3
 } from "react-icons/lu";
+import { Button } from "../../../../components/ui/Button";
 export const SecuritySettings = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -45,36 +46,36 @@ export const SecuritySettings = () => {
     <div className="space-y-8 animate-fadeIn">
       {/* قسم تغيير كلمة المرور */}
       <section className="space-y-4">
-        <h2 className="text-xl font-bold text-gray-700 flex items-center gap-2">
+        <h2 className="text-lg md:text-xl font-bold text-secondary flex items-center gap-2">
           <LuLockKeyhole className="text-primary" size="1.5rem"/>  Change Password
         </h2>
         <div className="grid grid-cols-1 gap-4 max-w-md">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
+            <label className="block text-sm font-medium text-secondary/80 mb-1">
               New Password
             </label>
             <input
               type="password" 
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none"
+              className="w-full p-3 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary outline-none"
               placeholder="••••••••"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
+            <label className="block text-sm font-medium text-secondary/80 mb-1">
               Confirm New Password
             </label>
             <input
               type="password" 
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none"
+              className="w-full p-3 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary outline-none"
               placeholder="••••••••"
             />
           </div>
-          <button
-           className={`w-fit px-8 py-2.5 rounded-xl font-medium transition-all shadow-sm ${
+          <Button
+           className={`w-full md:w-fit ${
               loading 
                 ? 'bg-gray-400 cursor-not-allowed text-white' 
                 : 'bg-primary text-white hover:scale-105 active:scale-95 cursor-pointer'
@@ -83,7 +84,7 @@ export const SecuritySettings = () => {
             onClick={handleUpdatePassword}
           >
             Update Password
-          </button>
+          </Button>
         </div>
       </section>
 
@@ -91,7 +92,7 @@ export const SecuritySettings = () => {
 
       {/* قسم سجل النشاطات - يعطي انطباع احترافي جداً */}
       <section className="space-y-4">
-        <h2 className="text-xl font-bold text-gray-700 flex items-center gap-2">
+        <h2 className="text-lg md:text-xl font-bold text-secondary flex items-center gap-2">
           <LuClock3 /> Recent Login Activity
         </h2>
         <div className="bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden">

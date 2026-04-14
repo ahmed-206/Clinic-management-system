@@ -19,22 +19,22 @@ const SettingsPage = () => {
   ];
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold text-secondary mb-8">System Settings</h1>
+    <div className="p-4 md:p-6 max-w-6xl mx-auto">
+      <h1 className="text-xl md:text-2xl font-bold text-secondary mb-6 md:mb-8 text-center md:text-left">System Settings</h1>
 
-      <div className="flex flex-col md:flex-row gap-8 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="flex flex-col lg:flex-row gap-8 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         
         {/* Sidebar Tabs */}
-        <aside className="w-full md:w-64 bg-gray-50 p-4 border-r border-gray-100">
-          <nav className="space-y-2">
+        <aside className="w-full lg:w-64 bg-white p-4 border-r border-gray-100">
+          <nav className="flex lg:flex-col overflow-x-auto lg:overflow-visible gap-2 no-scrollbar">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                className={`flex-1 lg:w-full flex items-center justify-center lg:justify-start gap-3 px-4 py-3 rounded-xl text-xs md:text-sm font-medium transition-all whitespace-nowrap ${
                   activeTab === tab.id 
                   ? 'bg-primary text-white shadow-md shadow-blue-200' 
-                  : 'text-gray-600 hover:bg-gray-200'
+                  : 'text-secondary hover:bg-neutral-200'
                 }`}
               >
                 <span>{tab.icon}</span>
@@ -45,7 +45,7 @@ const SettingsPage = () => {
         </aside>
 
         {/* Tab Content */}
-        <main className="flex-1 p-8 ">
+        <main className="flex-1 p-4 md:p-8 ">
           {activeTab === 'general' && <GeneralSettings />}
           {activeTab === 'financial' && <FinancialSettings />}
           {activeTab === 'security' && <SecuritySettings />}

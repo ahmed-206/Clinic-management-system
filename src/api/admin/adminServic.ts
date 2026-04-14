@@ -45,7 +45,7 @@ class AdminService {
 
     if (error) throw error;
 
-    // هنا تكمن القوة: نستخدم نوعك الجاهز مباشرة
+   
     const appointments = data as unknown as (AppointmentData & {
       profiles: UserProfile | null;
     })[];

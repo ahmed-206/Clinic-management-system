@@ -24,9 +24,9 @@ export const DoctorsMangementPage = () => {
   }
 
   return (
-    <div className="p-8">
-     <div className="flex justify-between items-center mb-6">
-       <h1 className="text-2xl font-bold text-secondary">Doctors Management</h1>
+    <div className="p-4 md:p-8">
+     <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+       <h1 className="text-xl md:text-2xl font-bold text-secondary">Doctors Management</h1>
        <Button 
          onClick={() => setIsAddModalOpen(true)}
          
@@ -44,9 +44,10 @@ export const DoctorsMangementPage = () => {
       />
       <LoadingWrapper isLoading={actions.isUpdating || actions.isToggling}>
       <div className="bg-white rounded-2xl shadow-sm  overflow-hidden">
-        <table className="w-full text-left ">
-          <thead>
-            <tr className="bg-primary text-white ">
+      <div className="overflow-x-auto">
+          <table className="w-full text-left min-w-[700px]">
+          <thead className="bg-primary text-white text-xs md:text-sm">
+            <tr >
               <th className="p-4">Doctor</th>
               <th className="p-4">Specialty</th>
               <th className="p-4">Status</th>
@@ -103,6 +104,7 @@ export const DoctorsMangementPage = () => {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
       </LoadingWrapper>
       <AddDoctorModal 

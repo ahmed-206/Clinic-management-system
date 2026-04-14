@@ -10,8 +10,8 @@ export const Stats = () => {
   ];
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-12">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+    <section className="max-w-7xl mx-auto px-4 md:px-6 py-12">
+      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {stats.map((s, i) => (
           <motion.div 
             key={i}
@@ -27,7 +27,7 @@ export const Stats = () => {
             className="group relative bg-primary border border-neutral-100 rounded-[28px] p-8 text-center transition-all duration-300 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5"
           >
 
-            <div className="relative z-10 text-3xl md:text-4xl font-black text-white font-headline tracking-tight">
+            <div className="relative z-10 text-3xl md:text-4xl font-bold text-white font-headline tracking-tight">
               <Counter from={0} to={s.value} />
               <span className="text-2xl md:text-3xl ml-0.5">{s.suffix}</span>
             </div>
@@ -36,7 +36,7 @@ export const Stats = () => {
               {s.label}
             </div>
 
-            {/* نقطة مضيئة صغيرة في الأعلى */}
+           
           </motion.div>
         ))}
       </div>

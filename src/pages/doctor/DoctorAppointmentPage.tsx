@@ -5,7 +5,6 @@ import { doctorService } from "../../api/doctor/doctorService";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import { SearchBar } from "../../components/ui/SearchBar";
 import PrescriptionModal from "../../features/doctor/PrescriptionModal";
-import { FaFilePrescription } from "react-icons/fa";
 import { toast } from "sonner";
 import PatientDetailsModal from "../../components/ui/PatientDetailsModal";
 import { Button } from "../../components/ui/Button";
@@ -104,22 +103,17 @@ const DoctorAppointmentPage = () => {
       </div>
     );
   return (
-    <div className="p-6 bg-gray-50 min-h-screen rounded-xl">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-secondary">My Appointments</h1>
+    <div className="p-4 md:p-6 bg-white min-h-screen rounded-xl">
+      <div className="flex flex-col gap-6 mb-8 lg:flex-row lg:justify-between lg:items-center">
+        <h1 className="text-2xl md:text-3xl font-bold text-secondary">My Appointments</h1>
 
-        <div className="relative w-full md:w-64">
-          <SearchBar
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            showAppointmentFilters={false}
-          />
-        </div>
-        {/* أزرار التبويب (Tabs) */}
-        <div className="flex bg-gray-200 p-1 rounded-lg">
+        <div className="flex flex-col gap-4 w-full md:flex-row md:items-center lg:w-auto"> 
+
+        
+        <div className="flex bg-neutral-200 p-1 rounded-lg w-full sm:w-auto">
           <button
             onClick={() => setActiveTab("upcoming")}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition ${
+            className={`flex-1 sm:flex-none px-4 py-2 rounded-md text-sm font-medium transition ${
               activeTab === "upcoming"
                 ? "bg-white shadow text-primary"
                 : "text-gray-700 hover:text-gray-800"
@@ -129,7 +123,7 @@ const DoctorAppointmentPage = () => {
           </button>
           <button
             onClick={() => setActiveTab("past")}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition ${
+            className={`flex-1 sm:flex-none px-4 py-2 rounded-md text-sm font-medium transition ${
               activeTab === "past"
                 ? "bg-white shadow text-primary"
                 : "text-gray-700 hover:text-gray-800"
@@ -138,51 +132,63 @@ const DoctorAppointmentPage = () => {
             History ({counts.pastAppointments})
           </button>
         </div>
+        </div>
+        {/* أزرار التبويب (Tabs) */}
       </div>
-
+<div className="relative w-full">
+          <SearchBar
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            showAppointmentFilters={false}
+          />
+        </div>
       <div className="bg-white rounded-xl shadow overflow-hidden">
-        <table className="w-full text-left border-collapse">
-          <thead className="bg-primary text-white uppercase text-sm font-semibold">
+      <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[600px]">
+          <thead className="bg-primary text-white uppercase text-xs md:text-sm font-semibold">
             <tr>
-              <th className="py-4 px-6">Patient</th>
-              <th className="py-4 px-6">Date</th>
-              <th className="py-4 px-6">Time</th>
-              <th className="py-4 px-6 text-center">Status</th>
-              <th className="py-4 px-6">Actions</th>
+              <th className="py-4 px-4 md:px-6">Patient</th>
+              <th className="py-4 px-4 md:px-6">Date</th>
+              <th className="py-4 px-4 md:px-6">Time</th>
+              <th className="py-4 px-4 md:px-6 text-center">Status</th>
+              <th className="py-4 px-4 md:px-6 ">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {filteredList.length > 0 ? (
               filteredList.map((app) => (
                 <tr key={app.id} className="hover:bg-gray-50 transition">
-                  <td className="py-4 px-6 font-medium text-gray-700">
+                  <td className="py-4 px-4 md:px-6 font-medium text-secondary/70">
                     {app.profiles?.name}
                   </td>
-                  <td className="py-4 px-6 text-gray-600 text-sm">
+                  <td className="py-4 px-4 md:px-6 text-secondary/70 text-sm">
                     {formatDisplayDate(app.appointment_date)}
                   </td>
-                  <td className="py-4 px-6 text-primary font-semibold text-sm">
+                  <td className="py-4 px-4 md:px-6 text-primary font-semibold text-sm">
                     {formatDisplayTime(app.appointment_date)}
                   </td>
-                  <td className="py-4 px-6 text-center">
+                  <td className="py-4 px-4 md:px-6 text-center">
                     <StatusBadge status={app.status} />
                   </td>
-                  <td className="py-4 px-4">
+                  <td className="py-4 px-4 md:px-6 text-right">
+                    
                     {/* أزرار التحكم تظهر فقط في التبويب القادم وللمواعيد غير المنتهية */}
                     {activeTab === "upcoming" ? (
-                      <div className="flex gap-2">
+                      <div className="flex flex-col sm:flex-row gap-2 justify-end items-end sm:items-center">
                         <Button
                           onClick={() => {
                             setSelectedAppointment(app); // تخزين الموعد الحالي لفتح الروشتة له
                             setIsPrescriptionModalOpen(true);
                           }}
                           variant="primary"
+                          className="text-[10px] md:text-xs py-1 px-2 h-auto w-full sm:w-auto flex items-center justify-center gap-1"
                         >
-                          <FaFilePrescription className="w-4 h-4" />
+                          
                           Complete & Prescribe
                         </Button>
                         <Button
                           variant="danger"
+                          className="text-[10px] md:text-xs py-1 px-2 h-auto w-full sm:w-auto"
                           onClick={() =>
                             handleStatusUpdate(app.id!, "cancelled")
                           }
@@ -219,6 +225,7 @@ const DoctorAppointmentPage = () => {
             )}
           </tbody>
         </table>
+      </div>
         <PatientDetailsModal
           appointment={isDetailsModalOpen ? selectedAppointment : null}
           onClose={() => {

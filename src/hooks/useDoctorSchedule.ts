@@ -21,7 +21,7 @@ export const useDoctorSchedule = (doctorId: string | undefined) => {
     // تحديث الكاش فورًا ليعرف المتصفح أن البيانات تغيرت
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["doctorSchedule", doctorId] });
-      alert("Schedule saved!");
+      toast.success("Schedule saved!");
     },
     onError: () => toast.error("Failed to save schedule"),
   });

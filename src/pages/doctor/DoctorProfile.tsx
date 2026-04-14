@@ -44,23 +44,23 @@ export const DoctorProfilePage = () => {
  const inputStyle =
     "w-full h-11 rounded-xl border border-secondary/30 bg-white/5 px-4 text-secondary text-sm placeholder:text-white/25 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-200";
    return (
-    <div className="flex min-h-[calc(100-64px)] bg-gray-50 rounded-xl ">
+    <div className="flex flex-col lg:flex-row bg-gray-50 rounded-xl ">
       {/* Left Side: Avatar & Basic Info */}
-      <aside className="w-1/3 bg-white border-r border-secondary/30 flex flex-col items-center pt-16 px-6  rounded-l-xl">
+      <aside className="w-full lg:w-1/3 bg-white border-b lg:border-b-0 lg:border-r border-gray-100 flex flex-col items-center py-10 lg:pt-16 px-6  rounded-l-xl">
         <div className="relative group">
-          <div className="w-32 h-32 bg-neutral-200 shadow-xl rounded-full flex items-center justify-center font-bold text-4xl border-4 border-gray-50 text-primary">
+          <div className="w-24 h-24 md:w-32 md:h-32 bg-neutral-200 shadow-xl rounded-full flex items-center justify-center font-bold text-3xl md:text-4x border-4 border-gray-50 text-primary">
              {profile?.name?.charAt(0).toUpperCase()}
           </div>
           {/* هنا يمكن إضافة زر لرفع الصورة مستقبلاً */}
         </div>
-        <h2 className="mt-6 text-2xl font-bold text-secondary">{profile?.name}</h2>
+        <h2 className="mt-6 text-xl md:text-2xl font-bold text-secondary">{profile?.name}</h2>
         <p className="text-secondary/50 font-medium">{profile?.specialty}</p>
       </aside>
 
       {/* Right Side: Settings Form */}
-      <main className="flex-1 p-12 bg-white rounded-xl">
+      <main className="flex-1 p-6 md:p-12 bg-white rounded-xl">
         <form onSubmit={handleSubmit((data) => updateProfile(data))} className="max-w-xl space-y-6">
-          <div className="grid grid-cols-1 gap-6">
+          <div className="grid grid-cols-1 gap-5 md:gap-6">
             
             <FormField label="Full Name" error={errors.name?.message}>
               <input {...register("name")} className={inputStyle} />
@@ -80,12 +80,12 @@ export const DoctorProfilePage = () => {
 
           </div>
 
-          <div className="flex justify-end pt-6">
+          <div className="flex justify-center md:justify-end pt-6">
             <Button
             variant="primary"
               type="submit"
               disabled={isPending}
-              className="px-10 py-3 bg-primary font-bold transition-all cursor-pointer disabled:bg-secondary/50"
+              className="w-full md:w-auto px-10 py-3 disabled:bg-secondary/50"
             >
               {isPending ? "Save..." : "Save"}
             </Button>

@@ -61,10 +61,10 @@ export const AdminDashboard = () => {
     );
   }
   return (
-    <div className="p-8 bg-gray-50 min-h-screen rounded-xl">
-      <h1 className="text-3xl font-bold text-secondary mb-8">Admin Dashboard</h1>
+    <div className="p-4 md:p-8 bg-neutral-200 min-h-screen rounded-xl">
+      <h1 className="text-2xl md:text-3xl font-bold text-secondary mb-6 md:mb-8 text-center md:text-left">Admin Dashboard</h1>
       {/* --- القسم الأول: الكروت الإحصائية الأربعة (Grid Layout) --- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
         <StatCard
           title="Total Doctors"
           value={stats?.mainStats.doctors || 0}
@@ -85,7 +85,7 @@ export const AdminDashboard = () => {
         />
         <StatCard
           title="Total Revenue"
-          value={`$${(stats?.mainStats.revenue || 0).toLocaleString()}`} // تنسيق العملة
+          value={`${(stats?.mainStats.revenue || 0).toLocaleString()} EGP`} // تنسيق العملة
           icon={<LuCircleDollarSign size={24} />}
           color="bg-purple-50"
         />
@@ -95,8 +95,8 @@ export const AdminDashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         {/* الرسم البياني (سيتخذ 2/3 المساحة على الشاشات الكبيرة) */}
-        <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-96">
-          <h2 className="text-xl font-bold text-secondary/90 mb-6">
+        <div className="lg:col-span-2 bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 h-64 md:h-80 lg:h-96">
+          <h2 className="text-lg md:text-xl font-bold text-secondary/90 mb-4 md:mb-6">
             Appointments Trend (Last 7 Days)
           </h2>
           <ResponsiveContainer width="100%" height="80%">
@@ -130,7 +130,7 @@ export const AdminDashboard = () => {
         </div>
 
         {/* قائمة النشاطات الأخيرة (سيتخذ 1/3 المساحة) */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100">
           <h2 className="text-xl font-bold text-secondary/90 mb-6">
             Recent Activity
           </h2>
@@ -170,7 +170,7 @@ export const AdminDashboard = () => {
       </div>
 
       {/* --- القسم الثالث: Top Doctors (أو أي إحصائية أخرى) --- */}
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+      <div className="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100">
         <h2 className="text-xl font-bold text-secondary/90 mb-6">
           Top 3 Doctors by Appointments
         </h2>

@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import type{  AppointmentData, Medicine } from "../../types/types";
 import { useDoctorPrescription } from "../../hooks/doctor/useDoctordPrescription"; 
 import { LuHistory, LuStethoscope, LuPill,LuX } from "react-icons/lu";
+import { Button } from "./Button";
 
 interface Props {
   appointment: AppointmentData | null;
@@ -52,22 +53,22 @@ const PatientDetailsModal = ({ appointment, onClose }: Props) => {
             <div className="p-6 overflow-y-auto custom-scrollbar space-y-6">
               
               {/* Patient Basic Info Card */}
-              <div className="grid grid-cols-2 gap-4 bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+              <div className="grid grid-cols-2 gap-4 p-4 rounded-xl ">
                 <div>
-                  <p className="text-blue-500 text-[10px] uppercase font-black">Patient Name</p>
-                  <p className="text-gray-800 font-bold">{appointment.profiles?.name}</p>
+                  <p className="text-secondary text-md uppercase font-bold">Patient Name : <span className="text-primary font-bold">{appointment.profiles?.name}</span></p>
                 </div>
                 <div className="text-right">
-                  <p className="text-blue-500 text-[10px] uppercase font-black">Status</p>
-                  <span className="text-xs font-bold text-primary px-2 py-0.5 bg-white border border-primary/20 rounded-md">
+                  <p className="text-secondary text-md uppercase font-black">Status : <span className="text-xs font-bold text-primary px-2 py-0.5 bg-white border border-primary/20 rounded-md">
                     {appointment.status.toUpperCase()}
                   </span>
+                  </p>
+                  
                 </div>
               </div>
 
               {/* History Section */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-gray-800 border-b pb-2">
+                <div className="flex items-center gap-2 text-secondary border-b border-secondary/50 pb-2">
                   <LuHistory className="text-primary" />
                   <h4 className="font-bold">Medical History</h4>
                 </div>
@@ -82,14 +83,14 @@ const PatientDetailsModal = ({ appointment, onClose }: Props) => {
                       <motion.div 
                         layout
                         key={record.id} 
-                        className="border border-gray-100 rounded-xl p-4 bg-gray-50/30"
+                        className="border border-gray-100 rounded-xl p-4 bg-neutral-100"
                       >
                         <div className="flex justify-between items-center mb-3">
-                          <span className="text-xs font-medium text-gray-500 bg-white px-2 py-1 rounded shadow-sm">
-                            {record.created_at && new Date(record.created_at).toLocaleDateString()}
-                          </span>
-                          <span className="text-[10px] text-gray-400 font-medium">
+                          <span className="text-sm text-primary bg-white px-2 py-1 rounded shadow-sm font-medium">
                             Dr. {record.profiles?.name}
+                          </span>
+                          <span className="text-xs font-medium text-secondary bg-white px-2 py-1 rounded shadow-sm">
+                            {record.created_at && new Date(record.created_at).toLocaleDateString()}
                           </span>
                         </div>
                         
@@ -97,15 +98,15 @@ const PatientDetailsModal = ({ appointment, onClose }: Props) => {
                           <div className="flex gap-3">
                             <LuStethoscope className="text-blue-400 mt-1 shrink-0" size={16} />
                             <div>
-                              <p className="text-[10px] font-bold text-gray-400 uppercase">Diagnosis</p>
-                              <p className="text-sm text-gray-700">{record.diagnosis}</p>
+                              <p className="text-[10px] font-bold text-secondary/50 uppercase">Diagnosis</p>
+                              <p className="text-sm text-secondary">{record.diagnosis}</p>
                             </div>
                           </div>
 
                           <div className="flex gap-3">
                             <LuPill className="text-green-400 mt-1 shrink-0" size={16} />
                             <div>
-                              <p className="text-[10px] font-bold text-gray-400 uppercase">Medicines</p>
+                              <p className="text-[10px] font-bold text-secondary/50 uppercase">Medicines</p>
                               <div className="flex flex-wrap gap-2 mt-1">
                                 {record.medicines.map((med: Medicine, i: number) => (
                                   <span key={i} className="text-[11px] bg-white border border-green-100 text-green-700 px-2 py-1 rounded-lg shadow-sm">
@@ -120,7 +121,7 @@ const PatientDetailsModal = ({ appointment, onClose }: Props) => {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-10 text-gray-400 bg-gray-50 rounded-xl border-2 border-dashed border-gray-100">
+                  <div className="text-center py-10 text-secondary/50 bg-neutral-100 rounded-xl border-2 border-dashed border-gray-100">
                     <p className="text-sm">No previous medical records found.</p>
                   </div>
                 )}
@@ -128,13 +129,13 @@ const PatientDetailsModal = ({ appointment, onClose }: Props) => {
             </div>
 
             {/* Footer */}
-            <div className="p-4 bg-gray-50 border-t flex justify-end">
-              <button
+            <div className="p-4 bg-neutral-100 border-t border-secondary/50 flex justify-end">
+              <Button
+              variant="primary"
                 onClick={onClose}
-                className="px-6 py-2 bg-primary text-white rounded-xl font-bold hover:shadow-lg active:scale-95 transition-all shadow-md"
               >
                 Done
-              </button>
+              </Button>
             </div>
           </motion.div>
         </div>

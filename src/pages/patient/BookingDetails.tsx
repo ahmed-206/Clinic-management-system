@@ -1,4 +1,4 @@
-import { useState,useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { FaUserDoctor } from "react-icons/fa6";
 import Calendar from "react-calendar";
@@ -13,7 +13,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useAppointment } from "../../hooks/useAppointment";
 import { getErrorMessage } from "../../utils/getErrorMessage";
 import { useDoctorSchedule } from "../../hooks/useDoctorSchedule";
-import { LuTriangleAlert, LuFilePenLine  } from "react-icons/lu";
+import { LuTriangleAlert, LuFilePenLine } from "react-icons/lu";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 import { Button } from "../../components/ui/Button";
 
@@ -41,31 +41,26 @@ const BookingDetailsContent = () => {
   const { doctorAvailability, isDoctorAvailabilityLoading } =
     useDoctorSchedule(doctorId);
 
-
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
- const availableSlots = useMemo(() => {
-  if (!selectedDate || !doctorAvailability) return [];
+  const availableSlots = useMemo(() => {
+    if (!selectedDate || !doctorAvailability) return [];
 
-  const availability = doctorAvailability.availability || [];
-  const bookedAppointments = doctorAvailability.bookedAppointments || [];
-  const timeOff = doctorAvailability.timeOff || [];
-  const dayOfWeek = selectedDate.getDay() as DayOfWeek;
+    const availability = doctorAvailability.availability || [];
+    const bookedAppointments = doctorAvailability.bookedAppointments || [];
+    const timeOff = doctorAvailability.timeOff || [];
+    const dayOfWeek = selectedDate.getDay() as DayOfWeek;
 
-  const { isHoliday } = getDayStatus(selectedDate, timeOff, availability);
-  const dayConfig = availability.find(
-    (d) => d.day_of_week === dayOfWeek && d.is_available,
-  );
+    const { isHoliday } = getDayStatus(selectedDate, timeOff, availability);
+    const dayConfig = availability.find(
+      (d) => d.day_of_week === dayOfWeek && d.is_available,
+    );
 
-  if (isHoliday || !dayConfig) return [];
+    if (isHoliday || !dayConfig) return [];
 
-  return buildSlotsWithStatus(
-    dayConfig,
-    bookedAppointments,
-    selectedDate,
-  );
-}, [selectedDate, doctorAvailability]);
+    return buildSlotsWithStatus(dayConfig, bookedAppointments, selectedDate);
+  }, [selectedDate, doctorAvailability]);
 
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
@@ -88,7 +83,9 @@ const BookingDetailsContent = () => {
 
   const handleConfirmBooking = () => {
     if (!profile?.is_active) {
-      toast.error("عذراً، لا يمكنك الحجز لأن حسابك غير نشط.");
+      toast.error(
+        "Sorry, you cannot make a booked because your account is inactive.",
+      );
       return;
     }
     // 1. التأكد من وجود البيانات الأساسية
@@ -110,14 +107,12 @@ const BookingDetailsContent = () => {
 
     // المنع الصارم
     if (isHoliday) {
-      toast.error(
-        "⚠️ عذراً، هذا اليوم إجازة رسمية للطبيب. برجاء اختيار يوم آخر.",
-      );
-      return; 
+      toast.error("Sorry, the doctor is off today. Please choose another day.");
+      return;
     }
 
     if (!isWorkDay) {
-      toast.error("⚠️ عذراً، الطبيب لا يعمل في هذا اليوم.");
+      toast.error("Sorry, the doctor is not working today.");
       return;
     }
 
@@ -138,7 +133,7 @@ const BookingDetailsContent = () => {
 
     const handleError = (err: unknown) => {
       const message = getErrorMessage(err);
-      // 2. فحص الأخطاء الخاصة بقاعدة البيانات 
+      // 2. فحص الأخطاء الخاصة بقاعدة البيانات
       if (err && typeof err === "object" && "code" in err) {
         const dbError = err as { code: string };
         if (dbError.code === "23505") {
@@ -188,11 +183,11 @@ const BookingDetailsContent = () => {
   }
 
   return (
-    <div className="max-w-5xl mx-auto animate-fade-in space-y-8 p-4">
+    <div className="max-w-5xl mx-auto animate-fade-in space-y-6 md:space-y-8 p-4 md:p-6">
       {/* Back Button */}
       <button
         onClick={() => navigate(-1)}
-        className="text-primary font-semibold flex items-center gap-2 hover:underline cursor-pointer"
+        className="text-primary font-semibold flex items-center gap-2 hover:underline cursor-pointer text-sm md:text-base"
       >
         ← Back to Doctors List
       </button>
@@ -200,7 +195,7 @@ const BookingDetailsContent = () => {
       {/* Doctor Header Card */}
 
       <div
-        className={`rounded-[30px] p-6 shadow-sm   flex flex-col md:flex-row gap-6 items-center transition-all duration-500 ${
+        className={`rounded-[25px] md:rounded-[30px] p-4 md:p-6 shadow-sm border flex flex-col md:flex-row gap-4 md:gap-6 items-center text-center md:text-left transition-all duration-500 ${
           rescheduleId
             ? "bg-orange-50 border-orange-200"
             : editId
@@ -210,7 +205,7 @@ const BookingDetailsContent = () => {
       >
         {/* صورة الطبيب / الأيقونة */}
         <div
-          className={`w-24 h-24 rounded-full shrink-0 flex items-center justify-center text-2xl transition-colors ${
+          className={`w-20 h-20 md:w-24 md:h-24 rounded-full shrink-0 flex items-center justify-center text-2xl transition-colors ${
             rescheduleId
               ? "bg-orange-200 text-orange-600"
               : editId
@@ -218,18 +213,24 @@ const BookingDetailsContent = () => {
                 : "bg-neutral-200 text-primary"
           }`}
         >
-          {rescheduleId ? <LuTriangleAlert /> : editId ? <LuFilePenLine /> : <FaUserDoctor size={48}/>}
+          {rescheduleId ? (
+            <LuTriangleAlert />
+          ) : editId ? (
+            <LuFilePenLine />
+          ) : (
+            <FaUserDoctor size={48} />
+          )}
         </div>
 
         <div className="flex-1 text-center md:text-left space-y-1">
-          <h2 className="text-2xl font-bold text-secondary">
+          <h2 className="text-xl md:text-2xl font-bold text-secondary">
             {rescheduleId
               ? "Reschedule Your Appointment"
               : editId
                 ? "Modify Your Appointment"
                 : "Confirm Appointment"}
           </h2>
-          <p className="text-secondary text-lg">
+          <p className="text-secondary text-sm md:text-lg">
             {rescheduleId
               ? "The doctor is unavailable on your original date. Please pick a new slot."
               : editId
@@ -237,26 +238,25 @@ const BookingDetailsContent = () => {
                 : `You are booking a new session with Dr. ${doctorAvailability?.doctorName}`}
           </p>
           {doctorAvailability?.doctorBio && (
-            <p className="text-secondary/50 leading-relaxed ">
+            <p className="text-secondary/50 leading-relaxed text-xs md:text-sm line-clamp-2 md:line-clamp-none">
               {doctorAvailability.doctorBio}
             </p>
           )}
         </div>
-        <div>
+        <div className="w-full md:w-auto pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-gray-100 md:pl-6">
           <div className="flex justify-between flex-col items-center text-secondary/50">
-          <LiaMoneyBillWaveSolid className="text-primary" size={28}/>
-          <span>Session Price {doctorAvailability?.doctorPrice} EGP</span>
-          
+            <LiaMoneyBillWaveSolid className="text-primary" size={28} />
+            <span>Session Price {doctorAvailability?.doctorPrice} EGP</span>
+          </div>
         </div>
-           </div>
       </div>
 
       {/* Selection Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
         {/* Date Section */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-secondary ml-2">Select Date</h2>
-          <div className="calendar-card shadow-xl rounded-[25px] p-4 bg-white border border-gray-50">
+          <h2 className="text-lg md:text-xl font-bold text-secondary ">Select Date</h2>
+          <div className="calendar-card shadow-xl rounded-[20px] md:rounded-[25px] p-2 md:p-4 bg-white border border-gray-50">
             <Calendar
               onChange={(value) => handleDateChange(value as Date)}
               value={selectedDate}
@@ -272,7 +272,7 @@ const BookingDetailsContent = () => {
 
         {/* Time Section */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-secondary ml-2">Select Time</h2>
+          <h2 className="text-lg md:text-xl font-bold text-secondary ml-2">Select Time</h2>
 
           {/* الحالة الأولى: وجود مواعيد متاحة */}
           {availableSlots.length > 0 ? (
@@ -282,7 +282,7 @@ const BookingDetailsContent = () => {
                   key={time}
                   onClick={() => !isBooked && setSelectedTime(time)}
                   disabled={isBooked}
-                  className={`py-4 rounded-md text-sm font-bold hover:bg-primary hover:text-white transition-all duration-300 ${
+                  className={`py-3 md:py-4 rounded-xl text-xs md:text-sm font-bold hover:bg-primary hover:text-white transition-all duration-300 ${
                     isBooked
                       ? "bg-gray-200 text-gray-400 cursor-not-allowed line-through"
                       : selectedTime === time
@@ -330,7 +330,7 @@ const BookingDetailsContent = () => {
       </div>
 
       {/* Confirm Button */}
-      <div className="pt-6 flex justify-center">
+      <div className="pt-4 md:pt-6 flex justify-center">
         {profile?.is_active ? (
           <Button
             onClick={handleConfirmBooking}
@@ -342,7 +342,7 @@ const BookingDetailsContent = () => {
               isUpdating ||
               availableSlots.length === 0
             }
-            className="w-full max-w-md py-5 text-xl"
+            className="w-full py-4 md:py-5 text-lg md:text-xl rounded-2xl"
           >
             {isCreating || isUpdating
               ? "Processing..."

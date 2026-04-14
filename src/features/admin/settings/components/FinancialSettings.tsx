@@ -2,6 +2,7 @@ import { useSettings } from "../../../../hooks/admin/useSettings";
 import { LoadingSpinner } from "../../../../components/ui/LoadingSpinner";
 import type {  ClinicSettings, SettingsFormsProps } from "../../../../types/types";
 import { useState} from "react";
+import { Button } from "../../../../components/ui/Button";
 
 
 const FinancialForm = ({ settings, updateSettings, isUpdating }: SettingsFormsProps) => {
@@ -13,10 +14,10 @@ const FinancialForm = ({ settings, updateSettings, isUpdating }: SettingsFormsPr
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-bold text-gray-700">Pricing & Taxes</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <h2 className="text-lg md:text-xl font-bold text-secondary">Pricing & Taxes</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
         <div className="p-4 border border-blue-100 bg-blue-50 rounded-2xl">
-          <label htmlFor="clinic_vat" className="block text-sm font-semibold text-primary mb-2">
+          <label htmlFor="clinic_vat" className="block text-xs md:text-sm font-semibold text-primary mb-2">
             Value Added Tax (VAT) %
           </label>
           <input
@@ -28,7 +29,7 @@ const FinancialForm = ({ settings, updateSettings, isUpdating }: SettingsFormsPr
           />
         </div>
         <div className="p-4 border border-green-100 bg-green-50 rounded-2xl">
-          <label htmlFor="clinic_fee" className="block text-sm font-semibold text-green-800 mb-2">
+          <label htmlFor="clinic_fee" className="block text-xs md:text-sm font-semibold text-green-800 mb-2">
             Service Fee ({formData.currency})
           </label>
           <input
@@ -40,13 +41,14 @@ const FinancialForm = ({ settings, updateSettings, isUpdating }: SettingsFormsPr
           />
         </div>
       </div>
-      <button 
+      <Button 
+      variant="primary"
         onClick={() => updateSettings(formData)}
         disabled={isUpdating}
-        className="bg-primary text-white px-10 py-3 rounded-xl font-bold disabled:bg-gray-400 transition-all shadow-lg cursor-pointer"
+        className="w-full md:w-auto"
       >
         {isUpdating ? "Processing..." : "Save Financial Rules"}
-      </button>
+      </Button>
     </div>
   );
 };

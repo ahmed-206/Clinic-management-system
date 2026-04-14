@@ -9,16 +9,16 @@ export const HowItWorks = () => {
   ];
 
   return (
-    <section id="how-it-works" className="max-w-7xl mx-auto px-6 py-24 space-y-16">
+    <section id="how-it-works" className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24 space-y-12 md:space-y-16">
       {/* Header */}
       <div className="text-center space-y-4">
    
-        <h2 className="text-3xl md:text-4xl font-black text-secondary font-headline">
+        <h2 className="text-2xl md:text-4xl font-bold text-secondary font-headline">
           Four steps to your appointment
         </h2>
       </div>
 
-      <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
+      <div className="relative grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8">
         
         {/* Connecting Line (Desktop) */}
         <div className="hidden md:block absolute top-7 left-[10%] right-[10%] h-[2px] bg-neutral-100 z-0">
@@ -42,7 +42,7 @@ export const HowItWorks = () => {
           >
             {/* Step Number Circle */}
             <div className="relative mb-6">
-              <div className="w-14 h-14 rounded-2xl bg-white border-2 border-neutral-100 flex items-center justify-center text-sm font-black text-neutral-400 group-hover:text-primary group-hover:border-primary transition-all duration-700 shadow-sm group-hover:shadow-primary/20 group-hover:shadow-xl">
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white border-2 border-neutral-100 flex items-center justify-center text-xs md:text-sm font-bold text-neutral-400 group-hover:text-primary group-hover:border-primary transition-all duration-700 shadow-sm group-hover:shadow-primary/20 group-hover:shadow-xl">
                 {s.n}
               </div>
               
@@ -52,10 +52,10 @@ export const HowItWorks = () => {
 
             {/* Content */}
             <div className="space-y-2">
-              <h3 className="text-lg font-bold text-secondary group-hover:text-primary transition-colors duration-300">
+              <h3 className="text-base md:text-lg font-bold text-secondary group-hover:text-primary transition-colors duration-300">
                 {s.title}
               </h3>
-              <p className="text-sm text-neutral-500 leading-relaxed font-medium max-w-[200px] mx-auto">
+              <p className="text-xs md:text-sm text-neutral-500 leading-relaxed font-medium max-w-[200px] mx-auto">
                 {s.desc}
               </p>
             </div>

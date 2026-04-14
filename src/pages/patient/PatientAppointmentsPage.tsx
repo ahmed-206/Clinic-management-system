@@ -34,15 +34,15 @@ export const PatientAppointmentsPage = () => {
   const displayedAppointments =
     activeTab === "upcoming" ? upcomingAppointments : historyAppointments;
   return (
-    <div className="max-w-6xl mx-auto p-8 animate-fade-in">
-     <div className="flex items-center justify-between">
-       <h1 className="text-3xl font-bold text-secondary mb-12">
+    <div className="max-w-6xl mx-auto p-4 md:p-8 animate-fade-in">
+     <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8 md:mb-12 text-center sm:text-left">
+       <h1 className="text-2xl md:text-3xl font-bold text-secondary">
         My Appointments
       </h1>
     <div className="flex p-1.5 bg-gray-100 rounded-lg w-fit shadow-inner">
           <button
             onClick={() => setActiveTab('upcoming')}
-            className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${
+            className={`flex-1 sm:flex-none px-4 md:px-6 py-2 md:py-2.5 rounded-lg text-xs md:text-sm font-bold transition-all duration-300 ${
               activeTab === 'upcoming' 
                 ? "bg-white text-primary shadow-sm scale-100" 
                 : "text-gray-500 hover:text-gray-700 scale-95"
@@ -52,7 +52,7 @@ export const PatientAppointmentsPage = () => {
           </button>
           <button
             onClick={() => setActiveTab('history')}
-            className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${
+            className={`flex-1 sm:flex-none px-4 md:px-6 py-2 md:py-2.5 rounded-lg text-xs md:text-sm font-bold transition-all duration-300 ${
               activeTab === 'history' 
                 ? "bg-white text-primary shadow-sm scale-100" 
                 : "text-gray-500 hover:text-gray-700 scale-95"
@@ -66,7 +66,7 @@ export const PatientAppointmentsPage = () => {
         
 
         {displayedAppointments && displayedAppointments.length > 0 ? (
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-4">
             {displayedAppointments.map((app) => {
               const doctorData = Array.isArray(app.doctor)
                 ? app.doctor[0]
@@ -82,7 +82,7 @@ export const PatientAppointmentsPage = () => {
             })}
           </div>
         ) : (
-          <div className="bg-white/50 rounded-[40px] py-20 text-center border-2 border-dashed border-gray-200 shadow-inner flex flex-col items-center justify-center">
+          <div className="bg-white/50 rounded-[30px] md:rounded-[40px] py-12 md:py-20 text-center border-2 border-dashed border-gray-200 shadow-inner flex flex-col items-center justify-center">
             <div className="text-5xl mb-4">
               {activeTab === 'upcoming' ? <LuCalendarX className="text-red-500"/> : "📜"}
             </div>
