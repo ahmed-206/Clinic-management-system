@@ -76,10 +76,10 @@ const ScheduleForm = ({
     <div className="p-6 md:p-8 bg-white rounded-2xl shadow-md max-w-5xl mx-auto border border-gray-100">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
         <div>
-      <h2 className="text-2xl md:text-3xl font-bold text-secondary">
+      <h2 className="text-2xl md:text-3xl font-bold text-primary">
         Weekly Availability
       </h2>
-      <p className="text-secondary/50 text-sm mt-1">
+      <p className="text-secondary text-sm mt-1">
         Set your working hours and session durations
       </p>
     </div>
@@ -94,7 +94,7 @@ const ScheduleForm = ({
       </div>
 
       <div className="space-y-4">
-        <div className="hidden md:grid grid-cols-5 gap-4 text-sm font-semibold text-secondary/80 border-b pb-3 px-2">
+        <div className="hidden md:grid grid-cols-5 gap-4 text-sm font-semibold text-secondary border-b pb-3 px-2">
           <span className="text-left">Day</span>
           <span>Available</span>
           <span>From</span>
@@ -109,11 +109,11 @@ const ScheduleForm = ({
           return (
             <div
               key={day.id}
-               className={`grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 items-center rounded-2xl bg-neutral-200 hover:scale-102 shadow-md py-4 px-2 transition-all ${
+               className={`grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 items-center rounded-2xl bg-primary-100 hover:scale-102 shadow-md py-4 px-2 transition-all ${
             !isAvailable ? "opacity-60" : ""
           }`}
             >
-              <span className="font-bold md:font-medium text-secondary/80">{day.name}</span>
+              <span className="font-bold md:font-medium text-secondary">{day.name}</span>
               <div className="flex justify-end md:justify-start">
                 <input
               type="checkbox"
@@ -131,7 +131,7 @@ const ScheduleForm = ({
             onChange={(e) =>
               handleInputChange(day.id, "start_time", e.target.value)
             }
-            className="w-full border border-primary bg-white text-secondary rounded-lg px-2 py-2 text-sm 
+            className="w-full border border-primary-200 bg-white text-primary rounded-lg px-2 py-2 text-sm 
             focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none
             disabled:bg-gray-50 disabled:text-gray-400 transition-all"
           />
@@ -143,7 +143,7 @@ const ScheduleForm = ({
             onChange={(e) =>
               handleInputChange(day.id, "end_time", e.target.value)
             }
-            className="w-full border border-primary bg-white text-secondary rounded-lg px-2 py-2 text-sm 
+            className="w-full border border-primary-200 bg-white text-primary rounded-lg px-2 py-2 text-sm 
             focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none
             disabled:bg-gray-50 disabled:text-secondary/50 transition-all"
           />
@@ -154,7 +154,7 @@ const ScheduleForm = ({
             onChange={(e) =>
               handleInputChange(day.id, "slot_duration", parseInt(e.target.value))
             }
-            className="w-full col-span-2 md:col-span-1 border border-primary bg-white text-secondary rounded-lg px-2 py-2 text-sm 
+            className="w-full col-span-2 md:col-span-1 border border-primary-200 bg-white text-primary rounded-lg px-2 py-2 text-sm 
             focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none
             disabled:bg-gray-50 disabled:text-gray-400 transition-all"
           >
@@ -247,10 +247,10 @@ const DoctorSchedulePage = () => {
       {/* القسم الثاني: إجازات الدكتور (Time Off) */}
       <div className="p-6 bg-white rounded-xl shadow-lg max-w-5xl mx-auto">
        <div className="mb-8">
-    <h2 className="text-2xl font-bold text-secondary tracking-tight">
+    <h2 className="text-2xl font-bold text-primary tracking-tight">
       Manage Time Off
     </h2>
-    <p className="text-secondary/50 text-sm mt-1">Select dates from the calendar to mark your holidays</p>
+    <p className="text-secondary text-sm mt-1">Select dates from the calendar to mark your holidays</p>
   </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="flex justify-center">
@@ -262,7 +262,7 @@ const DoctorSchedulePage = () => {
             />
           </div>
           <div className="shadow-xl rounded-[20px] p-3">
-            <div className="flex items-center justify-between mb-4 px-1">
+            <div className="flex items-center justify-between mb-4 px-1 ">
         <h3 className="font-bold text-secondary flex items-center gap-2">
           Selected Holidays
           <span className="bg-primary text-white text-xs py-0.5 px-2 rounded-xl">
@@ -271,15 +271,15 @@ const DoctorSchedulePage = () => {
         </h3>
       </div>
             <LoadingWrapper isLoading={isTimeOffLoading}>
-        <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+        <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar ">
           {timeOffData?.map((off) => (
             <div
               key={off.id}
-              className="group flex justify-between items-center p-4 bg-white border border-secondary/30 rounded-2xl transition-all hover:border-red-200 hover:shadow-sm"
+              className="group flex justify-between items-center p-4 bg-white border border-primary-100 rounded-2xl transition-all duration-300 hover:border-red-200 hover:shadow-sm"
             >
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-red-400 rounded-full group-hover:animate-pulse" />
-                <span className="text-secondary/80 font-semibold tracking-wide">
+                <span className="text-secondary font-semibold tracking-wide">
                   {new Date(off.off_date).toLocaleDateString('en-US', { 
                     month: 'short', day: 'numeric', year: 'numeric' 
                   })}

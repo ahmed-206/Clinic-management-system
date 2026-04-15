@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {type DoctorCreateInput} from "../../types/types.ts";
+import { Button } from "../../components/ui/Button.tsx";
 interface AddDoctorModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -19,22 +20,26 @@ export const AddDoctorModal = ({ isOpen, onClose, onAdd , isPending}: AddDoctorM
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl">
-        <h2 className="text-xl font-bold mb-6 text-gray-700">Add New Doctor</h2>
+        <h2 className="text-xl font-bold mb-6 text-primary">Add New Doctor</h2>
         <div className="space-y-4">
-          <input type="text" placeholder="Full Name" className="w-full border p-3 rounded-xl outline-none" onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
-          <input type="email" placeholder="Email" className="w-full border p-3 rounded-xl outline-none" onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
-          <input type="password" placeholder="Password" className="w-full border p-3 rounded-xl outline-none" onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
-          <input type="text" placeholder="Specialty" className="w-full border p-3 rounded-xl outline-none" onChange={(e) => setFormData({ ...formData, specialty: e.target.value })} />
+          <input type="text" placeholder="Full Name" className=    "w-full h-11 rounded-xl border border-secondary/30 bg-white/5 px-4 text-secondary text-sm  focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-200"
+ onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+          <input type="email" placeholder="Email" className=    "w-full h-11 rounded-xl border border-secondary/30 bg-white/5 px-4 text-secondary text-sm  focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-200"
+ onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+          <input type="password" placeholder="Password" className=    "w-full h-11 rounded-xl border border-secondary/30 bg-white/5 px-4 text-secondary text-sm  focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-200"
+ onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+          <input type="text" placeholder="Specialty" className=    "w-full h-11 rounded-xl border border-secondary/30 bg-white/5 px-4 text-secondary text-sm  focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-200"
+ onChange={(e) => setFormData({ ...formData, specialty: e.target.value })} />
         </div>
         <div className="flex justify-end gap-3 mt-8">
-          <button onClick={onClose} className="px-6 py-2 text-gray-500 hover:text-red-500 cursor-pointer">Cancel</button>
-          <button
+          <Button onClick={onClose} variant="danger">Cancel</Button>
+          <Button
           disabled={isPending || !formData.email || !formData.name} 
-            className="px-6 py-2 bg-primary text-white rounded-xl cursor-pointer"
+            variant="primary"
             onClick={() => onAdd(formData)}
           >
             {isPending ? "Creating..." : "Create Account"}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -13,9 +13,7 @@ export const Hero = () => {
 
       <div className="absolute inset-0 z-0 ">
     
-    <div className="absolute top-1/4 -left-10 md:-left-20 w-48 h-48 md:w-96 md:h-96 rounded-full bg-primary/30 blur-[60px] md:blur-[120px] animate-blob-slow" />
-        <div className="absolute bottom-1/4 -right-10 md:-right-20 w-48 h-48 md:w-96 md:h-96 rounded-full bg-primary/30 blur-[60px] md:blur-[120px] animate-blob-slow" />
-    
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[300px] bg-primary-100 rounded-[100%] blur-[120px] pointer-events-none" />
     
   </div>
      
@@ -26,9 +24,9 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-secondary leading-[1.15] tracking-tight max-w-none md:whitespace-nowrap"
+          className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-[1.15] tracking-tight  "
         >
-          <span >Book</span> Your <span className="text-primary">Clinic Appointment</span>{' '} 
+          <span >Book</span> Your Clinic <br/> Appointment{' '} 
           <span >in Seconds</span>
         </motion.h1>
 
@@ -36,7 +34,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-sm md:text-base lg:text-lg text-secondary/60  leading-relaxed max-w-2xl px-2"
+          className="text-sm md:text-base lg:text-lg text-secondary  leading-relaxed max-w-2xl px-2"
         >
           Smart booking for patients. 
   Powerful management tools for doctors & clinics.

@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { useSettings } from "../../hooks/admin/useSettings";
 import { HashLink } from "react-router-hash-link";
 import { LuCircleUser, LuMenu, LuX } from "react-icons/lu";
 import { Button } from "../ui/Button";
 import { AnimatePresence, motion } from "framer-motion";
+import logo from '../../assets/heroImg/doctori.png'
 
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { logout, user, profile } = useAuth();
-  const { settings } = useSettings();
+ 
   const navigate = useNavigate();
 
   const getDashboardPath = () => {
@@ -36,14 +36,13 @@ export const Navbar = () => {
         <div className="shrink-0">
           <Link
             to="/"
-            className="text-lg md:text-xl font-bold text-primary tracking-tight  transition-colors duration-200"
           >
-            {settings?.clinic_name}
+            <img src={logo} height={124} width={124}/>
           </Link>
         </div>
 
         {/* 2. Desktop Links */}
-        <div className="hidden md:flex items-center gap-8 text-sm lg:text-base font-semibold  text-secondary/80">
+        <div className="hidden md:flex items-center gap-8 text-sm lg:text-base font-semibold  text-secondary">
           <Link
             to="/"
             className="hover:text-primary transition-colors duration-200"

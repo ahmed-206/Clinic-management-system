@@ -10,62 +10,41 @@ export const HowItWorks = () => {
 
   return (
     <section id="how-it-works" className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24 space-y-12 md:space-y-16">
-      {/* Header */}
       <div className="text-center space-y-4">
-   
-        <h2 className="text-2xl md:text-4xl font-bold text-secondary font-headline">
+        <h2 className="text-2xl md:text-4xl font-bold text-primary font-headline">
           Four steps to your appointment
         </h2>
       </div>
 
-      <div className="relative grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8">
-        
-        {/* Connecting Line (Desktop) */}
-        <div className="hidden md:block absolute top-7 left-[10%] right-[10%] h-[2px] bg-neutral-100 z-0">
-          {/* Animated Progress Line */}
-          <motion.div 
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="h-full bg-linear-to-r from-primary/20 via-primary to-primary/20 origin-left"
-          />
-        </div>
-
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
         {steps.map((s, i) => (
           <motion.div 
             key={i}
-            initial={{ opacity: 0, y: 20 }} 
+            initial={{ opacity: 0, y: 30 }} 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.2, duration: 0.6 }}
-            className="group relative z-10 text-center flex flex-col items-center"
+            transition={{ delay: i * 0.1, duration: 0.5 }}
+            className="group relative bg-white p-8 rounded-3xl border border-neutral-100 shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 flex flex-col items-center text-center overflow-hidden"
           >
-            {/* Step Number Circle */}
-            <div className="relative mb-6">
-              <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white border-2 border-neutral-100 flex items-center justify-center text-xs md:text-sm font-bold text-neutral-400 group-hover:text-primary group-hover:border-primary transition-all duration-700 shadow-sm group-hover:shadow-primary/20 group-hover:shadow-xl">
+
+            <div className="relative mb-6 z-10">
+              <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-lg font-bold text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-inner">
                 {s.n}
               </div>
               
-              {/* Decorative Ring */}
-              <div className="absolute inset-0 rounded-2xl border-4 border-primary/5 scale-125 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500" />
+              <div className="absolute inset-0 rounded-2xl border-4 border-primary/10 scale-125 opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" />
             </div>
 
-            {/* Content */}
-            <div className="space-y-2">
-              <h3 className="text-base md:text-lg font-bold text-secondary group-hover:text-primary transition-colors duration-300">
+            <div className="space-y-3 z-10">
+              <h3 className="text-lg md:text-xl font-bold text-secondary group-hover:text-primary transition-colors duration-300">
                 {s.title}
               </h3>
-              <p className="text-xs md:text-sm text-neutral-500 leading-relaxed font-medium max-w-[200px] mx-auto">
+              <p className="text-sm text-neutral-500 leading-relaxed font-medium">
                 {s.desc}
               </p>
             </div>
 
-            {/* Mobile Arrow/Indicator (Only visible on small screens between items) */}
-            {i !== steps.length - 1 && (
-              <div className="md:hidden mt-8 text-neutral-200">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m7 7 5 5-5 5"/><path d="m13 7 5 5-5 5"/></svg>
-              </div>
-            )}
+            <div className="absolute bottom-0 left-0 h-1 bg-primary w-0 group-hover:w-full transition-all duration-500" />
           </motion.div>
         ))}
       </div>

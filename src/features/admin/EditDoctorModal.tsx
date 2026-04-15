@@ -48,7 +48,7 @@ export const EditDoctorModal = ({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose} // إغلاق عند الضغط على الخلفية
-        className="absolute inset-0 bg-neutral-800/10 backdrop-blur-sm"
+        className="absolute inset-0 bg-neutral-800/10 backdrop-blur-xs"
       />
         <motion.div
          initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -60,9 +60,9 @@ export const EditDoctorModal = ({
           stiffness: 300,
           duration: 0.3 
         }}
-        className="relative bg-white rounded-3xl p-8 w-full max-w-md shadow-xl z-10"
+        className="relative bg-white rounded-3xl p-8 w-full max-w-md  z-10"
         >
-          <h2 className="text-xl font-bold mb-6 text-secondary">
+          <h2 className="text-xl font-bold mb-6 text-primary">
             Edit Profile: {doctor.name}
           </h2>
 

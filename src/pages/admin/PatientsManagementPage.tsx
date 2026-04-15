@@ -40,7 +40,7 @@ export const PatientsManagementPage = () => {
   return (
     <div className="p-4 md:p-6">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 text-center sm:text-left">
-        <h1 className="text-xl md:text-2xl font-bold text-secondary">
+        <h1 className="text-xl md:text-2xl font-bold text-primary">
           Patients Management
         </h1>
         <span className="bg-primary text-white px-4 py-1 rounded-xl text-xs md:text-sm">

@@ -183,7 +183,7 @@ const BookingDetailsContent = () => {
   }
 
   return (
-    <div className="max-w-5xl mx-auto animate-fade-in space-y-6 md:space-y-8 p-4 md:p-6">
+    <div className="max-w-5xl mx-auto animate-fade-in space-y-6 md:space-y-8 p-2 md:p-4">
       {/* Back Button */}
       <button
         onClick={() => navigate(-1)}
@@ -223,14 +223,14 @@ const BookingDetailsContent = () => {
         </div>
 
         <div className="flex-1 text-center md:text-left space-y-1">
-          <h2 className="text-xl md:text-2xl font-bold text-secondary">
+          <h2 className="text-xl md:text-2xl font-bold text-primary">
             {rescheduleId
               ? "Reschedule Your Appointment"
               : editId
                 ? "Modify Your Appointment"
                 : "Confirm Appointment"}
           </h2>
-          <p className="text-secondary text-sm md:text-lg">
+          <p className="text-primary-200 text-sm md:text-lg">
             {rescheduleId
               ? "The doctor is unavailable on your original date. Please pick a new slot."
               : editId
@@ -238,13 +238,13 @@ const BookingDetailsContent = () => {
                 : `You are booking a new session with Dr. ${doctorAvailability?.doctorName}`}
           </p>
           {doctorAvailability?.doctorBio && (
-            <p className="text-secondary/50 leading-relaxed text-xs md:text-sm line-clamp-2 md:line-clamp-none">
+            <p className="text-secondary leading-relaxed text-xs md:text-sm line-clamp-2 md:line-clamp-none">
               {doctorAvailability.doctorBio}
             </p>
           )}
         </div>
         <div className="w-full md:w-auto pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-gray-100 md:pl-6">
-          <div className="flex justify-between flex-col items-center text-secondary/50">
+          <div className="flex justify-between flex-col items-center text-secondary">
             <LiaMoneyBillWaveSolid className="text-primary" size={28} />
             <span>Session Price {doctorAvailability?.doctorPrice} EGP</span>
           </div>
@@ -252,7 +252,7 @@ const BookingDetailsContent = () => {
       </div>
 
       {/* Selection Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-start">
         {/* Date Section */}
         <div className="space-y-4">
           <h2 className="text-lg md:text-xl font-bold text-secondary ">Select Date</h2>

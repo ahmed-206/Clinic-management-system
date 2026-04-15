@@ -105,7 +105,7 @@ const DoctorAppointmentPage = () => {
   return (
     <div className="p-4 md:p-6 bg-white min-h-screen rounded-xl">
       <div className="flex flex-col gap-6 mb-8 lg:flex-row lg:justify-between lg:items-center">
-        <h1 className="text-2xl md:text-3xl font-bold text-secondary">My Appointments</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-primary">My Appointments</h1>
 
         <div className="flex flex-col gap-4 w-full md:flex-row md:items-center lg:w-auto"> 
 

@@ -2,6 +2,7 @@ import { HashLink } from "react-router-hash-link";
 import { useSettings } from "../../hooks/admin/useSettings";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion"; 
+import logoWhite from '../../assets/heroImg/doctori2.png'
 
 export const Footer = () => {
   const { settings } = useSettings();
@@ -40,10 +41,10 @@ export const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 text-center md:text-left">
           
           {/* العمود الأول */}
-          <motion.div variants={itemVariants} className="flex flex-col gap-4">
-            <Link to="/" className="text-2xl md:text-3xl font-black tracking-tight hover:opacity-90 transition-opacity">
-              {settings?.clinic_name}
-            </Link>
+          <motion.div variants={itemVariants} className="flex flex-col gap-4 items-center md:items-start">
+            <div>
+        <Link to='/'><img src={logoWhite} alt="logo" height={124} width={124}/></Link>
+      </div>
             <p className="text-white/60 text-sm leading-relaxed max-w-xs mx-auto md:mx-0">
               Providing world-class healthcare services with the best specialists in the field.
             </p>

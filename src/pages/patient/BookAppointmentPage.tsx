@@ -42,8 +42,8 @@ export const BookAppointmentPage = () => {
     <div className="max-w-6xl mx-auto animate-fade-in px-4 py-6 md:px-0">
       {/* العنوان وشريط البحث العلوي */}
       <div className="mb-8 md:mb-10 text-center md:text-left">
-        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-2">Book an Appointment</h2>
-        <p className="text-secondary/50 font-medium text-sm md:text-base">Choose a specialty or search for your doctor.</p>
+        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-2">Book an Appointment</h2>
+        <p className="text-secondary font-medium text-sm md:text-base">Choose a specialty or search for your doctor.</p>
       </div>
 
       <div className="mb-8">

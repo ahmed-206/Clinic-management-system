@@ -34,8 +34,8 @@ export const DoctorDashboardPage = () => {
   return (
     <div className="p-4 md:p-8 bg-white min-h-screen rounded-xl">
       <div className="flex flex-col mb-2">
-        <h1 className="text-2xl md:text-3xl font-bold text-secondary">Welcome Back,</h1>
-        <p className="text-secondary/50 font-medium">Here's what's happening today.</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-primary">Welcome Back,</h1>
+        <p className="text-secondary font-medium">Here's what's happening today.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
@@ -65,10 +65,10 @@ export const DoctorDashboardPage = () => {
       <div className="mt-10 md:mt-12">
       <div className="p-6 border-b border-gray-50 flex justify-between items-center">
           <div className="flex items-center gap-2">
-             <h2 className="text-lg md:text-xl font-bold text-secondary/80">Next Patients Today</h2>
+             <h2 className="text-lg md:text-xl font-bold text-secondary">Next Patients Today</h2>
              <LuUsersRound className="text-primary" size={20} />
           </div>
-          <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">
+          <span className="text-xs font-bold text-primary bg-primary-100 px-3 py-1 rounded-full">
              Live Updates
           </span>
         </div>

@@ -2,14 +2,14 @@ import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { menuConfig } from "../../constants/menuConfig";
-import { useSettings } from "../../hooks/admin/useSettings";
 import { BiLogOutCircle } from "react-icons/bi";
 import { LuMenu, LuX } from "react-icons/lu";
+import logoWhite from '../../assets/heroImg/doctori2.png'
 
 export const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { profile, logout } = useAuth();
-  const {settings} = useSettings()
+ 
   const location = useLocation();
 
   // الحصول على القائمة بناءً على الدور الحالي
@@ -38,7 +38,7 @@ export const Sidebar = () => {
           <LuX size={24} />
         </button>
       <div className="p-8">
-        <Link to='/' className="text-2xl font-bold tracking-tight">{settings?.clinic_name}</Link>
+        <Link to='/' className="text-2xl font-bold tracking-tight"><img src={logoWhite} alt="logo" height={124} width={124}/></Link>
       </div>
 
       <nav className="flex-1 px-4 space-y-1">
@@ -53,7 +53,7 @@ export const Sidebar = () => {
               onClick={() => setIsOpen(false)}
               className={`flex items-center gap-4 px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                 isActive
-                  ? "bg-neutral-200 text-primary shadow-lg translate-x-1"
+                  ? "bg-primary-100 text-primary shadow-lg translate-x-1"
                   : "text-white/70 hover:bg-white/5 hover:text-white"
               }`}
             >

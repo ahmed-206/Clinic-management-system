@@ -123,7 +123,7 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
                   Confirmed <LuCircleCheck />
                 </span>
               ) : (
-                <span className="flex items-center gap-1.5 text-sm font-black text-tertiary bg-orange-50 px-4 py-2 rounded-[8px]">
+                <span className="flex items-center gap-1.5 text-sm font-black text-tertiary-200 bg-orange-50 px-4 py-2 rounded-[8px]">
                   Pending <LuCircleAlert />
                 </span>
               )}
@@ -142,7 +142,7 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
                 <Button
                   variant="outline"
                   onClick={() => navigate(`/dashboard/book/${appointment.doctor_id}?editId=${appointment.id}`)}
-                  className="text-tertiary border-tertiary hover:text-white hover:bg-tertiary"
+                  className="text-tertiary-200 border-tertiary-200 hover:text-white hover:bg-tertiary-200"
                 >
                   Edit
                 </Button>

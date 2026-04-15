@@ -35,10 +35,10 @@ export const Features = () => {
       </div>
 
       <div className="text-center space-y-4 mb-12 md:mb-16">
-        <h2 className="text-2xl md:text-4xl font-bold text-secondary font-headline px-2">
+        <h2 className="text-2xl md:text-4xl font-bold text-primary font-headline px-2">
           Everything you need
         </h2>
-        <p className="text-neutral-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed font-medium px-4">
+        <p className="text-secondary text-sm md:text-base max-w-xl mx-auto leading-relaxed font-medium px-4">
           Powerful tools designed to manage your clinic efficiently and deliver
           the best patient experience.
         </p>
@@ -69,7 +69,7 @@ export const Features = () => {
               {f.desc}
             </p>
 
-            <div className="absolute bottom-0 left-8 right-8 h-[2px] bg-linear-to-r from-transparent via-primary/40 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+            <div className="absolute bottom-0 left-8 right-8 h-[2px] bg-linear-to-r from-transparent via-primary to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
           </motion.div>
         ))}
       </div>

@@ -85,7 +85,7 @@ export const AppointmentsManagementPage = () => {
   return (
     <div className="p-4 md:p-6 min-h-screen">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-        <h1 className="text-xl md:text-2xl font-bold mb-6 text-secondary">
+        <h1 className="text-xl md:text-2xl font-bold mb-6 text-primary">
           Appointments Mangement
         </h1>
         <Button

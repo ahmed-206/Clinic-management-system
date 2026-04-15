@@ -54,7 +54,7 @@ const inputStyle =
 
           {/* Header */}
           <div className="mb-8 text-center">
-            <h2 className="text-xl font-bold text-secondary tracking-widest mb-2">
+            <h2 className="text-xl font-bold text-primary tracking-widest mb-2">
               Create an account
             </h2>
             
