@@ -3,6 +3,36 @@
 > Small clinics lose patients every day to missed calls, double-bookings, and paper schedules. This system replaces that with real-time appointment booking, role-based dashboards, and digital prescriptions — all in one platform.
 ---
 
+##  Landing Page (Responsive View)
+<div align="center">
+  <img src="./screenshots/responsive copy.jpg" width="800" alt="Landing Page Responsive">
+</div>
+
+---
+
+##  Admin Dashboard
+<div align="center">
+  <img src="./screenshots/admin.jpg" width="800" alt="Admin Dashboard">
+</div>
+
+---
+
+## 👨‍⚕️ Doctor Dashboard
+<div align="center">
+  <img src="./screenshots/docDash1.jpg" width="400" />
+  <img src="./screenshots/docDash2.jpgg" width="400" />
+  <img src="./screenshots/docDash3.jpg" width="400" />
+  <img src="./screenshots/docDash4.jpg" width="400" />
+</div>
+
+---
+
+##  Patient Dashboard
+<div align="center">
+  <img src="./screenshots/patientDash1.jpg" width="500" />
+  <img src="./screenshots/patientDash2.jpg" width="500" />
+  <img src="./screenshots/patientDash3.jpg" width="500" />
+</div>
 ## Overview
 
 The Clinic Management System connects three types of users — Admins, Doctors, and Patients — on a single unified platform. Each role gets a focused dashboard that eliminates the friction in their daily workflow:
