@@ -20,7 +20,7 @@
 ## 👨‍⚕️ Doctor Dashboard
 <div align="center">
   <img src="./screenshots/docDash1.jpg" width="400" />
-  <img src="./screenshots/docDash2.jpgg" width="400" />
+  <img src="./screenshots/docDash2.jpg" width="400" />
   <img src="./screenshots/docDash3.jpg" width="400" />
   <img src="./screenshots/docDash4.jpg" width="400" />
 </div>
