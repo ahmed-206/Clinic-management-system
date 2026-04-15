@@ -134,6 +134,6 @@ Tests are written with Vitest and React Testing Library, covering core booking f
 - Designing a role-based access system where three different user types share the same database but see completely different UIs
 - Using Supabase Row Level Security (RLS) policies to enforce data access rules at the database level rather than the application layer
 - Managing complex scheduling state (availability windows, conflict detection, time-off) with TanStack Query
-- Writing integration tests for booking flows that depend on real-time data
-
+- Comprehensive Integration Testing: Writing automated tests for booking flows, covering complex edge cases such as concurrent bookings, invalid time slots, and real-time availability updates.
+- Responsive UI/UX Refinement: Polishing the visual identity and ensuring seamless accessibility across mobile and desktop devices.
 
