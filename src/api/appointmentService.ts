@@ -1,31 +1,28 @@
 import supabase from "../supabase";
 
-import type{ BaseAppointment } from "../types/types";
-
-
+import type { BaseAppointment } from "../types/types";
 
 export const appointmentService = {
+  async markAppointmentsForReschedule(doctorId: string, date: string) {
+    // date is a local YYYY-MM-DD string (e.g. "2026-04-11").
+    // Supabase stores appointment_date in UTC, so we must build a UTC range
+    // that covers the ENTIRE local day. For example, UTC+2 local midnight is
+    // 2026-04-10T22:00:00Z, and local 23:59 is 2026-04-11T21:59:59Z.
+    const startUTC = new Date(`${date}T00:00:00.000Z`).toISOString();
+  const endUTC   = new Date(`${date}T23:59:59.999Z`).toISOString();
 
- async markAppointmentsForReschedule(doctorId: string, date: string) {
-  // date is a local YYYY-MM-DD string (e.g. "2026-04-11").
-  // Supabase stores appointment_date in UTC, so we must build a UTC range
-  // that covers the ENTIRE local day. For example, UTC+2 local midnight is
-  // 2026-04-10T22:00:00Z, and local 23:59 is 2026-04-11T21:59:59Z.
-  const localMidnight = new Date(`${date}T00:00:00`);
-  const localEndOfDay = new Date(`${date}T23:59:59.999`);
+    const { data, error } = await supabase
+      .from("appointments")
+      .update({ status: "reschedule_needed" })
+      .eq("doctor_id", doctorId)
+      .in("status", ["pending", "confirmed"])
+      .gte("appointment_date", startUTC)
+      .lte("appointment_date", endUTC);
 
-  const { data, error } = await supabase
-    .from("appointments")
-    .update({ status: "reschedule_needed" })
-    .eq("doctor_id", doctorId)
-    .in("status", ["pending", "confirmed"])
-    .gte("appointment_date", localMidnight.toISOString())
-    .lte("appointment_date", localEndOfDay.toISOString());
-
-  if (error) throw error;
-  return data;
-},
-  //  دالةاضافة حجز 
+    if (error) throw error;
+    return data;
+  },
+  //  دالةاضافة حجز
   async createAppointment(data: BaseAppointment) {
     const { data: result, error } = await supabase
       .from("appointments")
@@ -44,45 +41,45 @@ export const appointmentService = {
     return result;
   },
 
- // في ملف appointmentService.ts
+  async updateAppointment(data: { id: string } & Partial<BaseAppointment>) {
+    // 1. جلب بيانات الموعد الحالية للتحقق من حالته وتوقيته
+    const { data: existingApp, error: fetchError } = await supabase
+      .from("appointments")
+      .select("appointment_date, status")
+      .eq("id", data.id)
+      .single();
 
-async updateAppointment(data: { id: string } & Partial<BaseAppointment>) {
-  // 1. جلب بيانات الموعد الحالية للتحقق من حالته وتوقيته
-  const { data: existingApp, error: fetchError } = await supabase
-    .from("appointments")
-    .select("appointment_date, status")
-    .eq("id", data.id)
-    .single();
+    if (fetchError) throw fetchError;
 
-  if (fetchError) throw fetchError;
+    // 2. تطبيق منطق الـ 24 ساعة
+    if (existingApp) {
+      const appointmentTime = new Date(existingApp.appointment_date).getTime();
+      const currentTime = new Date().getTime();
+      const hoursLeft = (appointmentTime - currentTime) / (1000 * 60 * 60);
 
-  // 2. تطبيق منطق الـ 24 ساعة
-  if (existingApp) {
-    const appointmentTime = new Date(existingApp.appointment_date).getTime();
-    const currentTime = new Date().getTime();
-    const hoursLeft = (appointmentTime - currentTime) / (1000 * 60 * 60);
-
-    // المنع يطبق فقط إذا كان الموعد مؤكداً (Confirmed)
-    // أما إذا كان reschedule_needed فنسمح بالتعديل بغض النظر عن الوقت
-    if (existingApp.status === 'confirmed' && hoursLeft < 24) {
-      throw new Error("Cannot modify confirmed appointments within 24 hours.");
+      // المنع يطبق فقط إذا كان الموعد مؤكداً (Confirmed)
+      // أما إذا كان reschedule_needed فنسمح بالتعديل بغض النظر عن الوقت
+      if (existingApp.status === "confirmed" && hoursLeft < 24) {
+        throw new Error(
+          "Cannot modify confirmed appointments within 24 hours.",
+        );
+      }
     }
-  }
 
-  // 3. تنفيذ التحديث إذا اجتاز الفحص
-  const { data: result, error } = await supabase
-    .from("appointments")
-    .update({
-      appointment_date: data.appointment_date,
-      status: data.status,
-    })
-    .eq("id", data.id)
-    .select()
-    .single();
+    // 3. تنفيذ التحديث إذا اجتاز الفحص
+    const { data: result, error } = await supabase
+      .from("appointments")
+      .update({
+        appointment_date: data.appointment_date,
+        status: data.status,
+      })
+      .eq("id", data.id)
+      .select()
+      .single();
 
-  if (error) throw error;
-  return result;
-},
+    if (error) throw error;
+    return result;
+  },
 
   //  دالة جلب حجوزات المريض
   async getPatientAppointments(patientId: string) {
@@ -117,7 +114,7 @@ async updateAppointment(data: { id: string } & Partial<BaseAppointment>) {
       .from("appointments")
       .update({ status: "cancelled" })
       .eq("id", appointmentId);
-      if(error) throw error;
-      return data;
+    if (error) throw error;
+    return data;
   },
 };

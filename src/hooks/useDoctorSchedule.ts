@@ -49,7 +49,12 @@ export const useDoctorSchedule = (doctorId: string | undefined) => {
       queryClient.invalidateQueries({ queryKey: ["timeOff", doctorId] });
       queryClient.invalidateQueries({ queryKey: ["publicSchedule", doctorId] });
       queryClient.invalidateQueries({ queryKey: ["doctorSchedule", doctorId] });
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
     },
+  onError: (error: Error) => {
+   
+    toast.error(`Failed to save time off: ${error.message}`);
+  },
   });
 
   // حذف إجازة
