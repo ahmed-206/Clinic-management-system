@@ -56,7 +56,7 @@ class AdminService {
     ).length;
 
     // حساب الدخل من الحجوزات المؤكدة والمكتملة
-    // Bug fix: was only counting 'confirmed', missing all 'completed' revenue
+    
     const revenue = appointments
       .filter((a) => a.status === "confirmed" || a.status === "completed")
       .reduce(
@@ -73,7 +73,7 @@ class AdminService {
       },
       chartData: this.prepareChartData(appointments),
       topDoctors: this.getTopDoctors(appointments),
-      // Sort by created_at descending before slicing so "recent" is actually recent
+      // Sort by created_at descending 
       recentActivity: [...appointments]
         .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
         .slice(0, 5),

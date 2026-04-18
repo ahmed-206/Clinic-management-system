@@ -39,13 +39,13 @@ const { data: { session }, error: sessionError } = await supabase.auth.getSessio
   }
 
   // 2. استدعاء الفانكشن (الطريقة الصحيحة والآمنة)
-  // لاحظ: لا تضع Authorization Header يدوياً، الـ SDK سيفعل ذلك بالتوكن الصحيح
+ 
   const { data, error } = await supabase.functions.invoke('create-doctor', {
     body: formData,
   });
 
   if (error) {
-    // لو الـ error قادم من الفانكشن، حاول قراءة الرسالة
+    
     const errorMsg = error instanceof Error ? error.message : "خطأ غير معروف";
     console.error("تفاصيل الخطأ:", error);
     throw new Error(errorMsg);

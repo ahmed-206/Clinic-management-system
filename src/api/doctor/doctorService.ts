@@ -197,7 +197,7 @@ async createPrescription(payload: Prescription) {
     .from('prescriptions')
     .insert({
       ...payload,
-      doctor_id: user!.id  // 👈 override with real auth UID
+      doctor_id: user!.id  //  override with real auth UID
     })
     .select()
     .single();

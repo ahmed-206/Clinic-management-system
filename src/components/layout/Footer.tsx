@@ -37,10 +37,10 @@ export const Footer = () => {
         viewport={{ once: true }} 
         variants={containerVariants}
       >
-        {/* شبكة العناصر المتجاوبة */}
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 text-center md:text-left">
           
-          {/* العمود الأول */}
+         
           <motion.div variants={itemVariants} className="flex flex-col gap-4 items-center md:items-start">
             <div>
         <Link to='/'><img src={logoWhite} alt="logo" height={124} width={124}/></Link>
@@ -50,7 +50,7 @@ export const Footer = () => {
             </p>
           </motion.div>
 
-          {/* العمود الثاني */}
+         
           <motion.div variants={itemVariants} className="flex flex-col gap-4">
             <h3 className="text-lg font-bold uppercase tracking-wider text-white">Quick Links</h3>
             <nav className="flex flex-col gap-3 text-white/70">
@@ -60,7 +60,7 @@ export const Footer = () => {
             </nav>
           </motion.div>
 
-          {/* العمود الثالث */}
+         
           <motion.div variants={itemVariants} className="flex flex-col gap-4">
             <h3 className="text-lg font-bold uppercase tracking-wider text-white">Legal & Support</h3>
             <nav className="flex flex-col gap-3 text-white/70">
@@ -71,7 +71,7 @@ export const Footer = () => {
           </motion.div>
         </div>
 
-        {/* خط الفصل وحقوق الملكية */}
+        
         <motion.div 
           variants={itemVariants}
           className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center items-center gap-4 text-white/40 text-sm"

@@ -27,7 +27,7 @@ export const SignupForm = () => {
    try {
 
     await signup(data.name, data.email, data.password);
-    console.log("Success! Check your email for verification.");
+    
     navigate('/dashboard')
   } catch (err) {
     

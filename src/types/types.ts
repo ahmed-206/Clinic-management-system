@@ -62,7 +62,7 @@ export interface AppointmentData extends BaseAppointment {
   doctor?: { name: string; specialty: string }; // للإظهار في كرت المريض
 }
 
-// 3. البيانات عند الإرسال (Mutation Input) - الحل اللي يغنينا عن any
+// 3. البيانات عند الإرسال (Mutation Input) 
 export type AppointmentMutationInput =
   | (BaseAppointment & { id?: never }) // حالة الحجز الجديد
   | (Partial<BaseAppointment> & { id: string }); // حالة التعديل

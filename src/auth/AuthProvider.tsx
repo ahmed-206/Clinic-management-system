@@ -73,7 +73,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       options: { data: { name } },
     });
 
-    if (error) throw error;
+    if (error) {
+    if (
+      error.message.includes('Registration is closed') ||
+      error.message.includes('signup') ||
+      error.status === 422
+    ) {
+      throw new Error('This is a demo app — use the demo accounts to log in.');
+    }
+    throw error;
+  }
   };
 
   const logout = async () => {
