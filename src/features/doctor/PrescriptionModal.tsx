@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { AppointmentData, Medicine } from "../../types/types";
 import { useDoctorPrescription } from "../../hooks/doctor/useDoctordPrescription";
 import { FaPlus, FaTrash, FaTimes } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { Button } from "../../components/ui/Button";
 
 interface Props {
@@ -56,12 +56,12 @@ const PrescriptionModal = ({ appointment, onClose }: Props) => {
     savePrescription(payload);
   };
 
-  const backdropVariants = {
+  const backdropVariants : Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
   };
 
-  const modalVariants = {
+  const modalVariants : Variants = {
     hidden: {
       opacity: 0,
       scale: 0.9,

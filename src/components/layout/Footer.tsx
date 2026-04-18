@@ -1,7 +1,7 @@
 import { HashLink } from "react-router-hash-link";
 import { useSettings } from "../../hooks/admin/useSettings";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion"; 
+import { motion, type Variants } from "framer-motion"; 
 import logoWhite from '../../assets/heroImg/doctori2.png'
 
 export const Footer = () => {
@@ -9,22 +9,22 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2, // تأخير بسيط بين ظهور كل عمود
+        staggerChildren: 0.2,
       },
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { 
       opacity: 1, 
       y: 0, 
-      transition: { duration: 0.6, ease: "easeOut" } 
+      transition: { duration: 0.6, ease: "easeOut" } // سيعمل الآن لأن النوع Variants معرف مسبقاً
     },
   };
 
