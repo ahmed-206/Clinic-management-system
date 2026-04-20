@@ -51,6 +51,8 @@ export interface BaseAppointment {
   patient_id: string;
   appointment_date: string;
   status: AppointmentStatus;
+  patient_name: string;   // ✅ جديد
+  patient_phone: string;
 }
 
 // 2. البيانات عند الجلب من الداتا بيز (دائماً بها ID وعلاقات)

@@ -32,6 +32,8 @@ export const appointmentService = {
           patient_id: data.patient_id,
           appointment_date: data.appointment_date,
           status: data.status || "pending",
+          patient_name: data.patient_name,
+          patient_phone: data.patient_phone
         },
       ])
       .select()
@@ -72,6 +74,8 @@ export const appointmentService = {
       .update({
         appointment_date: data.appointment_date,
         status: data.status,
+        patient_name: data.patient_name,
+        patient_phone: data.patient_phone,
       })
       .eq("id", data.id)
       .select()

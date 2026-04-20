@@ -32,7 +32,7 @@ export const DoctorCard = ({id, name, specialty, price_per_session}: DoctorProps
       {/* زر الحجز باستخدام المكون الموحد */}
       <Button 
         onClick={() => navigate(`/dashboard/book/${id}`)} 
-        className="w-full text-sm py-2.5" // هنا الـ Button هيستخدم تنسيقاته الأساسية الـ Rounded-2xl والـ Shadow
+        className="w-full text-sm py-2.5" 
       >
         Book now
       </Button>

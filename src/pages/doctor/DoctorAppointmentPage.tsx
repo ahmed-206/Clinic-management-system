@@ -159,7 +159,7 @@ const DoctorAppointmentPage = () => {
               filteredList.map((app) => (
                 <tr key={app.id} className="hover:bg-gray-50 transition">
                   <td className="py-4 px-4 md:px-6 font-medium text-secondary/70">
-                    {app.profiles?.name}
+                    {app.patient_name}
                   </td>
                   <td className="py-4 px-4 md:px-6 text-secondary/70 text-sm">
                     {formatDisplayDate(app.appointment_date)}

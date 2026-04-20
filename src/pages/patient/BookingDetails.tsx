@@ -15,7 +15,8 @@ import { getErrorMessage } from "../../utils/getErrorMessage";
 import { useDoctorSchedule } from "../../hooks/useDoctorSchedule";
 import { LuTriangleAlert, LuFilePenLine } from "react-icons/lu";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
-import { Button } from "../../components/ui/Button";
+// import { Button } from "../../components/ui/Button";
+import { BookingForm } from "../../features/patient/BookingForm";
 
 import {
   combineDateAndTime,
@@ -40,7 +41,8 @@ const BookingDetailsContent = () => {
 
   const { doctorAvailability, isDoctorAvailabilityLoading } =
     useDoctorSchedule(doctorId);
-
+  const [patientName, setPatientName] = useState("");
+  const [patientPhone, setPatientPhone] = useState("");
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
@@ -65,6 +67,8 @@ const BookingDetailsContent = () => {
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
     setSelectedTime(null);
+    setPatientName(''); 
+    setPatientPhone('');
   };
   const tileClassName = ({ date, view }: { date: Date; view: string }) => {
     if (view === "month" && doctorAvailability) {
@@ -93,6 +97,16 @@ const BookingDetailsContent = () => {
       toast.error("Please select both date and time");
       return;
     }
+
+    if (!patientName.trim()) {
+    toast.error("Please enter the patient's full name");
+    return;
+  }
+
+  if (!patientPhone.trim()) {
+    toast.error("Please enter the patient's mobile number");
+    return;
+  }
 
     if (!doctorAvailability) {
       toast.error("Doctor schedule is still loading");
@@ -152,6 +166,8 @@ const BookingDetailsContent = () => {
           id: activeAppointmentId, // نرسل المعرف القديم
           appointment_date: finalDate,
           status: "pending",
+          patient_name: patientName.trim(),
+        patient_phone: patientPhone.trim(),
         },
         {
           onSuccess: handleSuccess,
@@ -165,6 +181,8 @@ const BookingDetailsContent = () => {
           patient_id: user.id,
           appointment_date: finalDate,
           status: "pending",
+          patient_name: patientName.trim(),
+        patient_phone: patientPhone.trim(),
         },
         {
           onSuccess: handleSuccess,
@@ -300,7 +318,6 @@ const BookingDetailsContent = () => {
               <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-2">
                 <LuCalendarX className="text-red-500" size={24} />
               </div>
-
               <h3 className="text-lg font-bold text-secondary">
                 {doctorAvailability?.timeOff?.some(
                   (off) =>
@@ -329,36 +346,28 @@ const BookingDetailsContent = () => {
         </div>
       </div>
 
-      {/* Confirm Button */}
-      <div className="pt-4 md:pt-6 flex justify-center">
-        {profile?.is_active ? (
-          <Button
-            onClick={handleConfirmBooking}
-            variant="primary"
-            disabled={
-              !selectedDate ||
-              !selectedTime ||
-              isCreating ||
-              isUpdating ||
-              availableSlots.length === 0
-            }
-            className="w-full py-4 md:py-5 text-lg md:text-xl rounded-2xl"
-          >
-            {isCreating || isUpdating
-              ? "Processing..."
-              : rescheduleId
-                ? "Confirm New Time"
-                : "Confirm My Appointment"}
-          </Button>
-        ) : (
-          <div className="flex justify-center flex-col items-center">
-            <h3 className="text-red-800 text-2xl">
-              Your account is suspended.
-            </h3>
-            <p>Please call the clinic</p>
-          </div>
-        )}
-      </div>
+   {selectedTime && profile?.is_active && (
+        <div className="animate-in fade-in slide-in-from-top-4 duration-500">
+          <BookingForm 
+            patientName={patientName}
+            setPatientName={setPatientName}
+            patientPhone={patientPhone}
+            setPatientPhone={setPatientPhone}
+            onSubmit={handleConfirmBooking}
+            isPending={isCreating || isUpdating}
+            price_per_session={profile.price_per_session}
+            // يمكنك تمرير نص الزر بناءً على الحالة (جدولة أو حجز جديد)
+            // buttonText={rescheduleId ? "Confirm New Time" : "Confirm My Appointment"}
+          />
+        </div>
+      )}
+
+      {!profile?.is_active && (
+        <div className="flex justify-center flex-col items-center p-8 bg-red-50 rounded-2xl border border-red-100 mt-6">
+          <h3 className="text-red-800 text-2xl font-bold">Your account is suspended.</h3>
+          <p className="text-red-600">Please call the clinic to resolve this issue.</p>
+        </div>
+      )}
     </div>
   );
 };

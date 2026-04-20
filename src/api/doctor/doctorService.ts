@@ -90,6 +90,7 @@ async getDoctorBasicInfo(doctorId: string) {
       status,
       appointment_date,
       patient_id,
+      patient_name,
       profiles:patient_id ( name )
     `,
       )

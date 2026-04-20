@@ -32,8 +32,9 @@ export const AppointmentsManagementPage = () => {
     if (searchTerm) {
       result = result.filter(
         (a) =>
-          a.patient?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          a.doctor?.name.toLowerCase().includes(searchTerm.toLowerCase()),
+          a.patient_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          a.patient?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          a.doctor?.name?.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 
@@ -122,10 +123,12 @@ export const AppointmentsManagementPage = () => {
               <tr key={app.id} className="shadow-sm">
                 <td className="p-4">
                   <div className="font-bold text-secondary/90">
-                    {app.patient?.name}
+                    {app.patient_name || app.patient?.name}
                   </div>
                   <div className="text-xs text-secondary/90">
-                    {app.patient?.email}
+                    {app.patient_phone
+                      ? app.patient_phone
+                      : app.patient?.email}
                   </div>
                 </td>
                 <td className="p-4">

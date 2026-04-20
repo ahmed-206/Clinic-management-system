@@ -112,7 +112,7 @@ const PrescriptionModal = ({ appointment, onClose }: Props) => {
             {/* Patient Info Summary */}
             <div className="bg-neutral-200 p-3 rounded-lg text-sm text-primary flex justify-between">
               <span>
-                Patient: <strong>{appointment.profiles?.name}</strong>
+                Patient: <strong>{appointment.patient_name}</strong>
               </span>
               <span>Date: {new Date().toLocaleDateString()}</span>
             </div>
