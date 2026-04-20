@@ -2,7 +2,7 @@
 
 > Small clinics lose patients every day to missed calls, double-bookings, and paper schedules. This system replaces that with real-time appointment booking, role-based dashboards, and digital prescriptions — all in one platform.
 ---
-**[Live Demo](https://your-demo-url.vercel.app)** · **[Report a Bug](https://github.com/ahmed-206/clinic-management-system/issues)**
+**[Live Demo](https://clinic-management-system-umber.vercel.app)** · **[Report a Bug](https://github.com/ahmed-206/clinic-management-system/issues)**
 
 > Demo credentials — try any role instantly:
 > - **Admin:** admin@demo.com / demo1234
