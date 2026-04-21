@@ -33,7 +33,7 @@ export const AppointmentsManagementPage = () => {
       result = result.filter(
         (a) =>
           a.patient_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          a.patient?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          a.patients?.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           a.doctor?.name?.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
@@ -122,13 +122,11 @@ export const AppointmentsManagementPage = () => {
             {filteredData.map((app) => (
               <tr key={app.id} className="shadow-sm">
                 <td className="p-4">
-                  <div className="font-bold text-secondary/90">
-                    {app.patient_name || app.patient?.name}
+                  <div className="font-bold text-secondary">
+                    {app.patients?.full_name ?? app.patient?.name ?? "—"}
                   </div>
-                  <div className="text-xs text-secondary/90">
-                    {app.patient_phone
-                      ? app.patient_phone
-                      : app.patient?.email}
+                  <div className="text-xs text-secondary">
+                    {app.patients?.phone ?? "—"}
                   </div>
                 </td>
                 <td className="p-4">

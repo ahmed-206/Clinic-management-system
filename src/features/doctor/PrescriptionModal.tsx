@@ -18,7 +18,7 @@ const PrescriptionModal = ({ appointment, onClose }: Props) => {
   const [notes, setNotes] = useState("");
 
   const { savePrescription, isSaving } = useDoctorPrescription(
-    appointment.patient_id,
+    appointment.actual_patient_id,
     onClose,
   );
 
@@ -48,6 +48,7 @@ const PrescriptionModal = ({ appointment, onClose }: Props) => {
     const payload = {
       appointment_id: appointment.id!,
       patient_id: appointment.patient_id,
+      actual_patient_id: appointment.actual_patient_id,
       doctor_id: appointment.doctor_id,
       diagnosis,
       medicines,
@@ -112,7 +113,7 @@ const PrescriptionModal = ({ appointment, onClose }: Props) => {
             {/* Patient Info Summary */}
             <div className="bg-neutral-200 p-3 rounded-lg text-sm text-primary flex justify-between">
               <span>
-                Patient: <strong>{appointment.patient_name}</strong>
+                Patient: <strong>{appointment.patients?.full_name ?? appointment.profiles?.name ?? "—"}</strong>
               </span>
               <span>Date: {new Date().toLocaleDateString()}</span>
             </div>

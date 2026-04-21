@@ -51,7 +51,7 @@ const StatCard = ({ title, value, icon, iconBgColor, accentColor }: StatCardProp
 );
 
 export const AdminDashboard = () => {
-  const { stats, isActivityLoading, statsError, isStatsLoading } =
+  const { stats, activities, isActivityLoading, statsError, isStatsLoading } =
     useAdminDashboard();
 
   // 1. حالة التحميل
@@ -160,29 +160,35 @@ export const AdminDashboard = () => {
             </div>
           ) : (
             <ul className="space-y-4">
-              {stats?.recentActivity?.length === 0 ? (
+              {!activities || activities.length === 0 ? (
                 <p className="text-gray-500 text-center py-4">
                   No recent activity.
                 </p>
               ) : (
-                stats?.recentActivity?.map((activity) => (
-                  <li key={activity.id} className="flex items-center gap-3 bg-primary-200 text-white p-2 rounded-[8px]">
-                    <div className="w-10 h-10 bg-primary-200 rounded-full flex items-center justify-center text-primary text-sm font-semibold shrink-0">
-                      {activity.profiles?.name.charAt(0).toUpperCase()}
-                    </div>
-                    <div>
-                      <p className="font-light">
-                        <span className="font-bold">
-                          {activity.profiles?.name}
-                        </span>{" "}
-                        booked an appointment.
-                      </p>
-                      <p className="text-xs text-white">
-                        {new Date(activity.created_at).toLocaleString()}
-                      </p>
-                    </div>
-                  </li>
-                ))
+                activities.map((activity) => {
+                  const patientName =
+                    activity.patients?.full_name ??
+                    activity.profiles?.name ??
+                    "Unknown";
+                  return (
+                    <li key={activity.id} className="flex items-center gap-3 bg-primary-200 text-white p-2 rounded-[8px]">
+                      <div className="w-10 h-10 bg-primary-200 rounded-full flex items-center justify-center text-primary text-sm font-semibold shrink-0">
+                        {patientName.charAt(0).toUpperCase()}
+                      </div>
+                      <div>
+                        <p className="font-light">
+                          <span className="font-bold">
+                            {patientName}
+                          </span>{" "}
+                          booked an appointment.
+                        </p>
+                        <p className="text-xs text-white">
+                          {new Date(activity.appointment_date).toLocaleString()}
+                        </p>
+                      </div>
+                    </li>
+                  );
+                })
               )}
             </ul>
           )}

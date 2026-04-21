@@ -91,7 +91,12 @@ class AdminService {
         appointment_date,
         doctor_id,
         patient_id,
-        profiles:patient_id ( name )
+         actual_patient_id,
+        profiles:patient_id ( name ),
+        patients!fk_actual_patient (
+        full_name,
+        phone
+      )
       `,
       )
       .order("created_at", { ascending: false })

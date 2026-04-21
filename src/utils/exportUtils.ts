@@ -5,7 +5,8 @@ export const exportToExcel = (data: AppointmentData[], fileName: string) => {
 
   // 1. تنظيف البيانات (نختار فقط الأعمدة التي تهم المستخدم)
   const cleanData = data.map((item) => ({
-   'Patient Name': item.patient?.name ||  'N/A', 
+   'Patient Name': item.patients?.full_name ?? item.profiles?.name ?? 'N/A',
+  'Patient Phone': item.patients?.phone ?? 'N/A',
     'Doctor': item.doctor?.name || 'N/A',
     'Specialty': item.doctor?.specialty || 'N/A',
     'Date': item.appointment_date,

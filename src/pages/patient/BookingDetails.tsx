@@ -4,7 +4,6 @@ import { FaUserDoctor } from "react-icons/fa6";
 import Calendar from "react-calendar";
 import { toast } from "sonner";
 import { useAuth } from "../../hooks/useAuth";
-// import { PriceSummary } from "../../features/patient/PriceSummary";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import "react-calendar/dist/Calendar.css";
 import "../../calendar-style.css";
@@ -15,8 +14,8 @@ import { getErrorMessage } from "../../utils/getErrorMessage";
 import { useDoctorSchedule } from "../../hooks/useDoctorSchedule";
 import { LuTriangleAlert, LuFilePenLine } from "react-icons/lu";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
-// import { Button } from "../../components/ui/Button";
-import { BookingForm } from "../../features/patient/BookingForm";
+import { PatientSelector } from "../../features/patient/PatientSelector";
+import { usePatients } from "../../hooks/patient/usePatients";
 
 import {
   combineDateAndTime,
@@ -41,8 +40,17 @@ const BookingDetailsContent = () => {
 
   const { doctorAvailability, isDoctorAvailabilityLoading } =
     useDoctorSchedule(doctorId);
-  const [patientName, setPatientName] = useState("");
-  const [patientPhone, setPatientPhone] = useState("");
+
+    const {patients, createPatient, isCreatingPatient} = usePatients();
+ 
+    const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
+  const [showNewPatientForm, setShowNewPatientForm] = useState(false);
+  const [newPatient, setNewPatient] = useState({
+    full_name: "",
+    phone: "",
+    gender: "",
+    is_self: false,
+  });
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
@@ -67,8 +75,9 @@ const BookingDetailsContent = () => {
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
     setSelectedTime(null);
-    setPatientName(''); 
-    setPatientPhone('');
+    setSelectedPatientId(null);
+    setShowNewPatientForm(false);
+    setNewPatient({ full_name: "", phone: "", gender: "", is_self: false });
   };
   const tileClassName = ({ date, view }: { date: Date; view: string }) => {
     if (view === "month" && doctorAvailability) {
@@ -85,7 +94,7 @@ const BookingDetailsContent = () => {
     return null;
   };
 
-  const handleConfirmBooking = () => {
+   const handleConfirmBooking = async () => {
     if (!profile?.is_active) {
       toast.error(
         "Sorry, you cannot make a booked because your account is inactive.",
@@ -98,15 +107,18 @@ const BookingDetailsContent = () => {
       return;
     }
 
-    if (!patientName.trim()) {
-    toast.error("Please enter the patient's full name");
-    return;
-  }
-
-  if (!patientPhone.trim()) {
-    toast.error("Please enter the patient's mobile number");
-    return;
-  }
+     if (!selectedPatientId && !showNewPatientForm) {
+      toast.error("Please select who this appointment is for");
+      return;
+    }
+    if (showNewPatientForm && !newPatient.full_name.trim()) {
+      toast.error("Please enter the patient's full name");
+      return;
+    }
+    if (showNewPatientForm && !newPatient.phone.trim()) {
+      toast.error("Please enter the patient's mobile number");
+      return;
+    }
 
     if (!doctorAvailability) {
       toast.error("Doctor schedule is still loading");
@@ -136,6 +148,22 @@ const BookingDetailsContent = () => {
       selectedTime,
     ).toISOString();
 
+    let patientId = selectedPatientId;
+    if (showNewPatientForm) {
+      try {
+         const created = await createPatient({
+          booked_by: user.id,
+          full_name: newPatient.full_name.trim(),
+          phone: newPatient.phone.trim(),
+          gender: (newPatient.gender as "male" | "female") || undefined,
+          is_self: newPatient.is_self,
+        });
+        patientId = created.id;
+      } catch {
+        toast.error("Failed to save patient info. Please try again.");
+        return;
+      }
+    }
     const handleSuccess = () => {
       toast.success(
         rescheduleId
@@ -160,35 +188,24 @@ const BookingDetailsContent = () => {
       toast.error(message);
     };
 
+    const appointmentPayload = {
+      doctor_id: doctorId,
+      patient_id: user.id,
+      actual_patient_id: patientId!,
+      appointment_date: finalDate,
+      status: "pending" as const,
+    };
+
     if (activeAppointmentId) {
       updateAppointment(
-        {
-          id: activeAppointmentId, // نرسل المعرف القديم
-          appointment_date: finalDate,
-          status: "pending",
-          patient_name: patientName.trim(),
-        patient_phone: patientPhone.trim(),
-        },
-        {
-          onSuccess: handleSuccess,
-          onError: handleError,
-        },
+        { id: activeAppointmentId, ...appointmentPayload },
+        { onSuccess: handleSuccess, onError: handleError },
       );
     } else {
-      createAppointment(
-        {
-          doctor_id: doctorId,
-          patient_id: user.id,
-          appointment_date: finalDate,
-          status: "pending",
-          patient_name: patientName.trim(),
-        patient_phone: patientPhone.trim(),
-        },
-        {
-          onSuccess: handleSuccess,
-          onError: handleError,
-        },
-      );
+      createAppointment(appointmentPayload, {
+        onSuccess: handleSuccess,
+        onError: handleError,
+      });
     }
   };
 
@@ -347,21 +364,31 @@ const BookingDetailsContent = () => {
       </div>
 
    {selectedTime && profile?.is_active && (
-        <div className="animate-in fade-in slide-in-from-top-4 duration-500">
-          <BookingForm 
-            patientName={patientName}
-            setPatientName={setPatientName}
-            patientPhone={patientPhone}
-            setPatientPhone={setPatientPhone}
-            onSubmit={handleConfirmBooking}
-            isPending={isCreating || isUpdating}
-            price_per_session={profile.price_per_session}
-            // يمكنك تمرير نص الزر بناءً على الحالة (جدولة أو حجز جديد)
-            // buttonText={rescheduleId ? "Confirm New Time" : "Confirm My Appointment"}
-          />
-        </div>
+        <PatientSelector
+    patients={patients}
+    selectedPatientId={selectedPatientId}
+    showNewPatientForm={showNewPatientForm}
+    newPatient={newPatient}
+    isCreating={isCreating}
+    isUpdating={isUpdating}
+    isCreatingPatient={isCreatingPatient}
+    rescheduleId={rescheduleId}
+    onSelectPatient={(id) => {
+      setSelectedPatientId(id);
+      setShowNewPatientForm(false);
+    }}
+    onShowNewForm={() => {
+      setShowNewPatientForm(true);
+      setSelectedPatientId(null);
+    }}
+    onNewPatientChange={(field, value) =>
+      setNewPatient((p) => ({ ...p, [field]: value }))
+    }
+    onConfirm={handleConfirmBooking}
+  />
       )}
 
+      {/* Account suspended */}
       {!profile?.is_active && (
         <div className="flex justify-center flex-col items-center p-8 bg-red-50 rounded-2xl border border-red-100 mt-6">
           <h3 className="text-red-800 text-2xl font-bold">Your account is suspended.</h3>

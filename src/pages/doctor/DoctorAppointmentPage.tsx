@@ -27,6 +27,7 @@ const HISTORY_STATUSES: AppointmentStatus[] = [
 
 const DoctorAppointmentPage = () => {
   const { user } = useAuth();
+  
   const [appointments, setAppointments] = useState<AppointmentData[]>([]);
   // للموعد المختار
   const [selectedAppointment, setSelectedAppointment] =
@@ -89,7 +90,8 @@ const DoctorAppointmentPage = () => {
         activeTab === "upcoming"
           ? UPCOMING_STATUSES.includes(app.status)
           : HISTORY_STATUSES.includes(app.status);
-      const matchesSearch = app.profiles?.name
+          const patientName = app.patients?.full_name ?? app.profiles?.name ?? "";
+      const matchesSearch = patientName
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
       return matchesTab && matchesSearch;
@@ -159,7 +161,7 @@ const DoctorAppointmentPage = () => {
               filteredList.map((app) => (
                 <tr key={app.id} className="hover:bg-gray-50 transition">
                   <td className="py-4 px-4 md:px-6 font-medium text-secondary/70">
-                    {app.patient_name}
+                    {app.patients?.full_name ?? app.profiles?.name ?? "—"}
                   </td>
                   <td className="py-4 px-4 md:px-6 text-secondary/70 text-sm">
                     {formatDisplayDate(app.appointment_date)}

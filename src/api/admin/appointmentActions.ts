@@ -9,7 +9,11 @@ export const appointmentActions = {
       .select(`
         *,
         patient:patient_id ( name, email),
-        doctor:doctor_id ( name, specialty )
+        doctor:doctor_id ( name, specialty ),
+         patients!fk_actual_patient (
+        full_name,
+        phone
+      )
       `)
       .order("appointment_date", { ascending: true });
 

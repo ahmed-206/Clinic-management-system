@@ -10,6 +10,10 @@ export interface AppointmentCardProps {
       name: string;
       specialty: string;
     };
+    patients?: {             
+      full_name: string;
+      phone: string;
+    };
   };
 }
 
@@ -51,8 +55,7 @@ export interface BaseAppointment {
   patient_id: string;
   appointment_date: string;
   status: AppointmentStatus;
-  patient_name: string;   // ✅ جديد
-  patient_phone: string;
+  actual_patient_id?: string;
 }
 
 // 2. البيانات عند الجلب من الداتا بيز (دائماً بها ID وعلاقات)
@@ -62,6 +65,13 @@ export interface AppointmentData extends BaseAppointment {
   profiles?: { name: string };
   patient: PatientProfile | null;
   doctor?: { name: string; specialty: string }; // للإظهار في كرت المريض
+  patients?: {              // ✅ جديد — بيانات المريض الفعلي من جدول patients
+    id: string;
+    full_name: string;
+    phone: string;
+    gender?: 'male' | 'female';
+    date_of_birth?: string;
+  };
 }
 
 // 3. البيانات عند الإرسال (Mutation Input) 
@@ -147,10 +157,23 @@ export interface Prescription {
   id?: string;
   appointment_id: string;
   patient_id: string;
+  actual_patient_id?: string;
   doctor_id: string;
   diagnosis: string;
   medicines: Medicine[]; 
   notes?: string;
   created_at?: string;
   profiles?: { name: string };
+}
+
+// تعريف شكل المريض
+export interface Patient {
+  id: string;
+  booked_by: string;
+  full_name: string;
+  phone: string;
+  date_of_birth?: string;
+  gender?: 'male' | 'female';
+  is_self: boolean;
+  notes?: string;
 }

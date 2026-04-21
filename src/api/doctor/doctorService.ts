@@ -45,29 +45,34 @@ async getDoctorBasicInfo(doctorId: string) {
       status,
       appointment_date,
       patient_id,
+      actual_patient_id,
       profiles:patient_id (
         name
-      )
+      ),
+      patients!fk_actual_patient (
+      full_name,
+      phone
+    )
     `,
       )
-      .eq("doctor_id", doctorId)
-      .returns<AppointmentData[]>();
+      .eq("doctor_id", doctorId);
 
     if (error) {
       console.error("Database Error Detail:", error.message, error.hint);
       throw error;
     }
+     const appointments = data as unknown as AppointmentData[];
 
     return {
       todayCount:
-        data?.filter((a) => a.appointment_date?.startsWith(localISOTime))
+        appointments?.filter((a) => a.appointment_date?.startsWith(localISOTime))
           .length || 0,
       upcomingCount:
-        data?.filter((a) => new Date(a.appointment_date) > new Date()).length ||
+        appointments?.filter((a) => new Date(a.appointment_date) > new Date()).length ||
         0,
       cancelledCount: data?.filter((a) => a.status === "cancelled").length || 0,
       nextPatients:
-        data
+        appointments
           ?.filter((a) => {
             const appointmentDate = a.appointment_date?.split("T")[0];
             return (
@@ -90,16 +95,24 @@ async getDoctorBasicInfo(doctorId: string) {
       status,
       appointment_date,
       patient_id,
+      actual_patient_id,
       patient_name,
-      profiles:patient_id ( name )
+      profiles:patient_id ( name ),
+      patients!fk_actual_patient (
+        id,
+        full_name,
+        phone,
+        gender,
+        date_of_birth
+      )
     `,
       )
       .eq("doctor_id", doctorId).neq("status", "cancelled")
-      .order("appointment_date", { ascending: false })
-      .returns<AppointmentData[]>();
+      .order("appointment_date", { ascending: false });
+      
 
-    if (error) throw error;
-    return data || [];
+     if (error) throw error;
+    return (data as unknown as AppointmentData[]) || [];
   },
 
   // تحديث الحالة 
@@ -174,14 +187,14 @@ async getWeeklyAvailability(doctorId: string) {
 
 
 // كتابة الروشتة للمريض
-async getPatientHistory(patientId: string){
+async getPatientHistory(actualPatientId: string){
 const { data: history,error } = await supabase
   .from('prescriptions')
   .select(`
   *,
   profiles!fk_doctor ( name )
 `) // لجلب اسم الدكتور اللي كتب الروشتة السابقة
-  .eq('patient_id', patientId)
+  .eq('actual_patient_id', actualPatientId)
   .order('created_at', { ascending: false });
   if (error) {
     console.error("Error fetching patient history:", error.message);

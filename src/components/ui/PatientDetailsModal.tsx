@@ -10,7 +10,7 @@ interface Props {
 }
 
 const PatientDetailsModal = ({ appointment, onClose }: Props) => {
-  const { history, isLoadingHistory } = useDoctorPrescription(appointment?.patient_id);
+  const { history, isLoadingHistory } = useDoctorPrescription(appointment?.actual_patient_id);
   // تذكير مهم 
   // لا تستدعي الـ Hooks داخل شروط أو بعد Return
  
@@ -55,7 +55,7 @@ const PatientDetailsModal = ({ appointment, onClose }: Props) => {
               {/* Patient Basic Info Card */}
               <div className="grid grid-cols-2 gap-4 p-4 rounded-xl ">
                 <div>
-                  <p className="text-secondary text-md uppercase font-bold">Patient Name : <span className="text-primary font-bold">{appointment.patient_name}</span></p>
+                  <p className="text-secondary text-md uppercase font-bold">Patient Name : <span className="text-primary font-bold">{appointment.patients?.full_name}</span></p>
                 </div>
                 <div className="text-right">
                   <p className="text-secondary text-md uppercase font-black">Status : <span className="text-xs font-bold text-primary px-2 py-0.5 bg-white border border-primary/20 rounded-md">
