@@ -5,7 +5,8 @@ import { HashLink } from "react-router-hash-link";
 import { LuCircleUser, LuMenu, LuX } from "react-icons/lu";
 import { Button } from "../ui/Button";
 import { AnimatePresence, motion } from "framer-motion";
-import logo from '../../assets/heroImg/doctori.png'
+import logo from '../../assets/heroImg/doctori.png';
+import { NotificationBell } from "../ui/NotificationBell";
 
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -69,6 +70,7 @@ export const Navbar = () => {
         <div className="flex items-center gap-2 md:gap-4">
           {user ? (
             <div className="flex items-center gap-2">
+              <NotificationBell />
               <Link
                 to={getDashboardPath()}
                 className="p-2 text-secondary/80 hover:text-white hover:bg-secondary/30 rounded-full transition-all duration-400"
