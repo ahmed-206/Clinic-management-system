@@ -1,75 +1,104 @@
+import { motion } from 'framer-motion';
 import {
   LuCalendarCheck2,
-  LuChartColumnDecreasing,
   LuShield,
-} from "react-icons/lu";
-import { motion } from "framer-motion";
+  LuChartColumnDecreasing,
+  LuBellRing,
+  LuFileText,
+  LuUsers,
+} from 'react-icons/lu';
+
+const features = [
+  {
+    icon: <LuCalendarCheck2 size={20} />,
+    title: 'Patients book themselves',
+    desc: 'No phone calls. No back-and-forth. Patients pick their slot and you get notified instantly.',
+  },
+  {
+    icon: <LuShield size={20} />,
+    title: 'Zero double bookings — ever',
+    desc: 'Every slot is locked the moment it\'s taken. No more "sorry, that time is gone" calls.',
+  },
+  {
+    icon: <LuChartColumnDecreasing size={20} />,
+    title: 'Your full clinic in one dashboard',
+    desc: 'Appointments, patient records, prescriptions and revenue — one screen, no spreadsheets.',
+  },
+  {
+    icon: <LuBellRing size={20} />,
+    title: 'Automatic patient reminders',
+    desc: 'Patients get notified when their appointment is confirmed, changed, or completed.',
+  },
+  {
+    icon: <LuFileText size={20} />,
+    title: 'Digital prescriptions',
+    desc: 'Write and store prescriptions digitally. Full medical history per patient, always accessible.',
+  },
+  {
+    icon: <LuUsers size={20} />,
+    title: 'Multi-doctor ready',
+    desc: 'Add multiple doctors, each with their own schedule, speciality and availability.',
+  },
+];
 
 export const Features = () => {
-  const features = [
-    {
-      title: "Online booking",
-      desc: "Patients book in seconds with real-time availability.",
-      icon: <LuCalendarCheck2 size={22} />,
-    },
-    {
-      title: "No double bookings",
-      desc: "Smart conflict detection prevents scheduling overlaps.",
-      icon: <LuShield size={22} />,
-    },
-    {
-      title: "Clinic dashboard",
-      desc: "Manage appointments and patient records from one place.",
-      icon: <LuChartColumnDecreasing size={22} />,
-    },
-  ];
-
   return (
-    <section
-      id="features"
-      className="relative max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24 overflow-hidden"
-    >
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-30 pointer-events-none">
-        <div className="absolute top-10 left-0 md:left-10 w-32 h-32 md:w-64 md:h-64 bg-primary/10 blur-[60px] md:blur-[100px] rounded-full" />
-        <div className="absolute bottom-10 right-0 md:right-10 w-32 h-32 md:w-64 md:h-64 bg-blue-400/10 blur-[60px] md:blur-[100px] rounded-full" />
+    <section id="features" className="relative max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24 overflow-hidden">
+
+      <div className="absolute inset-0 -z-10 pointer-events-none opacity-30">
+        <div className="absolute top-10 left-10 w-64 h-64 bg-primary/10 blur-[100px] rounded-full" />
+        <div className="absolute bottom-10 right-10 w-64 h-64 bg-blue-400/10 blur-[100px] rounded-full" />
       </div>
 
-      <div className="text-center space-y-4 mb-12 md:mb-16">
-        <h2 className="text-2xl md:text-4xl font-bold text-primary font-headline px-2">
-          Everything you need
-        </h2>
-        <p className="text-secondary text-sm md:text-base max-w-xl mx-auto leading-relaxed font-medium px-4">
-          Powerful tools designed to manage your clinic efficiently and deliver
-          the best patient experience.
-        </p>
+      <div className="text-center space-y-3 mb-14">
+     
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-2xl md:text-4xl font-bold text-primary"
+        >
+          Fix the problems that cost you patients
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-secondary/60 text-sm md:text-base max-w-lg mx-auto"
+        >
+          Every feature exists because a real clinic had a real problem.
+        </motion.p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {features.map((f, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.1, duration: 0.5, ease: "easeOut" }}
-            whileHover={{ y: -8 }} // حركة خفيفة للأعلى عند الـ hover
-            className="group relative p-6 md:p-8 bg-white border border-neutral-100 rounded-[24px] hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500"
+            transition={{ delay: i * 0.08, duration: 0.5 }}
+            whileHover={{ y: -6 }}
+            className="group relative p-6 bg-white border border-neutral-100 rounded-2xl hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 flex flex-col gap-4"
           >
-            {/* أيقونة مميزة */}
-            <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-neutral-50 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-500">
+          
+
+            <div className="w-11 h-11 rounded-xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
               {f.icon}
-              <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
 
-            <h3 className="text-base md:text-lg font-bold text-secondary mb-3 group-hover:text-primary transition-colors">
-              {f.title}
-            </h3>
+            <div>
+              <h3 className="text-base font-bold text-secondary mb-1.5 group-hover:text-primary transition-colors">
+                {f.title}
+              </h3>
+              <p className="text-xs text-neutral-500 leading-relaxed">
+                {f.desc}
+              </p>
+            </div>
 
-            <p className="text-xs md:text-sm text-neutral-500 leading-relaxed font-medium">
-              {f.desc}
-            </p>
-
-            <div className="absolute bottom-0 left-8 right-8 h-[2px] bg-linear-to-r from-transparent via-primary to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+            <div className="absolute bottom-0 left-6 right-6 h-[2px] bg-linear-to-r from-transparent via-primary to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
           </motion.div>
         ))}
       </div>

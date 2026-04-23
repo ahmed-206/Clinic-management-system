@@ -1,6 +1,7 @@
 import { Features } from "../components/landing/Features"
 import { Hero } from "../components/landing/Hero"
 import { HowItWorks } from "../components/landing/HowItWorks"
+
 import { Stats } from "../components/landing/Stats"
 export const HomePage = () => {
     return (
@@ -10,6 +11,7 @@ export const HomePage = () => {
             <Stats />
             <Features />
             <HowItWorks />
+            
         </main>
          </>
     )

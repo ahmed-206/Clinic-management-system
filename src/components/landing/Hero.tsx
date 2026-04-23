@@ -24,10 +24,12 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-[1.15] tracking-tight  "
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-primary leading-[1.15] tracking-tight  "
         >
-          <span >Book</span> Your Clinic <br/> Appointment{' '} 
-          <span >in Seconds</span>
+           Your Clinic, Fully Booked
+          <br />
+          without the phone tag
+         
         </motion.h1>
 
         <motion.p
@@ -36,7 +38,7 @@ export const Hero = () => {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-sm md:text-base lg:text-lg text-secondary  leading-relaxed max-w-2xl px-2"
         >
-          Smart booking for patients. 
+           Smart booking for patients. 
   Powerful management tools for doctors & clinics.
         </motion.p>
       </div>
@@ -73,7 +75,7 @@ export const Hero = () => {
               to="/dashboard/book"
               className="inline-flex items-center gap-2 bg-primary border border-white backdrop-blur-md  text-white text-xs md:text-sm font-medium px-6 md:px-8 py-3 md:py-3.5 rounded-xl transition-all duration-200 hover:gap-3 shadow-lg"
             >
-              Book an Appointment
+              Start Free — No Credit Card
               <FaArrowRight className="w-3 md:w-3.5 h-3 md:h-3.5" />
             </Link>
           </div>

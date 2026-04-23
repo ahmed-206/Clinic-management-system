@@ -97,7 +97,7 @@ export const DoctorDashboardPage = () => {
                         })}
                       </td>
                       <td className="py-4 px-4 font-medium">
-                        {app.profiles?.name || "Unknown"}
+                        {app.patients?.full_name || "Unknown"}
                       </td>
                       <td className="py-4 px-4">
                         <button
