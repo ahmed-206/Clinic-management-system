@@ -35,10 +35,9 @@
 
 ##  Patient Dashboard
 <div align="center">
-  <img src="./screenshots/patientDash1.jpg" width="400" />
-  <img src="./screenshots/patientDash2.jpg" width="400" />
-  <img src="./screenshots/patientDash3.jpg" width="400" />
-  <img src="./screenshots/patientDash4.jpg" width="400" />
+  <img src="./screenshots/patientDash1.jpg" width="500" />
+  <img src="./screenshots/patientDash2.jpg" width="500" />
+  <img src="./screenshots/patientDash4.jpg" width="500" />
 </div>
 
 ## Overview
