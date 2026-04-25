@@ -11,7 +11,7 @@
 
 ##  Landing Page (Responsive View)
 <div align="center">
-  <img src="./screenshots/landing.jpg" width="800" alt="Landing Page Responsive">
+  <img src="./screenshots/landingpage.jpg" width="800" alt="Landing Page Responsive">
 </div>
 
 ---
