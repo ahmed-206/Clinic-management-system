@@ -11,7 +11,7 @@
 
 ##  Landing Page (Responsive View)
 <div align="center">
-  <img src="./screenshots/responsive copy.jpg" width="800" alt="Landing Page Responsive">
+  <img src="./screenshots/landingpage.jpg" width="800" alt="Landing Page Responsive">
 </div>
 
 ---
@@ -35,9 +35,10 @@
 
 ##  Patient Dashboard
 <div align="center">
-  <img src="./screenshots/patientDash1.jpg" width="500" />
-  <img src="./screenshots/patientDash2.jpg" width="500" />
-  <img src="./screenshots/patientDash3.jpg" width="500" />
+  <img src="./screenshots/patientDash1.jpg" width="400" />
+  <img src="./screenshots/patientDash2.jpg" width="400" />
+  <img src="./screenshots/patientDash3.jpg" width="400" />
+  <img src="./screenshots/patientDash4.jpg" width="400" />
 </div>
 
 ## Overview
