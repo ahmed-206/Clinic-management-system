@@ -106,7 +106,34 @@ export const appointmentService = {
       console.error("Supabase SQL Error:", error.message);
       throw error;
     }
-    return data;
+
+    const appointments = data || [];
+
+    // Auto-cancel reschedule_needed appointments whose original slot has already passed
+    // (patient did not pick a new time before the appointment date).
+    const now = new Date();
+    const expiredRescheduleIds = appointments
+      .filter(
+        (a) =>
+          a.status === "reschedule_needed" &&
+          new Date(a.appointment_date) < now,
+      )
+      .map((a) => a.id);
+
+    if (expiredRescheduleIds.length > 0) {
+      await supabase
+        .from("appointments")
+        .update({ status: "cancelled" })
+        .in("id", expiredRescheduleIds);
+
+      return appointments.map((a) =>
+        expiredRescheduleIds.includes(a.id)
+          ? { ...a, status: "cancelled" as const }
+          : a,
+      );
+    }
+
+    return appointments;
   },
 
   //دالة الغاء الحجز

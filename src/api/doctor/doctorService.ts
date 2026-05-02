@@ -70,7 +70,7 @@ async getDoctorBasicInfo(doctorId: string) {
       upcomingCount:
         appointments?.filter((a) => new Date(a.appointment_date) > new Date()).length ||
         0,
-      cancelledCount: data?.filter((a) => a.status === "cancelled").length || 0,
+      cancelledCount: appointments?.filter((a) => a.status === "cancelled").length || 0,
       nextPatients:
         appointments
           ?.filter((a) => {
@@ -96,7 +96,6 @@ async getDoctorBasicInfo(doctorId: string) {
       appointment_date,
       patient_id,
       actual_patient_id,
-      patient_name,
       profiles:patient_id ( name ),
       patients!fk_actual_patient (
         id,
@@ -107,12 +106,39 @@ async getDoctorBasicInfo(doctorId: string) {
       )
     `,
       )
-      .eq("doctor_id", doctorId).neq("status", "cancelled")
+      .eq("doctor_id", doctorId)
       .order("appointment_date", { ascending: false });
-      
 
-     if (error) throw error;
-    return (data as unknown as AppointmentData[]) || [];
+    if (error) throw error;
+
+    const appointments = (data as unknown as AppointmentData[]) || [];
+
+    // Auto-cancel any reschedule_needed appointments whose date has already passed.
+    // This handles the case where the patient never rescheduled before the original slot passed.
+    const now = new Date();
+    const expiredRescheduleIds = appointments
+      .filter(
+        (a) =>
+          a.status === "reschedule_needed" &&
+          new Date(a.appointment_date) < now,
+      )
+      .map((a) => a.id!);
+
+    if (expiredRescheduleIds.length > 0) {
+      await supabase
+        .from("appointments")
+        .update({ status: "cancelled" })
+        .in("id", expiredRescheduleIds);
+
+      // Reflect the change locally so the caller gets the updated statuses
+      return appointments.map((a) =>
+        expiredRescheduleIds.includes(a.id!)
+          ? { ...a, status: "cancelled" as AppointmentStatus }
+          : a,
+      );
+    }
+
+    return appointments;
   },
 
   // تحديث الحالة 
@@ -207,11 +233,21 @@ const { data: history,error } = await supabase
 // دالة إضافية: حفظ روشتة جديدة
 async createPrescription(payload: Prescription) {
   const { data: { user } } = await supabase.auth.getUser();
+   let actualPatientId = payload.actual_patient_id;
+  if (!actualPatientId && payload.appointment_id) {
+    const { data: appt } = await supabase
+      .from('appointments')
+      .select('actual_patient_id')
+      .eq('id', payload.appointment_id)
+      .single();
+    actualPatientId = appt?.actual_patient_id ?? null;
+  }
   const { data, error } = await supabase
     .from('prescriptions')
     .insert({
       ...payload,
-      doctor_id: user!.id  //  override with real auth UID
+      doctor_id: user!.id,  //  override with real auth UID
+      actual_patient_id: actualPatientId,
     })
     .select()
     .single();

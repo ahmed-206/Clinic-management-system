@@ -208,7 +208,12 @@ const DoctorAppointmentPage = () => {
                         </button>
                       </div>
                     ) : (
-                      <button className="text-gray-400 hover:text-primary">
+                      <button
+                        onClick={() => {
+                          setSelectedAppointment(app);
+                          setIsDetailsModalOpen(true);
+                        }}
+                        className="text-gray-400 hover:text-primary font-medium text-sm transition-colors cursor-pointer">
                         View medical history
                       </button>
                     )}

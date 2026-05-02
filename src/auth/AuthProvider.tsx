@@ -38,13 +38,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(false);
   };
 
-  // onAuthStateChange fires INITIAL_SESSION on startup, so we don't need
-  // a separate getSession() call. Having both caused a race condition:
-  // the listener would re-run refreshAuth while the first async fetchProfile
-  // was still in flight, briefly setting loading=false with profile=null
-  // and triggering the /unauthorized redirect.
+ 
   const { data: authListener } = supabase.auth.onAuthStateChange(
-    (_event, session) => {
+    (event, session) => {
+      
+      if (event === "TOKEN_REFRESHED") {
+        if (session?.user) {
+          fetchProfile(session.user.id).then((userProfile) => {
+            setUser(session.user);
+            setProfile(userProfile);
+          });
+        }
+        return; 
+      }
       refreshAuth(session);
     }
   );
