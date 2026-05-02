@@ -7,41 +7,43 @@ import {
   LuFileText,
   LuUsers,
 } from 'react-icons/lu';
+import { useTranslation } from 'react-i18next';
 
 const features = [
   {
     icon: <LuCalendarCheck2 size={20} />,
-    title: 'Patients book themselves',
-    desc: 'No phone calls. No back-and-forth. Patients pick their slot and you get notified instantly.',
+    title: "features.bookSelf.title",
+    desc: "features.bookSelf.desc",
   },
   {
     icon: <LuShield size={20} />,
-    title: 'Zero double bookings — ever',
-    desc: 'Every slot is locked the moment it\'s taken. No more "sorry, that time is gone" calls.',
+    title: "features.noDouble.title",
+    desc: "features.noDouble.desc",
   },
   {
     icon: <LuChartColumnDecreasing size={20} />,
-    title: 'Your full clinic in one dashboard',
-    desc: 'Appointments, patient records, prescriptions and revenue — one screen, no spreadsheets.',
+    title: "features.dashboard.title",
+    desc: "features.dashboard.desc",
   },
   {
     icon: <LuBellRing size={20} />,
-    title: 'Automatic patient reminders',
-    desc: 'Patients get notified when their appointment is confirmed, changed, or completed.',
+    title: "features.reminders.title",
+    desc: "features.reminders.desc",
   },
   {
     icon: <LuFileText size={20} />,
-    title: 'Digital prescriptions',
-    desc: 'Write and store prescriptions digitally. Full medical history per patient, always accessible.',
+    title: "features.prescriptions.title",
+    desc: "features.prescriptions.desc",
   },
   {
     icon: <LuUsers size={20} />,
-    title: 'Multi-doctor ready',
-    desc: 'Add multiple doctors, each with their own schedule, speciality and availability.',
+    title: "features.multiDoctor.title",
+    desc: "features.multiDoctor.desc",
   },
 ];
 
 export const Features = () => {
+  const {t} = useTranslation('landing');
   return (
     <section id="features" className="relative max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24 overflow-hidden">
 
@@ -59,7 +61,7 @@ export const Features = () => {
           transition={{ duration: 0.5 }}
           className="text-2xl md:text-4xl font-bold text-primary"
         >
-          Fix the problems that cost you patients
+          {t('features.featuresTitle')}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
@@ -68,7 +70,7 @@ export const Features = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-secondary/60 text-sm md:text-base max-w-lg mx-auto"
         >
-          Every feature exists because a real clinic had a real problem.
+          {t('features.featuresSubTitle')}
         </motion.p>
       </div>
 
@@ -91,10 +93,10 @@ export const Features = () => {
 
             <div>
               <h3 className="text-base font-bold text-secondary mb-1.5 group-hover:text-primary transition-colors">
-                {f.title}
+                {t(f.title)}
               </h3>
               <p className="text-xs text-neutral-500 leading-relaxed">
-                {f.desc}
+                {t(f.desc)}
               </p>
             </div>
 

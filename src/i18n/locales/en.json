@@ -1,0 +1,37 @@
+{
+  
+  "booking": {
+    "title": "Confirm Appointment",
+    "selectDate": "Select Date",
+    "selectTime": "Select Time",
+    "confirmBtn": "Confirm My Appointment",
+    "processing": "Processing...",
+    "noSlots": "No Slots Available",
+    "holidayMsg": "This day has been marked as a holiday.",
+    "notWorkingMsg": "The doctor does not work on this day."
+  },
+  "patient": {
+    "whoIsThis": "Who is this appointment for?",
+    "myself": "Myself",
+    "addNew": "+ Add new patient",
+    "fullName": "Full Name",
+    "phone": "Mobile Number",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "isSelf": "This is me (account holder)"
+  },
+  "prescription": {
+    "title": "Write Prescription",
+    "diagnosis": "Diagnosis",
+    "medicines": "Medicines",
+    "notes": "Additional Notes",
+    "save": "Save & Complete Appointment",
+    "saving": "Saving..."
+  },
+  "errors": {
+    "loadFailed": "Failed to load data",
+    "bookingFailed": "Booking failed. Please try again.",
+    "slotTaken": "This slot was just taken! Please choose another time."
+  }
+}

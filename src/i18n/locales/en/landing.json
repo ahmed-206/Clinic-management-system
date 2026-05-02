@@ -1,0 +1,91 @@
+{
+    "heroTitle": {
+    "part1": "Your Clinic, Fully Booked",
+    "part2": "without the phone tag"
+  },
+    "heroSubTitle": "Smart booking for patients. Powerful management tools for doctors & clinics.",
+    
+    "features": {
+        "featuresTitle": "Fix the problems that cost you patients",
+    "featuresSubTitle": "Every feature exists because a real clinic had a real problem.",
+    "bookSelf": {
+      "title": "Patients book themselves",
+      "desc": "No phone calls. No back-and-forth. Patients pick their slot and you get notified instantly."
+    },
+    "noDouble": {
+      "title": "Zero double bookings — ever",
+      "desc": "Every slot is locked the moment it's taken. No more 'sorry, that time is gone' calls."
+    },
+    "dashboard": {
+      "title": "Your full clinic in one dashboard",
+      "desc": "Appointments, patient records, prescriptions and revenue — one screen, no spreadsheets."
+    },
+    "reminders": {
+      "title": "Automatic patient reminders",
+      "desc": "Patients get notified when their appointment is confirmed, changed, or completed."
+    },
+    "prescriptions": {
+      "title": "Digital prescriptions",
+      "desc": "Write and store prescriptions digitally. Full medical history per patient, always accessible."
+    },
+    "multiDoctor": {
+      "title": "Multi-doctor ready",
+      "desc": "Add multiple doctors, each with their own schedule, speciality and availability."
+    }
+  },
+  "howItWorks": {
+    "howItWorksTitle":"How it works",
+    "tab":{
+        "forClinic": "For your clinic",
+        "forPatient" :"For your patients"
+    },
+    "patientTab":[
+        {
+    "n": "01",
+    "title": "Choose a doctor",
+   " desc": "Browse available specialists and read their profiles — no account needed to look."
+  },
+     {
+    "n": "02",
+    "title": "Pick a date & time",
+    "desc": "See live available slots. No phone calls. No waiting on hold."
+  },
+  {
+    "n": "03",
+    "title": "Enter patient details",
+    "desc": "Book for yourself or a family member — each with their own medical record."
+  },
+  {
+    "n": "04",
+    "title": "Done — get confirmation",
+    "desc": "Instant confirmation notification. The clinic handles the rest."
+  }
+    ],
+     "clinicTab": [
+  {
+    "n": "01",
+    "title": "Add your schedule",
+    "desc": "Set your working hours, slot duration and days off — once. Never touch it again unless you want to."
+  },
+  {
+    "n": "02",
+    "title": "Share your booking link",
+    "desc": "Send patients your link via WhatsApp or add it to your Instagram bio. That's your entire marketing."
+  },
+  {
+    "n": "03",
+    "title": "Get notified instantly",
+    "desc": "Every new booking triggers a real-time notification. Confirm, cancel or view details in one click."
+  },
+  {
+    "n": "04",
+    "title": "Manage & prescribe",
+    "desc": "Complete appointments, write digital prescriptions and build a full patient history automatically."
+  }
+]
+    
+
+    }
+   
+  }
+    

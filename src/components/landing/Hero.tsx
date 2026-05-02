@@ -4,9 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import d1copy from '../../assets/heroImg/d1 copy.png'
 import { FaArrowRight } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
+
 
 export const Hero = () => {
-
+const {t} = useTranslation('landing')
 
   return (
     <section className="relative w-full min-h-[80vh] md:min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-neutral-100 px-4 py-20">
@@ -26,9 +28,9 @@ export const Hero = () => {
           transition={{ duration: 0.7 }}
           className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-primary leading-[1.15] tracking-tight  "
         >
-           Your Clinic, Fully Booked
+           {t('heroTitle.part1')}
           <br />
-          without the phone tag
+          {t('heroTitle.part2')}
          
         </motion.h1>
 
@@ -38,8 +40,7 @@ export const Hero = () => {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-sm md:text-base lg:text-lg text-secondary  leading-relaxed max-w-2xl px-2"
         >
-           Smart booking for patients. 
-  Powerful management tools for doctors & clinics.
+           {t('heroSubTitle')}
         </motion.p>
       </div>
 

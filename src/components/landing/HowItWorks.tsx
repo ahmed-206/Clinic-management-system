@@ -1,58 +1,25 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
-const clinicSteps = [
-  {
-    n: '01',
-    title: 'Add your schedule',
-    desc: 'Set your working hours, slot duration and days off — once. Never touch it again unless you want to.',
-  },
-  {
-    n: '02',
-    title: 'Share your booking link',
-    desc: 'Send patients your link via WhatsApp or add it to your Instagram bio. That\'s your entire marketing.',
-  },
-  {
-    n: '03',
-    title: 'Get notified instantly',
-    desc: 'Every new booking triggers a real-time notification. Confirm, cancel or view details in one click.',
-  },
-  {
-    n: '04',
-    title: 'Manage & prescribe',
-    desc: 'Complete appointments, write digital prescriptions and build a full patient history automatically.',
-  },
-];
-
-const patientSteps = [
-  {
-    n: '01',
-    title: 'Choose a doctor',
-    desc: 'Browse available specialists and read their profiles — no account needed to look.',
-  },
-  {
-    n: '02',
-    title: 'Pick a date & time',
-    desc: 'See live available slots. No phone calls. No waiting on hold.',
-  },
-  {
-    n: '03',
-    title: 'Enter patient details',
-    desc: 'Book for yourself or a family member — each with their own medical record.',
-  },
-  {
-    n: '04',
-    title: 'Done — get confirmation',
-    desc: 'Instant confirmation notification. The clinic handles the rest.',
-  },
-];
 
 type Tab = 'clinic' | 'patient';
 
 export const HowItWorks = () => {
+  const {t} = useTranslation('landing')
   const [tab, setTab] = useState<Tab>('clinic');
-  const steps = tab === 'clinic' ? clinicSteps : patientSteps;
+  
 
+  const steps = t(
+    tab === 'clinic'
+      ? 'howItWorks.clinicTab'
+      : 'howItWorks.patientTab',
+    { returnObjects: true }
+  ) as {
+    n: string;
+    title: string;
+    desc: string;
+  }[];
   return (
     <section id="how-it-works" className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24">
 
@@ -64,23 +31,27 @@ export const HowItWorks = () => {
           viewport={{ once: true }}
           className="text-2xl md:text-4xl font-bold text-primary"
         >
-          How it works
+          {t('howItWorks.howItWorksTitle')}
         </motion.h2>
 
         {/* tab toggle */}
         <div className="flex justify-center mt-4">
           <div className="inline-flex bg-neutral-100 p-1 rounded-xl">
-            {(['clinic', 'patient'] as Tab[]).map((t) => (
+            {(['clinic', 'patient'] as Tab[]).map((tabKey) => (
               <button
-                key={t}
-                onClick={() => setTab(t)}
+                key={tabKey}
+                onClick={() => setTab(tabKey)}
                 className={`px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
-                  tab === t
+                  tab === tabKey
                     ? 'bg-white text-primary shadow-sm'
                     : 'text-secondary/50 hover:text-secondary'
                 }`}
               >
-                {t === 'clinic' ? 'For your clinic' : 'For your patients'}
+                {t(
+                  tabKey === 'clinic'
+                    ? 'howItWorks.tab.forClinic'
+                    : 'howItWorks.tab.forPatient'
+                )}
               </button>
             ))}
           </div>

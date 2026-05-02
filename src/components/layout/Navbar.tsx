@@ -7,8 +7,10 @@ import { Button } from "../ui/Button";
 import { AnimatePresence, motion } from "framer-motion";
 import logo from '../../assets/heroImg/doctori.png';
 import { NotificationBell } from "../ui/NotificationBell";
-
+import { LanguageToggle } from "../ui/LanguageToggle";
+import { useTranslation } from 'react-i18next';
 export const Navbar = () => {
+  const {t} = useTranslation("nav")
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { logout, user, profile } = useAuth();
@@ -48,21 +50,21 @@ export const Navbar = () => {
             to="/"
             className="hover:text-primary transition-colors duration-200"
           >
-            Home
+            {t('home')}
           </Link>
           <HashLink
             smooth
             to="/#features"
             className="hover:text-primary transition-colors duration-200"
           >
-            Features
+            {t('features')}
           </HashLink>
           <HashLink
             smooth
             to="/#how-it-works"
             className="hover:text-primary transition-colors duration-200"
           >
-            How it works
+            {t('howItWorks')}
           </HashLink>
         </div>
 
@@ -82,8 +84,9 @@ export const Navbar = () => {
                 onClick={handleLogout}
                 className="hidden sm:inline-flex px-4 py-2 text-xs md:text-sm font-bold"
               >
-                Logout
+                {t('logout')}
               </Button>
+              <LanguageToggle />
             </div>
           ) : (
             <div className="hidden md:flex items-center gap-4">
@@ -91,13 +94,14 @@ export const Navbar = () => {
                 to="/login"
                 className="text-sm font-medium text-secondary hover:text-primary transition-colors duration-200 px-3 py-2"
               >
-                Login
+                {t('login')}
               </Link>
               <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button variant="primary" className="w-full text-primary">
-                  Sign up
+                  {t('signUp')}
                 </Button>
               </Link>
+              <LanguageToggle />
             </div>
           )}
 
