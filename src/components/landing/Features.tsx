@@ -7,9 +7,15 @@ import {
   LuFileText,
   LuUsers,
 } from 'react-icons/lu';
-import { useTranslation } from 'react-i18next';
+import type { LandingKeys } from '../../i18n/types';
+import { useLandingT } from '../../hooks/useT';
 
-const features = [
+interface Feature {
+  icon: React.ReactNode;
+  title: LandingKeys;  
+  desc: LandingKeys;   
+}
+const features :  Feature[] = [
   {
     icon: <LuCalendarCheck2 size={20} />,
     title: "features.bookSelf.title",
@@ -43,7 +49,7 @@ const features = [
 ];
 
 export const Features = () => {
-  const {t} = useTranslation('landing');
+  const tl = useLandingT();
   return (
     <section id="features" className="relative max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24 overflow-hidden">
 
@@ -61,7 +67,7 @@ export const Features = () => {
           transition={{ duration: 0.5 }}
           className="text-2xl md:text-4xl font-bold text-primary"
         >
-          {t('features.featuresTitle')}
+          {tl('features.featuresTitle')}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
@@ -70,7 +76,7 @@ export const Features = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-secondary/60 text-sm md:text-base max-w-lg mx-auto"
         >
-          {t('features.featuresSubTitle')}
+          {tl('features.featuresSubTitle')}
         </motion.p>
       </div>
 
@@ -93,10 +99,10 @@ export const Features = () => {
 
             <div>
               <h3 className="text-base font-bold text-secondary mb-1.5 group-hover:text-primary transition-colors">
-                {t(f.title)}
+                {tl(f.title)}
               </h3>
               <p className="text-xs text-neutral-500 leading-relaxed">
-                {t(f.desc)}
+                {tl(f.desc)}
               </p>
             </div>
 

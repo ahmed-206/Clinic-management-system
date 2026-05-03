@@ -1,11 +1,12 @@
 import { HashLink } from "react-router-hash-link";
-import { useSettings } from "../../hooks/admin/useSettings";
 import { Link } from "react-router-dom";
 import { motion, type Variants } from "framer-motion"; 
 import logoWhite from '../../assets/heroImg/doctori2.png'
-
+import { useTranslation } from "react-i18next";
 export const Footer = () => {
-  const { settings } = useSettings();
+  const {t} = useTranslation('landing')
+  const { t: tNav } = useTranslation('nav');
+
   const currentYear = new Date().getFullYear();
 
   
@@ -38,7 +39,7 @@ export const Footer = () => {
         variants={containerVariants}
       >
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 text-center md:text-left">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 text-center md:text-start">
           
          
           <motion.div variants={itemVariants} className="flex flex-col gap-4 items-center md:items-start">
@@ -46,27 +47,27 @@ export const Footer = () => {
         <Link to='/'><img src={logoWhite} alt="logo" height={124} width={124}/></Link>
       </div>
             <p className="text-white/60 text-sm leading-relaxed max-w-xs mx-auto md:mx-0">
-              Providing world-class healthcare services with the best specialists in the field.
+              {t('footer.logoTitle')}
             </p>
           </motion.div>
 
          
           <motion.div variants={itemVariants} className="flex flex-col gap-4">
-            <h3 className="text-lg font-bold uppercase tracking-wider text-white">Quick Links</h3>
+            <h3 className="text-lg font-bold uppercase tracking-wider text-white">{t('footer.quickLinks')}</h3>
             <nav className="flex flex-col gap-3 text-white/70">
-              <Link to="/" className="text-base font-medium hover:translate-x-1 transition-all duration-300">Home</Link>
-              <HashLink smooth to="/#features" className="text-base font-medium hover:translate-x-1 transition-all duration-300">Features</HashLink>
-              <HashLink smooth to="/#how-it-works" className="text-base font-medium hover:translate-x-1 transition-all duration-300">How it works</HashLink>
+              <Link to="/" className="text-base font-medium hover:translate-x-1 transition-all duration-300">{tNav('home')}</Link>
+              <HashLink smooth to="/#features" className="text-base font-medium hover:translate-x-1 transition-all duration-300">{tNav('features')}</HashLink>
+              <HashLink smooth to="/#how-it-works" className="text-base font-medium hover:translate-x-1 transition-all duration-300">{tNav('howItWorks')}</HashLink>
             </nav>
           </motion.div>
 
          
           <motion.div variants={itemVariants} className="flex flex-col gap-4">
-            <h3 className="text-lg font-bold uppercase tracking-wider text-white">Legal & Support</h3>
+            <h3 className="text-lg font-bold uppercase tracking-wider text-white">{t('footer.legalSupport')}</h3>
             <nav className="flex flex-col gap-3 text-white/70">
-              <Link to="/terms" className="text-base font-medium hover:translate-x-1 transition-all duration-300">Terms of Service</Link>
-              <Link to="/privacy" className="text-base font-medium hover:translate-x-1 transition-all duration-300">Privacy Policy</Link>
-              <Link to="contactus" className="text-base font-medium hover:translate-x-1 transition-all duration-300">Contact Us</Link>
+              <Link to="/terms" className="text-base font-medium hover:translate-x-1 transition-all duration-300">{t('footer.links.terms')}</Link>
+              <Link to="/privacy" className="text-base font-medium hover:translate-x-1 transition-all duration-300">{t('footer.links.privacy')}</Link>
+              <Link to="contactus" className="text-base font-medium hover:translate-x-1 transition-all duration-300"> {t('footer.links.contact')}</Link>
             </nav>
           </motion.div>
         </div>
@@ -76,7 +77,7 @@ export const Footer = () => {
           variants={itemVariants}
           className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center items-center gap-4 text-white/40 text-sm"
         >
-          <p>© {currentYear} {settings?.clinic_name}. All rights reserved.</p>
+          <p>© {currentYear} . {t('footer.rightsReserved')}.</p>
         </motion.div>
       </motion.div>
     </footer>

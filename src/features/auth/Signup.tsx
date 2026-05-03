@@ -6,11 +6,14 @@ import { useAuth } from "../../hooks/useAuth";
 import { type SignupFormData, signupSchema } from "../../validation/authSchema"; 
 import { Button } from "../../components/ui/Button";
 import { toast } from "sonner";
+import { useFormT } from "../../hooks/useT";
+import type { FormKeys } from "../../i18n/types";
 
 
 
 
 export const SignupForm = () => {
+  const tf = useFormT();
   const { signup } = useAuth();
   
   const navigate = useNavigate();
@@ -39,9 +42,9 @@ export const SignupForm = () => {
   
 
 const inputStyle =
-    "w-full h-11 rounded-xl border border-secondary/30 bg-white/5 px-4 text-secondary text-sm placeholder:text-white/25 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-200";
+    "w-full h-11 rounded-xl border border-secondary/30 bg-white/5 px-4 text-secondary text-sm placeholder:text-secondary/80 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-200";
 
-  const labelStyle = "text-xs font-medium text-secondary uppercase tracking-widest";
+  const labelStyle = "text-md font-medium text-secondary tracking-widest";
  return (
     <div className="min-h-screen bg-neutral-100 flex items-center justify-center p-4 py-20">
       
@@ -55,7 +58,7 @@ const inputStyle =
           {/* Header */}
           <div className="mb-8 text-center">
             <h2 className="text-xl font-bold text-primary tracking-widest mb-2">
-              Create an account
+              {tf('register.title')}
             </h2>
             
             
@@ -65,23 +68,23 @@ const inputStyle =
 
             {/* Name */}
             <div className="flex flex-col gap-1.5">
-              <label className={labelStyle} htmlFor="name">Name</label>
-              <input className={inputStyle} type="text" id="name" placeholder="Your name" {...register("name")} />
-              {errors.name && <p className="text-red-400 text-xs mt-0.5">{errors.name.message}</p>}
+              <label className={labelStyle} htmlFor="name">{tf('register.fullName')}</label>
+              <input className={inputStyle} type="text" id="name" placeholder={tf('placeholders.fullName')} {...register("name")} />
+              {errors.name && <p className="text-red-400 text-xs mt-0.5">{tf(errors.name.message as FormKeys)}</p>}
             </div>
 
             {/* Email */}
             <div className="flex flex-col gap-1.5">
-              <label className={labelStyle} htmlFor="email">Email</label>
-              <input className={inputStyle} type="email" id="email" placeholder="you@example.com" {...register("email")} />
-              {errors.email && <p className="text-red-400 text-xs mt-0.5">{errors.email.message}</p>}
+              <label className={labelStyle} htmlFor="email">{tf('register.email')}</label>
+              <input className={inputStyle} type="email" id="email" placeholder={tf('placeholders.email')} {...register("email")} />
+              {errors.email && <p className="text-red-400 text-xs mt-0.5">{tf(errors.email.message as  FormKeys) }</p>}
             </div>
 
             {/* Password */}
             <div className="flex flex-col gap-1.5">
-              <label className={labelStyle} htmlFor="password">Password</label>
-              <input className={inputStyle} type="password" id="password" placeholder="••••••••" {...register("password")} />
-              {errors.password && <p className="text-red-400 text-xs mt-0.5">{errors.password.message}</p>}
+              <label className={labelStyle} htmlFor="password">{tf('register.password')}</label>
+              <input className={inputStyle} type="password" id="password" placeholder={tf('placeholders.password')} {...register("password")} />
+              {errors.password && <p className="text-red-400 text-xs mt-0.5">{tf(errors.password.message as FormKeys) }</p>}
             </div>
 
             {/* Terms */}
@@ -94,22 +97,22 @@ const inputStyle =
                   {...register("terms")}
                 />
                 <label className="text-sm text-secondary cursor-pointer leading-snug" htmlFor="check">
-                  I agree to the <span className="text-secondary underline underline-offset-2 hover:text-primary transition-colors">terms and conditions</span>
+                  {tf('register.agreeCondition')}
                 </label>
               </div>
-              {errors.terms && <p className="text-red-400 text-xs mt-0.5">{errors.terms.message}</p>}
+              {errors.terms && <p className="text-red-400 text-xs mt-0.5">{tf(errors.terms.message as FormKeys)}</p>}
             </div>
 
             {/* Submit */}
             <Button className="w-full h-11 mt-1 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-xl shadow-[0_4px_16px_rgba(37,99,235,0.35)] transition-all duration-200">
-              Create Account
+              {tf('register.submit')}
             </Button>
 
             {/* Login link */}
             <p className="text-center text-sm text-secondary mt-1">
-              Already have an account?{" "}
+              {tf('register.haveAccount')}{" "}
               <Link to="/login" className="text-primary hover:text-primary/50 font-medium transition-colors duration-200">
-                Login
+                {tf('register.login')}
               </Link>
             </p>
 

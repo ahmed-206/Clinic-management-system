@@ -1,0 +1,48 @@
+{
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "Sign in to your account",
+    "email": "Email address",
+    "password": "Password",
+    "remember": "Remember me",
+    "forgot": "Forgot your password?",
+    "submit": "Sign In",
+    "noAccount": "Don’t have an account?",
+    "createAccount": "Create one"
+  },
+  "register": {
+    "title": "Create your account",
+    "subtitle": "Start managing your clinic today",
+    "fullName": "Full name",
+    "email": "Email address",
+    "phone": "Phone number",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "submit": "Create Account",
+    "haveAccount": "Already have an account?",
+    "login": "Sign In",
+    "agreeCondition": "I agree to the terms and conditions"
+  },
+  "placeholders": {
+    "fullName": "Enter your full name",
+    "email": "Enter your email",
+    "phone": "Enter your phone number",
+    "password": "Enter your password",
+    "confirmPassword": "Re-enter your password"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalidName":"Name must be at least 3 character",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidPassword":"Password must be at least 6 characters",
+    "minLength": "Must be at least {{count}} characters",
+    "passwordMismatch": "Passwords do not match",
+    "weakPassword": "Password is too weak",
+    "agreeCondition": "Terms and conditions must be agreed upon to continue."
+
+  },
+  "success": {
+    "login": "Logged in successfully",
+    "register": "Account created successfully"
+  }
+}

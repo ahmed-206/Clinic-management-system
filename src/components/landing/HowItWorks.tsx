@@ -10,16 +10,15 @@ export const HowItWorks = () => {
   const [tab, setTab] = useState<Tab>('clinic');
   
 
-  const steps = t(
-    tab === 'clinic'
-      ? 'howItWorks.clinicTab'
-      : 'howItWorks.patientTab',
-    { returnObjects: true }
-  ) as {
-    n: string;
-    title: string;
-    desc: string;
-  }[];
+  const stepsObj = t(
+  tab === 'clinic'
+    ? 'howItWorks.clinicTab'
+    : 'howItWorks.patientTab',
+  { returnObjects: true }
+) as Record<string, { n: string; title: string; desc: string }>;
+
+// ✅ حوّله لـ array
+const steps = Object.values(stepsObj);;
   return (
     <section id="how-it-works" className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24">
 

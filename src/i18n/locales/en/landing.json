@@ -4,7 +4,13 @@
     "part2": "without the phone tag"
   },
     "heroSubTitle": "Smart booking for patients. Powerful management tools for doctors & clinics.",
-    
+    "heroButton" : "Join Now",
+    "stats": {
+      "doctors":{ "label": "Active doctors", "value": 50, "suffix": "+" },
+    "patients":{ "label": "Happy patients", "value": 10, "suffix": "k+" },
+    "bookings":{ "label": "Appointments", "value": 25, "suffix": "k+" },
+    "support":{ "label": "Support", "value": 24, "suffix": "/7" }
+    },
     "features": {
         "featuresTitle": "Fix the problems that cost you patients",
     "featuresSubTitle": "Every feature exists because a real clinic had a real problem.",
@@ -34,57 +40,68 @@
     }
   },
   "howItWorks": {
-    "howItWorksTitle":"How it works",
-    "tab":{
-        "forClinic": "For your clinic",
-        "forPatient" :"For your patients"
-    },
-    "patientTab":[
-        {
-    "n": "01",
-    "title": "Choose a doctor",
-   " desc": "Browse available specialists and read their profiles — no account needed to look."
+  "howItWorksTitle": "How it works",
+  "tab": {
+    "forClinic": "For your clinic",
+    "forPatient": "For your patients"
   },
-     {
-    "n": "02",
-    "title": "Pick a date & time",
-    "desc": "See live available slots. No phone calls. No waiting on hold."
-  },
-  {
-    "n": "03",
-    "title": "Enter patient details",
-    "desc": "Book for yourself or a family member — each with their own medical record."
-  },
-  {
-    "n": "04",
-    "title": "Done — get confirmation",
-    "desc": "Instant confirmation notification. The clinic handles the rest."
-  }
-    ],
-     "clinicTab": [
-  {
-    "n": "01",
-    "title": "Add your schedule",
-    "desc": "Set your working hours, slot duration and days off — once. Never touch it again unless you want to."
-  },
-  {
-    "n": "02",
-    "title": "Share your booking link",
-    "desc": "Send patients your link via WhatsApp or add it to your Instagram bio. That's your entire marketing."
-  },
-  {
-    "n": "03",
-    "title": "Get notified instantly",
-    "desc": "Every new booking triggers a real-time notification. Confirm, cancel or view details in one click."
-  },
-  {
-    "n": "04",
-    "title": "Manage & prescribe",
-    "desc": "Complete appointments, write digital prescriptions and build a full patient history automatically."
-  }
-]
-    
 
+  "patientTab": {
+    "step1": {
+      "n": "01",
+      "title": "Choose a doctor",
+      "desc": "Browse specialists and view profiles easily."
+    },
+    "step2": {
+      "n": "02",
+      "title": "Pick a time",
+      "desc": "See available slots instantly."
+    },
+    "step3": {
+      "n": "03",
+      "title": "Enter details",
+      "desc": "Book for yourself or family."
+    },
+    "step4": {
+      "n": "04",
+      "title": "Get confirmation",
+      "desc": "Instant confirmation."
+    }
+  },
+
+  "clinicTab": {
+    "step1": {
+      "n": "01",
+      "title": "Set your schedule",
+      "desc": "Define working hours once."
+    },
+    "step2": {
+      "n": "02",
+      "title": "Share your link",
+      "desc": "Send your booking link easily."
+    },
+    "step3": {
+      "n": "03",
+      "title": "Get notified",
+      "desc": "Receive real-time bookings."
+    },
+    "step4": {
+      "n": "04",
+      "title": "Manage clinic",
+      "desc": "Handle appointments and prescriptions."
+    }
+  }
+},
+    "footer": {
+      "logoTitle": "Providing world-class healthcare services with the best specialists in the field.",
+      "quickLinks":"Quick Links",
+      "legalSupport": "Legal & Support",
+      "links": {
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "contact": "Contact Us"
+  },
+  "rightsReserved": "All rights reserved"
     }
    
   }

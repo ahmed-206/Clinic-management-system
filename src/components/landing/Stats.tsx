@@ -1,13 +1,21 @@
 import { motion } from 'framer-motion';
 import { Counter } from './Counter';
 
+import { useTranslation } from 'react-i18next';
+
+interface StatItem {
+  label: string;
+  value: number;
+  suffix: string;
+}
 export const Stats = () => {
-  const stats = [
-    { label: "Active doctors", value: 50, suffix: "+" },
-    { label: "Happy patients", value: 10, suffix: "k+" },
-    { label: "Appointments", value: 25, suffix: "k+" },
-    { label: "Support", value: 24, suffix: "/7" },
-  ];
+ const { t } = useTranslation('landing');
+
+ 
+  const statsObj = t('stats', { returnObjects: true }) as Record<string, StatItem>;
+
+  
+  const stats = Object.values(statsObj);
 
   return (
     <section className="max-w-7xl mx-auto px-4 md:px-6 py-12">
@@ -32,7 +40,7 @@ export const Stats = () => {
               <span className="text-2xl md:text-3xl ml-0.5">{s.suffix}</span>
             </div>
 
-            <div className="relative z-10 text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-white mt-2  transition-colors">
+            <div className="relative z-10 text-md md:text-md font-black uppercase tracking-[0.2em] text-white mt-2  transition-colors">
               {s.label}
             </div>
 

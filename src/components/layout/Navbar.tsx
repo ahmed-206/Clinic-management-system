@@ -45,26 +45,29 @@ export const Navbar = () => {
         </div>
 
         {/* 2. Desktop Links */}
-        <div className="hidden md:flex items-center gap-8 text-sm lg:text-base font-semibold  text-secondary">
+        <div className="hidden md:flex items-center gap-8 text-sm lg:text-base font-semibold  text-primary">
           <Link
             to="/"
-            className="hover:text-primary transition-colors duration-200"
+            className="relative group  transition-colors duration-200"
           >
             {t('home')}
+            <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
           </Link>
           <HashLink
             smooth
             to="/#features"
-            className="hover:text-primary transition-colors duration-200"
+            className="relative group transition-colors duration-200"
           >
             {t('features')}
+            <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
           </HashLink>
           <HashLink
             smooth
             to="/#how-it-works"
-            className="hover:text-primary transition-colors duration-200"
+            className="relative group transition-colors duration-200"
           >
             {t('howItWorks')}
+            <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
           </HashLink>
         </div>
 
@@ -92,7 +95,7 @@ export const Navbar = () => {
             <div className="hidden md:flex items-center gap-4">
               <Link
                 to="/login"
-                className="text-sm font-medium text-secondary hover:text-primary transition-colors duration-200 px-3 py-2"
+                className="text-md font-bold text-secondary hover:text-primary transition-colors duration-200 px-3 py-2"
               >
                 {t('login')}
               </Link>
