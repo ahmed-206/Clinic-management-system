@@ -1,0 +1,22 @@
+{
+  "dashboard": {
+    "sidebar": {
+      "myAppointments": "My Appointments",
+      "bookAppointment": "Book Appointment",
+      "dashboard": "Dashboard",
+      "schedule": "My Schedule",
+      "profile": "Profile",
+      "doctors": "Doctors",
+      "patients": "Patients",
+      "appointments": "Appointments",
+      "settings": "Settings"
+    },
+    "patient": {
+      "appointment": "My Appointments",
+      "bookAppointment": "Book Appointment",
+      "bookSubTitle": "Choose a specialty or search for your doctor",
+      "upcoming": "Upcoming",
+      "history": "History"
+    }
+  }
+}

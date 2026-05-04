@@ -1,7 +1,7 @@
 
 import { useTranslation } from 'react-i18next';
 import type {
-  FormKeys, CommonKeys, NavKeys, LandingKeys
+  FormKeys, CommonKeys, NavKeys, LandingKeys,DashboardKeys
 } from '../i18n/types';
 
 //  hook لكل namespace — autocomplete كامل
@@ -23,4 +23,8 @@ export const useNavT = () => {
 export const useLandingT = () => {
   const { t } = useTranslation('landing');
   return (key: LandingKeys) => t(key);
+};
+export const useDashboardT = () => {
+  const { t } = useTranslation('dashboard');
+  return (key: DashboardKeys) => t(key);
 };

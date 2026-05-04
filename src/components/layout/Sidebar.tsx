@@ -5,8 +5,10 @@ import { menuConfig } from "../../constants/menuConfig";
 import { BiLogOutCircle } from "react-icons/bi";
 import { LuMenu, LuX } from "react-icons/lu";
 import logoWhite from '../../assets/heroImg/doctori2.png'
-
+import { useDashboardT, useNavT } from "../../hooks/useT";
 export const Sidebar = () => {
+  const td = useDashboardT();
+  const tn = useNavT()
   const [isOpen, setIsOpen] = useState(false);
   const { profile, logout } = useAuth();
  
@@ -58,7 +60,7 @@ export const Sidebar = () => {
               }`}
             >
               <span className="text-lg">{item.icon}</span>
-              {item.name}
+              {td(item.name)}
             </Link>
           );
         })}
@@ -78,8 +80,7 @@ export const Sidebar = () => {
         >
           
           <BiLogOutCircle  size="1.5rem"/>
-          Logout
-
+          {tn('logout')}
         </button>
       </div>
     </aside>

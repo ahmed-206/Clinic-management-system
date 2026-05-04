@@ -1,0 +1,22 @@
+{
+  "dashboard": {
+    "sidebar": {
+      "myAppointments": "مواعيدي",
+      "bookAppointment": "حجز موعد",
+      "dashboard": "لوحة التحكم",
+      "schedule": "جدول العمل",
+      "profile": "الملف الشخصي",
+      "doctors": "الأطباء",
+      "patients": "المرضى",
+      "appointments": "الحجوزات",
+      "settings": "الإعدادات"
+    },
+    "patient": {
+      "appointment": "مواعيدي",
+      "bookAppointment": "حجز موعد",
+      "bookSubTitle": "اختر التخصص او قم بالبحث عن الدكتور",
+      "upcoming": "القادم",
+      "history": "الارشيف"
+    }
+  }
+}

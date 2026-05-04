@@ -27,6 +27,8 @@ import { LuCalendarX } from "react-icons/lu";
 import type { DayOfWeek } from "../../types/types";
 
 const BookingDetailsContent = () => {
+   
+  
   const navigate = useNavigate();
   const { doctorId } = useParams();
   const [searchParams] = useSearchParams();

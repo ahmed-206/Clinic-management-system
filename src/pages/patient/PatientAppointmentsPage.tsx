@@ -2,9 +2,10 @@ import { AppointmentCard } from "../../features/patient/AppointmentCard";
 import { usePatientAppointments } from "../../hooks/usePatientAppointments";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import { LuCalendarX } from "react-icons/lu";
-
 import { useState } from "react";
+import { useDashboardT } from "../../hooks/useT";
 export const PatientAppointmentsPage = () => {
+  const td = useDashboardT();
   const { data: appointments, error, isLoading } = usePatientAppointments();
   const [activeTab, setActiveTab] = useState<"upcoming" | "history">(
     "upcoming",
@@ -37,7 +38,7 @@ export const PatientAppointmentsPage = () => {
     <div className="max-w-6xl mx-auto p-4 md:p-8 animate-fade-in">
      <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8 md:mb-12 text-center sm:text-left">
        <h1 className="text-2xl md:text-3xl font-bold text-primary">
-        My Appointments
+        {td('dashboard.patient.appointment')}
       </h1>
     <div className="flex p-1.5 bg-gray-100 rounded-lg w-fit shadow-inner">
           <button
@@ -48,7 +49,7 @@ export const PatientAppointmentsPage = () => {
                 : "text-gray-500 hover:text-gray-700 scale-95"
             }`}
           >
-            Upcoming ({upcomingAppointments.length})
+            {td('dashboard.patient.upcoming')} ({upcomingAppointments.length})
           </button>
           <button
             onClick={() => setActiveTab('history')}
@@ -58,7 +59,7 @@ export const PatientAppointmentsPage = () => {
                 : "text-gray-500 hover:text-gray-700 scale-95"
             }`}
           >
-            History ({historyAppointments.length})
+            {td('dashboard.patient.history')} ({historyAppointments.length})
           </button>
         </div>
      </div>

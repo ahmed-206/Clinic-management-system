@@ -9,39 +9,41 @@ import {
   LuUsersRound
 } from "react-icons/lu";
 
+import { type DashboardKeys } from "../i18n/types";
 export interface MenuItem {
-  name: string;
+  name: DashboardKeys;
   path: string;
   icon: React.ReactNode;
 }
 export const menuConfig: Record<string, MenuItem[]> = {
+    
   patient: [
-    { name: "My Appointments", path: "/dashboard", icon: <LuCalendarDays /> },
+    { name: "dashboard.sidebar.myAppointments", path: "/dashboard", icon: <LuCalendarDays /> },
     {
-      name: "Book Appointment",
+      name: "dashboard.sidebar.bookAppointment",
       path: "/dashboard/book",
       icon: <LuCalendarPlus />,
     },
   ],
   doctor: [
-    { name: "Dashboard", path: "/doctor", icon: <LuChartColumnDecreasing /> },
+    { name: "dashboard.sidebar.dashboard", path: "/doctor", icon: <LuChartColumnDecreasing /> },
     {
-      name: "My Appointments",
+      name: "dashboard.sidebar.appointments",
       path: "/doctor/appointments",
       icon: <LuCalendarDays />,
     },
     {
-      name: "My Schedule",
+      name: "dashboard.sidebar.schedule",
       path: "/doctor/schedule",
       icon: <LuCalendarClock />,
     },
-    { name: "Profile", path: "/doctor/profile", icon: <LuUserRound /> },
+    { name: "dashboard.sidebar.profile", path: "/doctor/profile", icon: <LuUserRound /> },
   ],
   admin: [
-    { name: "Dashboard", path: "/admin", icon: <LuChartColumnDecreasing /> },
-    { name: "Doctors", path: "/admin/doctors", icon: <LuStethoscope /> },
-    { name: "Patients", path: "/admin/patient", icon: <LuUsersRound/> },
-    { name: "Appointments", path: "/admin/adminappointments", icon: <LuCalendarDays /> },
-    { name: "Settings", path: "/admin/settings", icon: <LuSettings /> },
+    { name: "dashboard.sidebar.dashboard", path: "/admin", icon: <LuChartColumnDecreasing /> },
+    { name: "dashboard.sidebar.doctors", path: "/admin/doctors", icon: <LuStethoscope /> },
+    { name: "dashboard.sidebar.patients", path: "/admin/patient", icon: <LuUsersRound/> },
+    { name: "dashboard.sidebar.appointments", path: "/admin/adminappointments", icon: <LuCalendarDays /> },
+    { name: "dashboard.sidebar.settings", path: "/admin/settings", icon: <LuSettings /> },
   ],
 };

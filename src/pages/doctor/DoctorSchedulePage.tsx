@@ -94,12 +94,12 @@ const ScheduleForm = ({
       </div>
 
       <div className="space-y-4">
-        <div className="hidden md:grid grid-cols-5 gap-4 text-sm font-semibold text-secondary border-b pb-3 px-2">
+        <div className="hidden md:grid grid-cols-5 gap-4 text-xs font-bold text-primary uppercase tracking-widest px-6 mb-2">
           <span className="text-left">Day</span>
-          <span>Available</span>
-          <span>From</span>
-          <span>To</span>
-          <span>Duration</span>
+          <span className="text-center">Available</span>
+          <span>Shift Start</span>
+          <span>Shift End</span>
+          <span>Session</span>
         </div>
 
         {DAYS.map((day) => {
@@ -109,61 +109,58 @@ const ScheduleForm = ({
           return (
             <div
               key={day.id}
-               className={`grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 items-center rounded-2xl bg-primary-100 hover:scale-102 shadow-md py-4 px-2 transition-all ${
-            !isAvailable ? "opacity-60" : ""
+              className={`grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-6 items-center rounded-4xl py-5 px-6 transition-all duration-300 border ${
+            isAvailable 
+            ? "bg-white border-slate-100 shadow-sm hover:shadow-md hover:border-primary/20" 
+            : "bg-slate-50/50 border-transparent opacity-60 grayscale-[0.5]"
           }`}
             >
-              <span className="font-bold md:font-medium text-secondary">{day.name}</span>
-              <div className="flex justify-end md:justify-start">
-                <input
-              type="checkbox"
-              className="w-6 h-6 md:w-5 md:h-5 accent-primary cursor-pointer transition-all"
-              checked={isAvailable}
-              onChange={(e) =>
-                handleInputChange(day.id, "is_available", e.target.checked)
-              }
+              <span className={`text-lg font-bold ${isAvailable ? "text-primary" : "text-primary/50"}`}>{day.name}</span>
+              <div className="flex justify-end md:justify-center">
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input 
+                type="checkbox" 
+                className="sr-only peer"
+                checked={isAvailable}
+                onChange={(e) => handleInputChange(day.id, "is_available", e.target.checked)}
+              />
+              <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+            </label>
+          </div>
+             <div className="relative group">
+            <input
+              type="time"
+              disabled={!isAvailable}
+              value={dayData.start_time || "10:00"}
+              onChange={(e) => handleInputChange(day.id, "start_time", e.target.value)}
+              className="w-full bg-primary-100/50 border-0 text-primary font-medium rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 transition-all disabled:opacity-30"
             />
-              </div>
-             <input
-            type="time"
-            disabled={!isAvailable}
-            value={dayData.start_time || "10:00"}
-            onChange={(e) =>
-              handleInputChange(day.id, "start_time", e.target.value)
-            }
-            className="w-full border border-primary-200 bg-white text-primary rounded-lg px-2 py-2 text-sm 
-            focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none
-            disabled:bg-gray-50 disabled:text-gray-400 transition-all"
-          />
+          </div>
               {/* End Time */}
-          <input
-            type="time"
-            disabled={!isAvailable}
-            value={dayData.end_time || "17:00"}
-            onChange={(e) =>
-              handleInputChange(day.id, "end_time", e.target.value)
-            }
-            className="w-full border border-primary-200 bg-white text-primary rounded-lg px-2 py-2 text-sm 
-            focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none
-            disabled:bg-gray-50 disabled:text-secondary/50 transition-all"
-          />
+          <div className="relative group">
+            <input
+              type="time"
+              disabled={!isAvailable}
+              value={dayData.end_time || "17:00"}
+              onChange={(e) => handleInputChange(day.id, "end_time", e.target.value)}
+              className="w-full bg-primary-100/50 border-0 text-primary font-medium rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 transition-all disabled:opacity-30"
+            />
+          </div>
              {/* Duration */}
-          <select
-            disabled={!isAvailable}
-            value={dayData.slot_duration ?? 30}
-            onChange={(e) =>
-              handleInputChange(day.id, "slot_duration", parseInt(e.target.value))
-            }
-            className="w-full col-span-2 md:col-span-1 border border-primary-200 bg-white text-primary rounded-lg px-2 py-2 text-sm 
-            focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none
-            disabled:bg-gray-50 disabled:text-gray-400 transition-all"
-          >
-            <option value={15}>15 min</option>
-            <option value={20}>20 min</option>
-            <option value={30}>30 min</option>
-            <option value={45}>45 min</option>
-            <option value={60}>60 min</option>
-          </select>
+         <div className="col-span-2 md:col-span-1">
+            <select
+              disabled={!isAvailable}
+              value={dayData.slot_duration ?? 30}
+              onChange={(e) => handleInputChange(day.id, "slot_duration", parseInt(e.target.value))}
+              className="w-full bg-primary-100/50 border-0 text-primary font-semibold rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 outline-none appearance-none cursor-pointer disabled:opacity-30"
+            >
+              <option value={15}>15 min</option>
+              <option value={20}>20 min</option>
+              <option value={30}>30 min</option>
+              <option value={45}>45 min</option>
+              <option value={60}>60 min</option>
+            </select>
+          </div>
             </div>
           );
         })}
