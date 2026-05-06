@@ -163,14 +163,14 @@ export const Navbar = () => {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="flex items-center justify-center w-full py-3 text-sm font-medium text-white/70 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all duration-200"
                   >
-                    Login
+                    {t('login')}
                   </Link>
                   <Link
                     to="/signup"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="flex items-center justify-center w-full py-3 text-sm font-bold text-primary bg-white  rounded-xl shadow-[0_4px_16px_rgba(37,99,235,0.3)] transition-all duration-200"
                   >
-                    Sign up
+                    {t('signUp')}
                   </Link>
                 </>
               ) : (
@@ -179,7 +179,7 @@ export const Navbar = () => {
                   onClick={handleLogout}
                   className="w-full py-3 text-sm font-medium "
                 >
-                  Logout
+                  {t('logout')}
                 </Button>
               )}
             </div>

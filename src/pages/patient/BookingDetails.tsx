@@ -25,9 +25,10 @@ import {
 } from "../../utils/appointmentLogic";
 import { LuCalendarX } from "react-icons/lu";
 import type { DayOfWeek } from "../../types/types";
+import { useDashboardT } from "../../hooks/useT";
 
 const BookingDetailsContent = () => {
-   
+   const td = useDashboardT();
   
   const navigate = useNavigate();
   const { doctorId } = useParams();
@@ -226,13 +227,13 @@ const BookingDetailsContent = () => {
         onClick={() => navigate(-1)}
         className="text-primary font-semibold flex items-center gap-2 hover:underline cursor-pointer text-sm md:text-base"
       >
-        ← Back to Doctors List
+        {td('dashboard.patient.backToDoctors')}
       </button>
 
       {/* Doctor Header Card */}
 
       <div
-        className={`rounded-[25px] md:rounded-[30px] p-4 md:p-6 shadow-sm border flex flex-col md:flex-row gap-4 md:gap-6 items-center text-center md:text-left transition-all duration-500 ${
+        className={`rounded-[25px] md:rounded-[30px] p-4 md:p-6 shadow-sm border flex flex-col md:flex-row gap-4 md:gap-6 items-center text-center md:text-start transition-all duration-500 ${
           rescheduleId
             ? "bg-orange-50 border-orange-200"
             : editId
@@ -259,7 +260,7 @@ const BookingDetailsContent = () => {
           )}
         </div>
 
-        <div className="flex-1 text-center md:text-left space-y-1">
+        <div className="flex-1 text-center md:text-start space-y-1">
           <h2 className="text-xl md:text-2xl font-bold text-primary">
             {rescheduleId
               ? "Reschedule Your Appointment"
@@ -283,7 +284,7 @@ const BookingDetailsContent = () => {
         <div className="w-full md:w-auto pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-gray-100 md:pl-6">
           <div className="flex justify-between flex-col items-center text-secondary">
             <LiaMoneyBillWaveSolid className="text-primary" size={28} />
-            <span>Session Price {doctorAvailability?.doctorPrice} EGP</span>
+            <span>{td('dashboard.patient.sessionPrice')} {doctorAvailability?.doctorPrice} EGP</span>
           </div>
         </div>
       </div>
@@ -292,7 +293,7 @@ const BookingDetailsContent = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-start">
         {/* Date Section */}
         <div className="space-y-4">
-          <h2 className="text-lg md:text-xl font-bold text-secondary ">Select Date</h2>
+          <h2 className="text-lg md:text-xl font-bold text-secondary ">{td('dashboard.patient.selectDate')}</h2>
           <div className="calendar-card shadow-xl rounded-[20px] md:rounded-[25px] p-2 md:p-4 bg-white border border-gray-50">
             <Calendar
               onChange={(value) => handleDateChange(value as Date)}
@@ -309,7 +310,7 @@ const BookingDetailsContent = () => {
 
         {/* Time Section */}
         <div className="space-y-4">
-          <h2 className="text-lg md:text-xl font-bold text-secondary ml-2">Select Time</h2>
+          <h2 className="text-lg md:text-xl font-bold text-secondary ml-2">{td('dashboard.patient.selectTime')}</h2>
 
           {/* الحالة الأولى: وجود مواعيد متاحة */}
           {availableSlots.length > 0 ? (
@@ -358,7 +359,7 @@ const BookingDetailsContent = () => {
               </p>
 
               <div className="mt-4 px-4 py-1 bg-red-50 text-red-500 text-xs font-bold rounded-[8px] border border-red-100 uppercase tracking-wider">
-                No Slots Available
+                {td('dashboard.patient.noSlotsAvailable')}
               </div>
             </div>
           )}
@@ -393,8 +394,8 @@ const BookingDetailsContent = () => {
       {/* Account suspended */}
       {!profile?.is_active && (
         <div className="flex justify-center flex-col items-center p-8 bg-red-50 rounded-2xl border border-red-100 mt-6">
-          <h3 className="text-red-800 text-2xl font-bold">Your account is suspended.</h3>
-          <p className="text-red-600">Please call the clinic to resolve this issue.</p>
+          <h3 className="text-red-800 text-2xl font-bold">{td('dashboard.patient.accountSuspended')}</h3>
+          <p className="text-red-600">{td('dashboard.patient.accountSuspendedMsg')}</p>
         </div>
       )}
     </div>

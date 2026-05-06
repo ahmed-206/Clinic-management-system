@@ -10,6 +10,7 @@ import PatientDetailsModal from "../../components/ui/PatientDetailsModal";
 import { Button } from "../../components/ui/Button";
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import { formatDisplayDate, formatDisplayTime } from "../../utils/dateTimeFormate";
+import { useDashboardT,useCommonT } from "../../hooks/useT";
 
 // Statuses that belong in the "upcoming" tab
 const UPCOMING_STATUSES: AppointmentStatus[] = [
@@ -26,6 +27,8 @@ const HISTORY_STATUSES: AppointmentStatus[] = [
 ];
 
 const DoctorAppointmentPage = () => {
+   const td = useDashboardT();
+  const tc = useCommonT();
   const { user } = useAuth();
   
   const [appointments, setAppointments] = useState<AppointmentData[]>([]);
@@ -107,7 +110,7 @@ const DoctorAppointmentPage = () => {
   return (
     <div className="p-4 md:p-6 bg-white min-h-screen rounded-xl">
       <div className="flex flex-col gap-6 mb-8 lg:flex-row lg:justify-between lg:items-center">
-        <h1 className="text-2xl md:text-3xl font-bold text-primary">My Appointments</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-primary">{td('dashboard.doctor.myAppointments')}</h1>
 
         <div className="flex flex-col gap-4 w-full md:flex-row md:items-center lg:w-auto"> 
 
@@ -121,7 +124,7 @@ const DoctorAppointmentPage = () => {
                 : "text-gray-700 hover:text-gray-800"
             }`}
           >
-            Upcoming ({counts.upcomingAppointments})
+            {td('dashboard.doctor.upcoming')} ({counts.upcomingAppointments})
           </button>
           <button
             onClick={() => setActiveTab("past")}
@@ -131,7 +134,7 @@ const DoctorAppointmentPage = () => {
                 : "text-gray-700 hover:text-gray-800"
             }`}
           >
-            History ({counts.pastAppointments})
+            {td('dashboard.doctor.history')} ({counts.pastAppointments})
           </button>
         </div>
         </div>
@@ -146,24 +149,24 @@ const DoctorAppointmentPage = () => {
         </div>
       <div className="bg-white rounded-xl shadow overflow-hidden">
       <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[600px]">
+          <table className="w-full text-start border-collapse min-w-[600px]">
           <thead className="bg-primary text-white uppercase text-xs md:text-sm font-semibold">
             <tr>
-              <th className="py-4 px-4 md:px-6">Patient</th>
-              <th className="py-4 px-4 md:px-6">Date</th>
-              <th className="py-4 px-4 md:px-6">Time</th>
-              <th className="py-4 px-4 md:px-6 text-center">Status</th>
-              <th className="py-4 px-4 md:px-6 ">Actions</th>
+              <th className="py-4 px-4 md:px-6 text-start">{tc('patient')}</th>
+              <th className="py-4 px-4 md:px-6 text-start">{tc('date')}</th>
+              <th className="py-4 px-4 md:px-6 text-start">{tc('time')}</th>
+              <th className="py-4 px-4 md:px-6 text-start">{tc('status')}</th>
+              <th className="py-4 px-4 md:px-6 text-start">{tc('actions')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {filteredList.length > 0 ? (
               filteredList.map((app) => (
-                <tr key={app.id} className="hover:bg-gray-50 transition">
+                <tr key={app.id} className="hover:bg-gray-50 transition ">
                   <td className="py-4 px-4 md:px-6 font-medium text-secondary/70">
                     {app.patients?.full_name ?? app.profiles?.name ?? "—"}
                   </td>
-                  <td className="py-4 px-4 md:px-6 text-secondary/70 text-sm">
+                  <td className="py-4 px-4 md:px-6 text-secondary/70 text-sm ">
                     {formatDisplayDate(app.appointment_date)}
                   </td>
                   <td className="py-4 px-4 md:px-6 text-primary font-semibold text-sm">
@@ -172,11 +175,11 @@ const DoctorAppointmentPage = () => {
                   <td className="py-4 px-4 md:px-6 text-center">
                     <StatusBadge status={app.status} />
                   </td>
-                  <td className="py-4 px-4 md:px-6 text-right">
+                  <td className="py-4 px-4 md:px-6 text-start">
                     
                     {/* أزرار التحكم تظهر فقط في التبويب القادم وللمواعيد غير المنتهية */}
                     {activeTab === "upcoming" ? (
-                      <div className="flex flex-col sm:flex-row gap-2 justify-end items-end sm:items-center">
+                      <div className="flex flex-col sm:flex-row gap-2  items-end sm:items-center">
                         <Button
                           onClick={() => {
                             setSelectedAppointment(app); // تخزين الموعد الحالي لفتح الروشتة له
@@ -186,7 +189,7 @@ const DoctorAppointmentPage = () => {
                           className="text-[10px] md:text-xs py-1 px-2 h-auto w-full sm:w-auto flex items-center justify-center gap-1"
                         >
                           
-                          Complete & Prescribe
+                          {td('dashboard.doctor.completePrescribe')}
                         </Button>
                         <Button
                           variant="danger"
@@ -195,7 +198,7 @@ const DoctorAppointmentPage = () => {
                             handleStatusUpdate(app.id!, "cancelled")
                           }
                         >
-                          Cancel
+                          {tc('cancel')}
                         </Button>
                         <button
                           onClick={() => {
@@ -204,7 +207,7 @@ const DoctorAppointmentPage = () => {
                           }}
                           className="text-primary hover:text-primary/80 font-medium text-sm transition-colors cursor-pointer"
                         >
-                          View medical history
+                          {td('dashboard.doctor.viewMedicalHistory')}
                         </button>
                       </div>
                     ) : (
@@ -214,7 +217,7 @@ const DoctorAppointmentPage = () => {
                           setIsDetailsModalOpen(true);
                         }}
                         className="text-gray-400 hover:text-primary font-medium text-sm transition-colors cursor-pointer">
-                        View medical history
+                        {td('dashboard.doctor.viewMedicalHistory')}
                       </button>
                     )}
                   </td>

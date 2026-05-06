@@ -8,9 +8,12 @@ import {LoadingWrapper } from "../../components/ui/LoadingWrapper";
 import { Button } from "../../components/ui/Button";
 import {type UserProfile } from "../../types/types";
 import { useState } from "react";
+import { useDashboardT, useCommonT } from "../../hooks/useT";
 
 
 export const DoctorsMangementPage = () => {
+  const td = useDashboardT();
+    const tc = useCommonT();
   const { doctors, allSpecialties, isLoading, searchProps, actions } =
     useAdminDoctors();
     const [selectedDoctor, setSelectedDoctor] = useState<UserProfile | null>(null);
@@ -26,12 +29,12 @@ export const DoctorsMangementPage = () => {
   return (
     <div className="p-4 md:p-8">
      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-       <h1 className="text-xl md:text-2xl font-bold text-primary">Doctors Management</h1>
+       <h1 className="text-xl md:text-2xl font-bold text-primary">{td('dashboard.admin.doctorsManagement')}</h1>
        <Button 
          onClick={() => setIsAddModalOpen(true)}
          
        >
-         + Add New Doctor
+         {td('dashboard.admin.addNewDoctor')}
        </Button>
     </div>
       
@@ -45,14 +48,14 @@ export const DoctorsMangementPage = () => {
       <LoadingWrapper isLoading={actions.isUpdating || actions.isToggling}>
       <div className="bg-white rounded-2xl shadow-sm  overflow-hidden">
       <div className="overflow-x-auto">
-          <table className="w-full text-left min-w-[700px]">
+          <table className="w-full text-start min-w-[700px]">
           <thead className="bg-primary text-white text-xs md:text-sm">
             <tr >
-              <th className="p-4">Doctor</th>
-              <th className="p-4">Specialty</th>
-              <th className="p-4">Status</th>
-              <th className="p-4">Verified</th>
-              <th className="p-4 text-center">Actions</th>
+              <th className="p-4 text-start">{tc('doctor')}</th>
+              <th className="p-4 text-start">{tc('specialty')}</th>
+              <th className="p-4 text-start">{tc('status')}</th>
+              <th className="p-4 text-start">{tc('verify')}</th>
+              <th className="p-4 text-start">{tc('actions')}</th>
             </tr>
           </thead>
 
@@ -70,14 +73,14 @@ export const DoctorsMangementPage = () => {
                   <span className="text-red-500 flex items-center gap-1"><LuUserRoundX  /> Inactive</span>
                 }
               </td>
-              <td className="p-4 text-center">
+              <td className="p-4 text-start">
                 <button onClick={() => actions.toggleVerify(doc.id, !!doc.is_verified)}>
                   <LuBadgeCheck className={doc.is_verified ? "text-blue-500" : "text-secondary/70"} size={20} />
                 </button>
               </td>
-              <td className="p-4">
-                <div className="flex justify-center gap-3">
-                  <button onClick={() => setSelectedDoctor(doc)} className="bg-tertiary-100 p-2 rounded-[4px] text-white"><LuPencil size={14} /></button>
+              <td className="p-4 text-start">
+                <div className="flex justify-center gap-3 ">
+                  <button onClick={() => setSelectedDoctor(doc)} className="bg-tertiary-100 p-2 rounded-[4px] text-white "><LuPencil size={14} /></button>
                   {selectedDoctor && (
         <EditDoctorModal 
           key={selectedDoctor.id}

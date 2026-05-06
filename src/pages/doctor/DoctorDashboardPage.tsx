@@ -6,9 +6,11 @@ import PatientDetailsModal from "../../components/ui/PatientDetailsModal";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import { LuCalendar, LuClock3, LuCircleX, LuStar, LuUsersRound } from "react-icons/lu";
 import { useState } from "react";
-
+import { useDashboardT,useCommonT } from "../../hooks/useT";
 
 export const DoctorDashboardPage = () => {
+  const td = useDashboardT();
+const tc = useCommonT();
   const [selectedApp, setSelectedApp] = useState<AppointmentData | null>(null);
   const { user } = useAuth();
   const {
@@ -34,8 +36,8 @@ export const DoctorDashboardPage = () => {
   return (
     <div className="p-4 md:p-8 bg-white min-h-screen rounded-xl">
       <div className="flex flex-col mb-2">
-        <h1 className="text-2xl md:text-3xl font-bold text-primary">Welcome Back,</h1>
-        <p className="text-secondary font-medium">Here's what's happening today.</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-primary">{td('dashboard.doctor.welcomeBack')}</h1>
+        <p className="text-secondary font-medium">{td('dashboard.doctor.whatsHappening')}</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
@@ -65,20 +67,20 @@ export const DoctorDashboardPage = () => {
       <div className="mt-10 md:mt-12">
       <div className="p-6 border-b border-gray-50 flex justify-between items-center">
           <div className="flex items-center gap-2">
-             <h2 className="text-lg md:text-xl font-bold text-secondary">Next Patients Today</h2>
+             <h2 className="text-lg md:text-xl font-bold text-secondary">{td('dashboard.doctor.nextPatients')}</h2>
              <LuUsersRound className="text-primary" size={20} />
           </div>
           <span className="text-xs font-bold text-primary bg-primary-100 px-3 py-1 rounded-full">
-             Live Updates
+             {td('dashboard.doctor.liveUpdates')}
           </span>
         </div>
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[500px]">
+          <table className="w-full text-start border-collapse min-w-[500px]">
             <thead className="bg-primary text-white">
               <tr className="border-b-2 border-gray-200">
-                <th className="py-3 px-4 font-bold">Time</th>
-                <th className="py-3 px-4 font-bold">Patient</th>
-                <th className="py-3 px-4 font-bold">Action</th>
+                <th className="py-3 px-4 font-bold text-start">{tc('time')}</th>
+                <th className="py-3 px-4 font-bold text-start">{tc('patient')}</th>
+                <th className="py-3 px-4 font-bold text-start">{tc('actions')}</th>
               </tr>
             </thead>
             <tbody>
@@ -104,7 +106,7 @@ export const DoctorDashboardPage = () => {
                           onClick={() => setSelectedApp(app)}
                           className="text-primary hover:text-primary/80 font-medium text-sm transition-colors cursor-pointer"
                         >
-                          View Details
+                          {td('dashboard.doctor.viewDetails')}
                         </button>
                       </td>
                     </tr>

@@ -11,12 +11,15 @@ import {
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import type { AppointmentStatus } from "../../types/types";
 import { toast } from "sonner";
+import { useDashboardT, useCommonT } from "../../hooks/useT";
+
 export const AppointmentsManagementPage = () => {
   const { appointmentsQuery, updateStatusMutation } = useAdminAppointments();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [dateFilter, setDateFilter] = useState("all");
-
+const td = useDashboardT();
+  const tc = useCommonT();
   const filteredData = useMemo(() => {
     let result = appointmentsQuery.data || [];
 
@@ -87,13 +90,13 @@ export const AppointmentsManagementPage = () => {
     <div className="p-4 md:p-6 min-h-screen">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
         <h1 className="text-xl md:text-2xl font-bold mb-6 text-primary">
-          Appointments Mangement
+          {td('dashboard.admin.appointmentsManagement')}
         </h1>
         <Button
         variant="primary"
           onClick={handleExportToExcel}
         >
-          Export to Excel
+          {td('dashboard.admin.exportToExcel')}
         </Button>
       </div>
       <SearchBar
@@ -108,14 +111,14 @@ export const AppointmentsManagementPage = () => {
 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
         <div className="overflow-x-auto">
-           <table className="w-full text-left border-collapse min-w-[700]">
+           <table className="w-full text-start border-collapse min-w-[700]">
           <thead>
             <tr className="bg-primary text-white">
-              <th className="p-4 text-sm font-semibold ">Patient</th>
-              <th className="p-4 text-sm font-semibold ">Doctor</th>
-              <th className="p-4 text-sm font-semibold ">Schedule</th>
-              <th className="p-4 text-sm font-semibold ">Status</th>
-              <th className="p-4 text-sm font-semibold ">Actions</th>
+              <th className="p-4 text-sm font-semibold  text-start">{tc('patient')}</th>
+              <th className="p-4 text-sm font-semibold  text-start">{tc('doctor')}</th>
+              <th className="p-4 text-sm font-semibold  text-start">{tc('schedule')}</th>
+              <th className="p-4 text-sm font-semibold  text-start">{tc('status')}</th>
+              <th className="p-4 text-sm font-semibold  text-start">{tc('actions')}</th>
             </tr>
           </thead>
           <tbody>

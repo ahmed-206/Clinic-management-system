@@ -3,8 +3,11 @@ import { SearchBar } from "../../components/ui/SearchBar";
 import { useAdminPatients } from "../../hooks/admin/useAdminPatients";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import { LoadingWrapper } from "../../components/ui/LoadingWrapper";
+import { useDashboardT, useCommonT } from "../../hooks/useT";
 
 export const PatientsManagementPage = () => {
+  const td = useDashboardT();
+    const tc = useCommonT();
   const { patientsQuery, toggleStatusMutation } = useAdminPatients();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -41,10 +44,10 @@ export const PatientsManagementPage = () => {
     <div className="p-4 md:p-6">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 text-center sm:text-left">
         <h1 className="text-xl md:text-2xl font-bold text-primary">
-          Patients Management
+          {td('dashboard.admin.patientsManagement')}
         </h1>
         <span className="bg-primary text-white px-4 py-1 rounded-xl text-xs md:text-sm">
-          Total: {filteredPatients.length}
+          {td('dashboard.admin.totalPatients')}: {filteredPatients.length}
         </span>
       </div>
 
@@ -60,14 +63,14 @@ export const PatientsManagementPage = () => {
       <LoadingWrapper isLoading={toggleStatusMutation.isPending}>
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left min-w-[700px]">
+            <table className="w-full text-start min-w-[700px]">
               <thead>
                 <tr className="bg-primary border-b border-gray-100 text-white">
-                  <th className="p-4 font-semibold">Patient Name</th>
-                  <th className="p-4 font-semibold">Email</th>
-                  <th className="p-4 font-semibold">Status</th>
-                  <th className="p-4 font-semibold">Joined Date</th>
-                  <th className="p-4 font-semibold">Actions</th>
+                  <th className="p-4 font-semibold text-start">{tc('patient')}</th>
+                  <th className="p-4 font-semibold text-start">{tc('email')}</th>
+                  <th className="p-4 font-semibold text-start">{tc('status')}</th>
+                  <th className="p-4 font-semibold text-start">{tc('joinedDate')}</th>
+                  <th className="p-4 font-semibold text-start">{tc('actions')}</th>
                 </tr>
               </thead>
               <tbody>

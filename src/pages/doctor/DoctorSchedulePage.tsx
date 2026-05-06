@@ -8,6 +8,7 @@ import { getLocalDateString } from "../../utils/appointmentLogic";
 import Calendar from "react-calendar";
 import { toast } from "sonner";
 import { Button } from "../../components/ui/Button";
+import { useDashboardT } from "../../hooks/useT";
 
 // عزلها خارج المكون لتقليل الرندر
 const transformSchedule = (data: DoctorAvailability[] | undefined) => {
@@ -30,6 +31,8 @@ const ScheduleForm = ({
   isSaving: boolean;
   userId?: string;
 }) => {
+   const td = useDashboardT();
+    
   // الـ State تأخذ قيمتها الابتدائية فقط عند أول رندر للمكون
   const [localSchedule, setLocalSchedule] = useState(() =>
     transformSchedule(initialData),
@@ -77,10 +80,10 @@ const ScheduleForm = ({
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
         <div>
       <h2 className="text-2xl md:text-3xl font-bold text-primary">
-        Weekly Availability
+        {td('dashboard.doctor.weeklyAvailability')}
       </h2>
       <p className="text-secondary text-sm mt-1">
-        Set your working hours and session durations
+        {td('dashboard.doctor.setWorkingHours')}
       </p>
     </div>
        {isSaving && (
@@ -95,11 +98,11 @@ const ScheduleForm = ({
 
       <div className="space-y-4">
         <div className="hidden md:grid grid-cols-5 gap-4 text-xs font-bold text-primary uppercase tracking-widest px-6 mb-2">
-          <span className="text-left">Day</span>
-          <span className="text-center">Available</span>
-          <span>Shift Start</span>
-          <span>Shift End</span>
-          <span>Session</span>
+          <span className="text-start">{td('dashboard.doctor.day')}</span>
+          <span className="text-center">{td('dashboard.doctor.available')}</span>
+          <span>{td('dashboard.doctor.shiftStart')}</span>
+          <span>{td('dashboard.doctor.shiftEnd')}</span>
+          <span>{td('dashboard.doctor.session')}</span>
         </div>
 
         {DAYS.map((day) => {
@@ -177,6 +180,7 @@ const ScheduleForm = ({
   );
 };
 const DoctorSchedulePage = () => {
+   const td = useDashboardT();
   const { user } = useAuth();
   const {
     scheduleData,
@@ -245,9 +249,9 @@ const DoctorSchedulePage = () => {
       <div className="p-6 bg-white rounded-xl shadow-lg max-w-5xl mx-auto">
        <div className="mb-8">
     <h2 className="text-2xl font-bold text-primary tracking-tight">
-      Manage Time Off
+      {td('dashboard.doctor.manageTimeOff')}
     </h2>
-    <p className="text-secondary text-sm mt-1">Select dates from the calendar to mark your holidays</p>
+    <p className="text-secondary text-sm mt-1">{td('dashboard.doctor.selectDatesHint')}</p>
   </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="flex justify-center">
@@ -261,7 +265,7 @@ const DoctorSchedulePage = () => {
           <div className="shadow-xl rounded-[20px] p-3">
             <div className="flex items-center justify-between mb-4 px-1 ">
         <h3 className="font-bold text-secondary flex items-center gap-2">
-          Selected Holidays
+          {td('dashboard.doctor.selectedHolidays')}
           <span className="bg-primary text-white text-xs py-0.5 px-2 rounded-xl">
             {timeOffData?.length || 0}
           </span>

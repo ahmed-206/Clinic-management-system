@@ -4,10 +4,11 @@ import { useDoctors } from "../../hooks/useDoctors";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import { SearchBar } from "../../components/ui/SearchBar";
 import { useState, useMemo } from "react";
-import { useDashboardT } from "../../hooks/useT";
+import { useDashboardT,useCommonT } from "../../hooks/useT";
 
 export const BookAppointmentPage = () => {
    const td = useDashboardT();
+   const tc = useCommonT();
   const { data: doctors, isLoading, isError, error } = useDoctors();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,7 +40,7 @@ export const BookAppointmentPage = () => {
     </div>
   );
   if (isError)
-    return <div className="text-red-500">حدث خطأ: {error.message}</div>;
+    return <div className="text-red-500"> {tc('error')}: {error.message}</div>;
 
   return (
     <div className="max-w-6xl mx-auto animate-fade-in px-4 py-6 md:px-0">

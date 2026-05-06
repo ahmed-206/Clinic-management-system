@@ -8,7 +8,10 @@ import {
   LuCircleDollarSign
   
 } from "react-icons/lu";
+import {  useDashboardT } from '../../../hooks/useT';
 const SettingsPage = () => {
+ 
+  const td = useDashboardT();
   const [activeTab, setActiveTab] = useState('general');
 
   // قائمة التبويبات   
@@ -20,7 +23,7 @@ const SettingsPage = () => {
 
   return (
     <div className="p-4 md:p-6 max-w-6xl mx-auto">
-      <h1 className="text-xl md:text-2xl font-bold text-primary mb-6 md:mb-8 text-center md:text-left">System Settings</h1>
+      <h1 className="text-xl md:text-2xl font-bold text-primary mb-6 md:mb-8 text-center md:text-start">{td('dashboard.admin.systemSettings')}</h1>
 
       <div className="flex flex-col lg:flex-row gap-8 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         

@@ -11,8 +11,11 @@ import {
 } from "react-icons/lu";
 import { BiLockAlt } from "react-icons/bi";
 import { Button } from "../../components/ui/Button";
+import { useCommonT,useDashboardT } from "../../hooks/useT";
 
 export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
+  const tc = useCommonT();
+  const td = useDashboardT();
   const navigate = useNavigate();
   const { mutate: cancel, isPending } = useCancelAppointment();
   const date = new Date(appointment.appointment_date);
@@ -46,7 +49,7 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
       </div>
 
       {/* 2. تفاصيل الموعد */}
-      <div className="flex-1 text-center md:text-left space-y-1">
+      <div className="flex-1 text-center md:text-start space-y-1">
         <h3 className={`text-xl font-bold ${isRescheduleNeeded ? "text-orange-700" : isFinalStatus ? "text-secondary/50" : "text-secondary"}`}>
           Dr. {appointment.doctor.name}
         </h3>
@@ -67,7 +70,7 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
         {!canEditOrCancel && !isFinalStatus && !isRescheduleNeeded && (
           <div className="flex items-center gap-1 text-[11px] text-red-400 mt-2 font-medium bg-red-50 w-fit px-2 py-0.5 rounded-full mx-auto md:mx-0">
             <BiLockAlt />
-            <p>Changes locked (under 24h)</p>
+            <p>{td('dashboard.patient.changesLocked')}</p>
           </div>
         )}
       </div>
@@ -136,7 +139,7 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
                   isLoading={isPending}
                   onClick={() => cancel(appointment.id)}
                 >
-                  Cancel
+                  {tc('cancel')}
                 </Button>
                 
                 <Button
@@ -144,7 +147,7 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
                   onClick={() => navigate(`/dashboard/book/${appointment.doctor_id}?editId=${appointment.id}`)}
                   className="text-tertiary-200 border-tertiary-200 hover:text-white hover:bg-tertiary-200"
                 >
-                  Edit
+                  {tc('edit')}
                 </Button>
               </div>
             )}

@@ -17,13 +17,14 @@ import {
 } from "react-icons/lu";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import { formatDisplayDate } from "../../utils/dateTimeFormate";
+import { useDashboardT, useCommonT } from "../../hooks/useT";
 
 interface StatCardProps {
   title: string;
   value: number | string;
   icon: React.ReactNode;
-  iconBgColor: string; // لون خلفية الأيقونة (موحد أو متغير)
-  accentColor: string; // لون الخط الجانبي
+  iconBgColor: string;
+  accentColor: string;
 }
 
 const StatCard = ({ title, value, icon, iconBgColor, accentColor }: StatCardProps) => (
@@ -53,71 +54,68 @@ const StatCard = ({ title, value, icon, iconBgColor, accentColor }: StatCardProp
 export const AdminDashboard = () => {
   const { stats, activities, isActivityLoading, statsError, isStatsLoading } =
     useAdminDashboard();
+  const td = useDashboardT();
+  const tc = useCommonT();
 
-  // 1. حالة التحميل
   if (isStatsLoading) {
     return (
       <div className="flex justify-center items-center h-screen bg-gray-50">
         <LoadingSpinner size="lg" />
-        
       </div>
     );
   }
 
-  // 1. حالة الخطأ
   if (statsError) {
     return (
       <div className="flex justify-center items-center h-screen bg-red-50 text-red-700">
-        <p className="text-lg">Error: {statsError.message}</p>
+        <p className="text-lg">{tc('error')}: {statsError.message}</p>
       </div>
     );
   }
   return (
     <div className="p-4 md:p-8 bg-neutral-100 min-h-screen rounded-xl">
 <div className="mb-6 md:mb-8 text-center md:text-left">
-        <h1 className="text-2xl md:text-3xl font-bold text-primary mb-6 md:mb-2 text-center md:text-left">Welcome back, Admin</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-primary mb-6 md:mb-2 text-center md:text-start">{td('dashboard.admin.welcomeBack')}</h1>
 <p className="text-sm md:text-base text-secondary font-medium">
     {formatDisplayDate(new Date().toISOString())}
   </p>
-  </div>      {/* --- القسم الأول: الكروت الإحصائية الأربعة (Grid Layout) --- */}
+  </div>      {/* الكروت الإحصائية */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
         <StatCard
-          title="Total Doctors"
+          title={td('dashboard.admin.totalDoctors')}
           value={stats?.mainStats.doctors || 0}
           icon={<LuStethoscope size={24} />}
           iconBgColor="bg-blue-50"   
     accentColor="bg-primary"
         />
         <StatCard
-          title="Total Patients"
+          title={td('dashboard.admin.totalPatients')}
           value={stats?.mainStats.patients || 0}
           icon={<LuUsersRound size={24} />}
          iconBgColor="bg-blue-50"   
     accentColor="bg-primary-200"
         />
         <StatCard
-          title="Appointments Today"
+          title={td('dashboard.admin.appointmentsToday')}
           value={stats?.mainStats.todayAppointments || 0}
           icon={<LuCalendarDays size={24} />}
          iconBgColor="bg-blue-50"   
     accentColor="bg-primary"
         />
         <StatCard
-          title="Total Revenue"
-          value={`${(stats?.mainStats.revenue || 0).toLocaleString()} EGP`} // تنسيق العملة
+          title={td('dashboard.admin.totalRevenue')}
+          value={`${(stats?.mainStats.revenue || 0).toLocaleString()} EGP`}
           icon={<LuCircleDollarSign size={24} />}
          iconBgColor="bg-tertiary-100"  
     accentColor="bg-tertiary-200"
         />
       </div>
 
-      {/* --- القسم الثاني: الرسم البياني وقائمة النشاطات (Flex / Grid) --- */}
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        {/* الرسم البياني (سيتخذ 2/3 المساحة على الشاشات الكبيرة) */}
+        {/* الرسم البياني */}
         <div className="lg:col-span-2 bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 h-64 md:h-80 lg:h-96">
           <h2 className="text-lg md:text-xl font-medium text-primary mb-4 md:mb-6">
-            Appointments Trend (Last 7 Days)
+            {td('dashboard.admin.appointmentsTrend')}
           </h2>
           <ResponsiveContainer width="100%" height="80%">
             <LineChart data={stats?.chartData}>
@@ -149,10 +147,10 @@ export const AdminDashboard = () => {
           </ResponsiveContainer>
         </div>
 
-        {/* قائمة النشاطات الأخيرة (سيتخذ 1/3 المساحة) */}
+        {/* قائمة النشاطات الأخيرة */}
         <div className="bg-primary rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100">
           <h2 className="text-xl font-bold text-primary-200 mb-6">
-            Recent Activity
+            {td('dashboard.admin.recentActivity')}
           </h2>
           {isActivityLoading ? (
             <div className="flex justify-center items-center h-full">
@@ -162,14 +160,14 @@ export const AdminDashboard = () => {
             <ul className="space-y-4">
               {!activities || activities.length === 0 ? (
                 <p className="text-gray-500 text-center py-4">
-                  No recent activity.
+                  {td('dashboard.admin.noRecentActivity')}
                 </p>
               ) : (
                 activities.map((activity) => {
                   const patientName =
                     activity.patients?.full_name ??
                     activity.profiles?.name ??
-                    "Unknown";
+                    tc('unknown');
                   return (
                     <li key={activity.id} className="flex items-center gap-3 bg-primary-200 text-white p-2 rounded-[8px]">
                       <div className="w-10 h-10 bg-primary-200 rounded-full flex items-center justify-center text-primary text-sm font-semibold shrink-0">
@@ -180,7 +178,7 @@ export const AdminDashboard = () => {
                           <span className="font-bold">
                             {patientName}
                           </span>{" "}
-                          booked an appointment.
+                          {td('dashboard.admin.bookedAppointment')}
                         </p>
                         <p className="text-xs text-white">
                           {new Date(activity.appointment_date).toLocaleString()}
@@ -195,14 +193,14 @@ export const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* --- القسم الثالث: Top Doctors (أو أي إحصائية أخرى) --- */}
+      {/* Top Doctors */}
       <div className="bg-white rounded-2xl p-4 md:p-6 shadow-sm">
         <h2 className="text-xl font-medium text-primary mb-6">
-          Top 3 Doctors by Appointments
+          {td('dashboard.admin.topDoctors')}
         </h2>
         {stats?.topDoctors?.length === 0 ? (
           <p className="text-secondary text-center py-4">
-            No doctors with appointments yet.
+            {td('dashboard.admin.noDoctors')}
           </p>
         ) : (
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -219,7 +217,7 @@ export const AdminDashboard = () => {
                     {doctor.name}
                   </p>
                   <p className="text-sm text-secondary/50">
-                    {doctor.count} Appointments
+                    {doctor.count} {td('dashboard.admin.appointmentsCount')}
                   </p>
                 </div>
               </li>
