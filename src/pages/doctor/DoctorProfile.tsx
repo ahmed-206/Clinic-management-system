@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useUpdateProfile } from "../../hooks/useUpdateProfile";
 import { useEffect } from "react";
+import { useFormPersist } from "../../hooks/useFormPersist";
 import { Button } from "../../components/ui/Button";
 
 
@@ -21,7 +22,7 @@ export const DoctorProfilePage = () => {
     const {profile} = useAuth();
     const {mutate : updateProfile, isPending} = useUpdateProfile();
 
-    const { register, handleSubmit,reset, formState: { errors } } = useForm<ProfileFormValues>({
+    const form = useForm<ProfileFormValues>({
     resolver : zodResolver(profileSchema),
     defaultValues: {
       name: profile?.name || "",
@@ -31,8 +32,12 @@ export const DoctorProfilePage = () => {
     },
   });
 
+  const { register, handleSubmit, reset, formState: { errors } } = form;
+  const { clearPersistedForm } = useFormPersist("doctor_profile", form);
+
    useEffect(() => {
-    if (profile) {
+    const savedData = sessionStorage.getItem("doctor_profile");
+    if (profile && !savedData) {
       reset({
         name: profile.name || "",
         specialty: profile.specialty || "",
@@ -59,7 +64,7 @@ export const DoctorProfilePage = () => {
 
       {/* Right Side: Settings Form */}
       <main className="flex-1 p-6 md:p-12 bg-white rounded-xl">
-        <form onSubmit={handleSubmit((data) => updateProfile(data))} className="max-w-xl space-y-6">
+        <form onSubmit={handleSubmit((data) => updateProfile(data, { onSuccess: clearPersistedForm }))} className="max-w-xl space-y-6">
           <div className="grid grid-cols-1 gap-5 md:gap-6">
             
             <FormField label="Full Name" error={errors.name?.message}>

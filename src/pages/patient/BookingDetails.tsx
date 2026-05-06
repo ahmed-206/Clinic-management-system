@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import {  useMemo } from "react";
+import { useSessionStorage } from "../../hooks/useSessionStorage";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { FaUserDoctor } from "react-icons/fa6";
 import Calendar from "react-calendar";
@@ -46,16 +47,18 @@ const BookingDetailsContent = () => {
 
     const {patients, createPatient, isCreatingPatient} = usePatients();
  
-    const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
-  const [showNewPatientForm, setShowNewPatientForm] = useState(false);
-  const [newPatient, setNewPatient] = useState({
+    const [selectedPatientId, setSelectedPatientId] = useSessionStorage<string | null>("booking_selectedPatientId", null);
+  const [showNewPatientForm, setShowNewPatientForm] = useSessionStorage("booking_showNewPatientForm", false);
+  const [newPatient, setNewPatient] = useSessionStorage("booking_newPatient", {
     full_name: "",
     phone: "",
     gender: "",
     is_self: false,
   });
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedTime, setSelectedTime] = useSessionStorage<string | null>("booking_selectedTime", null);
+  const [selectedDateStr, setSelectedDateStr] = useSessionStorage<string | null>("booking_selectedDate", () => new Date().toISOString());
+  
+  const selectedDate = selectedDateStr ? new Date(selectedDateStr) : null;
 
   const availableSlots = useMemo(() => {
     if (!selectedDate || !doctorAvailability) return [];
@@ -76,7 +79,7 @@ const BookingDetailsContent = () => {
   }, [selectedDate, doctorAvailability]);
 
   const handleDateChange = (date: Date) => {
-    setSelectedDate(date);
+    setSelectedDateStr(date.toISOString());
     setSelectedTime(null);
     setSelectedPatientId(null);
     setShowNewPatientForm(false);
@@ -168,6 +171,12 @@ const BookingDetailsContent = () => {
       }
     }
     const handleSuccess = () => {
+      sessionStorage.removeItem("booking_selectedPatientId");
+      sessionStorage.removeItem("booking_showNewPatientForm");
+      sessionStorage.removeItem("booking_newPatient");
+      sessionStorage.removeItem("booking_selectedTime");
+      sessionStorage.removeItem("booking_selectedDate");
+
       toast.success(
         rescheduleId
           ? "Appointment rescheduled successfully!"

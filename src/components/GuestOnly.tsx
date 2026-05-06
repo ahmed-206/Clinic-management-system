@@ -13,11 +13,14 @@ export const GuestOnly = () => {
 
   if (loading) return null; // wait until auth state is resolved
 
-  if (user) {
+  if (user && profile) {
     const redirect =
       (profile?.role && ROLE_REDIRECTS[profile.role]) ?? "/dashboard";
     return <Navigate to={redirect} replace />;
   }
+
+  if (user && !profile) return null;
+
 
   return <Outlet />;
 };

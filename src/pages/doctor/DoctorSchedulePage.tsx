@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSessionStorage } from "../../hooks/useSessionStorage";
 import { LoadingWrapper } from "../../components/ui/LoadingWrapper";
 import { useAuth } from "../../hooks/useAuth";
 import { type DayOfWeek, type DoctorAvailability } from "../../types/types";
@@ -34,7 +34,7 @@ const ScheduleForm = ({
    const td = useDashboardT();
     
   // الـ State تأخذ قيمتها الابتدائية فقط عند أول رندر للمكون
-  const [localSchedule, setLocalSchedule] = useState(() =>
+  const [localSchedule, setLocalSchedule] = useSessionStorage("doctor_schedule", () =>
     transformSchedule(initialData),
   );
 
@@ -73,6 +73,7 @@ const ScheduleForm = ({
       if (!confirm("You haven't selected any available days. Continue?"))
         return;
     }
+    sessionStorage.removeItem("doctor_schedule");
     onSave(payload as DoctorAvailability[]);
   };
   return (

@@ -10,19 +10,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const fetchProfile = async (userId: string) => {
-    console.log("Fetching profile for ID:", userId);
     const { data } = await supabase
       .from("profiles")
       .select()
       .eq("id", userId).returns<UserProfile>()
       .maybeSingle();
-      console.log("Data returned from DB:", data);
     return data;
   };
 
   useEffect(() => {
   // دالة واحدة تتعامل مع كل شيء
   const refreshAuth = async (session: Session | null) => {
+      console.log('🔄 refreshAuth called, event session:', session?.user?.email);
+
     setLoading(true); 
     if (session?.user) {
       const userProfile = await fetchProfile(session.user.id);
@@ -33,12 +33,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setProfile(null);
     }
     setLoading(false);
+    console.log('✅ refreshAuth done, loading = false');
   };
 
  
   const { data: authListener } = supabase.auth.onAuthStateChange(
     (event, session) => {
-      
+      console.log('🎯 Auth event:', event);
       if (event === "TOKEN_REFRESHED") {
         if (session?.user) {
           fetchProfile(session.user.id).then((userProfile) => {

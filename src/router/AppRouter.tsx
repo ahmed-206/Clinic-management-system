@@ -23,6 +23,7 @@ import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsOfService from "../pages/TermsOfService";
 import ContactUs from "../pages/ContactUs";
 
+
 const rout = createBrowserRouter([
   {
     path: "/",
@@ -94,7 +95,6 @@ const rout = createBrowserRouter([
     ]
   }
 ]);
-
 const AppRouter = () => {
   return <RouterProvider router={rout} />;
 };

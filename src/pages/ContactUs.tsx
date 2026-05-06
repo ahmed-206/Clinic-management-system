@@ -6,27 +6,39 @@ import { LuPhone } from "react-icons/lu";
 import { FaRegEnvelope } from "react-icons/fa";
 import { GrLocation } from "react-icons/gr";
 import { Button } from '../components/ui/Button';
-
-
+import { useSessionStorage } from '../hooks/useSessionStorage';
 
 const ContactUs = () => {
   const [loading, setLoading] = useState(false);
-    const {settings} = useSettings();
+  const {settings} = useSettings();
+  
+  const [formData, setFormData] = useSessionStorage("contact_form", {
+    name: "",
+    email: "",
+    message: ""
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    const formData = new FormData(e.currentTarget);
     
     const { error } = await supabase.from('contact_messages').insert({
-      name: formData.get('name'),
-      email: formData.get('email'),
-      message: formData.get('message'),
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
     });
 
     if (error) toast.error("Failed to send message");
     else {
       toast.success("Message sent successfully!");
-      (e.target as HTMLFormElement).reset();
+      setFormData({ name: "", email: "", message: "" });
+      sessionStorage.removeItem("contact_form");
     }
     setLoading(false);
   };
@@ -64,17 +76,17 @@ const ContactUs = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="flex flex-col">
               <label className={labelStyle}>Full Name / الاسم</label>
-              <input name="name" required className={inputStyle} placeholder="John Doe" />
+              <input name="name" required className={inputStyle} placeholder="John Doe" value={formData.name} onChange={handleChange} />
             </div>
             <div className="flex flex-col">
               <label className={labelStyle}>Email / البريد</label>
-              <input name="email" type="email" required className={inputStyle} placeholder="example@mail.com" />
+              <input name="email" type="email" required className={inputStyle} placeholder="example@mail.com" value={formData.email} onChange={handleChange} />
             </div>
           </div>
           
           <div className="flex flex-col">
             <label className={labelStyle}>Message / الرسالة</label>
-            <textarea name="message" rows={4} required className={`${inputStyle} h-32 py-4 resize-none`} placeholder="How can we help you?" />
+            <textarea name="message" rows={4} required className={`${inputStyle} h-32 py-4 resize-none`} placeholder="How can we help you?" value={formData.message} onChange={handleChange} />
           </div>
 
           <Button 
