@@ -12,6 +12,7 @@
       "settings": "Settings"
     },
     "patient": {
+      "bookNow": "Book now",
       "appointment": "My Appointments",
       "bookAppointment": "Book Appointment",
       "bookSubTitle": "Choose a specialty or search for your doctor",

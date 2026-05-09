@@ -1,10 +1,9 @@
-// src/pages/Patient/components/BookAppointment.tsx
 import { DoctorCard } from "../../features/patient/DoctorCard";
 import { useDoctors } from "../../hooks/useDoctors";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
-import { SearchBar } from "../../components/ui/SearchBar";
 import { useState, useMemo } from "react";
 import { useDashboardT,useCommonT } from "../../hooks/useT";
+import { SearchInput } from "../../components/ui/searchBar/index";
 
 export const BookAppointmentPage = () => {
    const td = useDashboardT();
@@ -51,11 +50,7 @@ export const BookAppointmentPage = () => {
       </div>
 
       <div className="mb-8">
-        <SearchBar
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          showSpecialtyFilter={false}
-        />
+       <SearchInput value={searchTerm} onChange={setSearchTerm} />
       </div>
 
 {/* نظام الـ Tabs للتخصصات */}
@@ -71,7 +66,7 @@ export const BookAppointmentPage = () => {
                   : "bg-white text-secondary border border-secondary/20 hover:border-primary hover:text-primary"
               }`}
             >
-              {spec === "All" ? "All Specialties" : spec}
+              {spec === "All" ? td('dashboard.patient.allSpecialties') : spec}
             </button>
           ))}
         </div>
@@ -79,7 +74,7 @@ export const BookAppointmentPage = () => {
   
       <div className="mb-6 md:mb-8">
         <p className="mt-4 text-secondary/80 font-semibold text-lg ">
-          Find Your Doctors
+          {td('dashboard.patient.findDoctors')}
         </p>
       </div>
 
@@ -98,12 +93,12 @@ export const BookAppointmentPage = () => {
       {/* Empty State */}
       {filteredDoctors.length === 0 && (
         <div className="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200 mt-10">
-          <p className="text-gray-500 font-bold">No doctors found in this category.</p>
+          <p className="text-gray-500 font-bold">{td('dashboard.patient.noDoctorsFound')}</p>
           <button 
             onClick={() => {setSearchTerm(""); setSelectedSpecialty("All");}}
             className="mt-4 text-primary font-bold hover:underline"
           >
-            Show all doctors
+            {td('dashboard.patient.showAllDoctors')}
           </button>
         </div>
       )}

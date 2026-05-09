@@ -6,7 +6,7 @@ import { useUpdateProfile } from "../../hooks/useUpdateProfile";
 import { useEffect } from "react";
 import { useFormPersist } from "../../hooks/useFormPersist";
 import { Button } from "../../components/ui/Button";
-
+import { useDashboardT } from "../../hooks/useT";
 
 
 const profileSchema = z.object({
@@ -19,6 +19,7 @@ const profileSchema = z.object({
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
 export const DoctorProfilePage = () => {
+  const td = useDashboardT();
     const {profile} = useAuth();
     const {mutate : updateProfile, isPending} = useUpdateProfile();
 
@@ -67,19 +68,19 @@ export const DoctorProfilePage = () => {
         <form onSubmit={handleSubmit((data) => updateProfile(data, { onSuccess: clearPersistedForm }))} className="max-w-xl space-y-6">
           <div className="grid grid-cols-1 gap-5 md:gap-6">
             
-            <FormField label="Full Name" error={errors.name?.message}>
+            <FormField label={td('dashboard.doctor.profileFullName')} error={errors.name?.message}>
               <input {...register("name")} className={inputStyle} />
             </FormField>
 
-            <FormField label="Medical Specialty" error={errors.specialty?.message}>
+            <FormField label={td('dashboard.doctor.medicalSpecialty')} error={errors.specialty?.message}>
               <input {...register("specialty")} className={inputStyle} />
             </FormField>
 
-            <FormField label="Professional Bio" error={errors.bio?.message}>
+            <FormField label={td('dashboard.doctor.professionalBio')} error={errors.bio?.message}>
               <textarea {...register("bio")} rows={4} className={`${inputStyle}resize-none`} />
             </FormField>
 
-            <FormField label="Session Price (EGP)" error={errors.price_per_session?.message}>
+            <FormField label={td('dashboard.doctor.sessionPrice')} error={errors.price_per_session?.message}>
               <input type="number" {...register("price_per_session", { valueAsNumber: true })} className={inputStyle} />
             </FormField>
 

@@ -3,7 +3,6 @@ import { useAuth } from "../../hooks/useAuth";
 import type { AppointmentData, AppointmentStatus } from "../../types/types";
 import { doctorService } from "../../api/doctor/doctorService";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
-import { SearchBar } from "../../components/ui/SearchBar";
 import PrescriptionModal from "../../features/doctor/PrescriptionModal";
 import { toast } from "sonner";
 import PatientDetailsModal from "../../components/ui/PatientDetailsModal";
@@ -11,6 +10,7 @@ import { Button } from "../../components/ui/Button";
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import { formatDisplayDate, formatDisplayTime } from "../../utils/dateTimeFormate";
 import { useDashboardT,useCommonT } from "../../hooks/useT";
+import { SearchInput } from "../../components/ui/searchBar/index";
 
 // Statuses that belong in the "upcoming" tab
 const UPCOMING_STATUSES: AppointmentStatus[] = [
@@ -140,13 +140,11 @@ const DoctorAppointmentPage = () => {
         </div>
         {/* أزرار التبويب (Tabs) */}
       </div>
-<div className="relative w-full">
-          <SearchBar
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            showAppointmentFilters={false}
-          />
-        </div>
+      <div className="flex flex-col md:flex-row gap-4 w-full mb-6">
+  <SearchInput value={searchTerm} onChange={setSearchTerm} />
+
+</div>
+
       <div className="bg-white rounded-xl shadow overflow-hidden">
       <div className="overflow-x-auto">
           <table className="w-full text-start border-collapse min-w-[600px]">

@@ -42,22 +42,22 @@ const tc = useCommonT();
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <StatCard 
-          label="Today's Appointments" 
+          label={td('dashboard.doctor.todaysAppointments')}
           value={stats?.todayCount} 
           icon={<LuClock3 className="text-primary group-hover:text-white" size={28} />}
         />
         <StatCard 
-          label="Upcoming Total" 
+          label={td('dashboard.doctor.upcomingTotal')} 
           value={stats?.upcomingCount} 
           icon={<LuCalendar className="text-primary group-hover:text-white" size={28} />}
         />
         <StatCard 
-          label="Canceled" 
+          label={td('dashboard.doctor.canceled')}
           value={stats?.cancelledCount} 
           icon={<LuCircleX className="text-primary group-hover:text-white" size={28} />}
         />
         <StatCard 
-          label="Doctor Rating" 
+          label={td('dashboard.doctor.doctorRating')}
           value="4.7" 
           icon={<LuStar className="text-primary group-hover:text-white fill-primary group-hover:fill-white" size={28} />}
         />
@@ -118,7 +118,7 @@ const tc = useCommonT();
                     colSpan={3}
                     className="py-8 text-center text-gray-500 italic"
                   >
-                    No confirmed patients for today.
+                   {td('dashboard.doctor.noConfirmedPatients')}
                   </td>
                 </tr>
               )}

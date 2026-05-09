@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react";
 import { useAdminAppointments } from "../../hooks/admin/useAdminAppointments";
-import { SearchBar } from "../../components/ui/SearchBar";
 import { exportToExcel } from "../../utils/exportUtils";
 import { Button } from "../../components/ui/Button";
 import {
@@ -12,6 +11,8 @@ import { StatusBadge } from "../../components/ui/StatusBadge";
 import type { AppointmentStatus } from "../../types/types";
 import { toast } from "sonner";
 import { useDashboardT, useCommonT } from "../../hooks/useT";
+import { SearchInput } from "../../components/ui/searchBar/index";
+import { AppointmentFilters } from "../../components/ui/searchBar/index";
 
 export const AppointmentsManagementPage = () => {
   const { appointmentsQuery, updateStatusMutation } = useAdminAppointments();
@@ -99,15 +100,15 @@ const td = useDashboardT();
           {td('dashboard.admin.exportToExcel')}
         </Button>
       </div>
-      <SearchBar
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        showAppointmentFilters={true}
-        statusAppointmentFilter={statusFilter}
-        onStatusAppointmentFilter={setStatusFilter}
-        dateFilter={dateFilter}
-        onDateChange={setDateFilter}
-      />
+      <div className="flex flex-col md:flex-row gap-4 w-full mb-6">
+  <SearchInput value={searchTerm} onChange={setSearchTerm} />
+  <AppointmentFilters
+    statusFilter={statusFilter}
+    onStatusChange={setStatusFilter}
+    dateFilter={dateFilter}
+    onDateChange={setDateFilter}
+  />
+</div>
 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
         <div className="overflow-x-auto">

@@ -1,9 +1,10 @@
 import { useState, useMemo } from "react";
-import { SearchBar } from "../../components/ui/SearchBar";
 import { useAdminPatients } from "../../hooks/admin/useAdminPatients";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import { LoadingWrapper } from "../../components/ui/LoadingWrapper";
 import { useDashboardT, useCommonT } from "../../hooks/useT";
+import { SearchInput } from "../../components/ui/searchBar/index";
+import { PatientFilters } from "../../components/ui/searchBar/index";
 
 export const PatientsManagementPage = () => {
   const td = useDashboardT();
@@ -50,15 +51,14 @@ export const PatientsManagementPage = () => {
           {td('dashboard.admin.totalPatients')}: {filteredPatients.length}
         </span>
       </div>
-
-      <SearchBar
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        showSpecialtyFilter={false}
-        statusFilter={statusFilter}
-        onStatusChange={setStatusFilter}
-        showStatusFilter={true}
-      />
+    <div className="flex flex-col md:flex-row gap-4 w-full mb-6">
+  <SearchInput value={searchTerm} onChange={setSearchTerm} />
+  <PatientFilters
+    statusFilter={statusFilter}
+    onStatusChange={setStatusFilter}
+  />
+</div>
+     
 
       <LoadingWrapper isLoading={toggleStatusMutation.isPending}>
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">

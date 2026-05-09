@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/ui/Button";
+import { useDashboardT } from "../../hooks/useT";
 interface DoctorProps {
   id: string
   name: string;
@@ -8,6 +9,7 @@ interface DoctorProps {
 }
 
 export const DoctorCard = ({id, name, specialty, price_per_session}: DoctorProps) => {
+  const td = useDashboardT();
   const navigate = useNavigate();
   return (
     <div className="bg-white rounded-lg p-6 flex flex-col items-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-50">
@@ -34,7 +36,7 @@ export const DoctorCard = ({id, name, specialty, price_per_session}: DoctorProps
         onClick={() => navigate(`/dashboard/book/${id}`)} 
         className="w-full text-sm py-2.5" 
       >
-        Book now
+        {td('dashboard.patient.bookNow')}
       </Button>
     </div>
   );

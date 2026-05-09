@@ -81,28 +81,28 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
         {/* حالة ملغي */}
         {isCancelled && (
           <div className="flex items-center gap-2 text-red-400 font-bold px-5 py-2 bg-red-50/50 rounded-[8px] border border-red-100">
-            Cancelled <LuCircleX />
+            {td('dashboard.patient.cancelledStatus')} <LuCircleX />
           </div>
         )}
 
         {/* حالة منتهي (Expired) */}
         {isExpired && (
           <div className="flex items-center gap-2 text-gray-400 font-bold px-5 py-2 bg-gray-100 rounded-2xl border border-gray-200">
-            Expired <LuHistory />
+            {td('dashboard.patient.expiredStatus')} <LuHistory />
           </div>
         )}
 
         {/* حالة مكتمل (Completed) */}
         {isCompleted && (
           <div className="flex items-center gap-2 text-primary font-bold px-5 py-2 bg-primary/5 rounded-[8px] border border-primary/10">
-            Completed <LuCircleCheck />
+            {td('dashboard.patient.completedStatus')} <LuCircleCheck />
           </div>
         )}
 
         {/* حالة لم يحضر (No Show) */}
         {isNoShow && (
           <div className="flex items-center gap-2 text-orange-700 font-bold px-5 py-2 bg-orange-50 rounded-[8px] border border-orange-100">
-            No Show <LuCircleAlert />
+            {td('dashboard.patient.noShowStatus')} <LuCircleAlert />
           </div>
         )}
 
@@ -113,7 +113,7 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
             onClick={() => navigate(`/dashboard/book/${appointment.doctor_id}?rescheduleId=${appointment.id}`)}
             className="bg-orange-500 hover:bg-orange-600 px-8 py-4 shadow-orange-200"
           >
-            Reschedule Now
+            {td('dashboard.patient.rescheduledNow')}
           </Button>
         )}
 
@@ -123,11 +123,11 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
             <div className="mr-2">
               {appointment.status === "confirmed" ? (
                 <span className="flex items-center gap-1.5 text-sm font-black text-primary bg-primary/10 px-4 py-2 rounded-[8px]">
-                  Confirmed <LuCircleCheck />
+                  {td('dashboard.patient.confirmedStatus')} <LuCircleCheck />
                 </span>
               ) : (
                 <span className="flex items-center gap-1.5 text-sm font-black text-tertiary-200 bg-orange-50 px-4 py-2 rounded-[8px]">
-                  Pending <LuCircleAlert />
+                  {td('dashboard.patient.pendingStatus')} <LuCircleAlert />
                 </span>
               )}
             </div>

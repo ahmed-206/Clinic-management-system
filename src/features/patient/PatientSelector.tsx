@@ -2,7 +2,7 @@
 import { LuPhone, LuUserRound } from "react-icons/lu";
 import { FaTransgender } from "react-icons/fa";
 import type { Patient } from "../../types/types";
-
+import { useDashboardT } from "../../hooks/useT";
 interface NewPatientForm {
   full_name: string;
   phone: string;
@@ -42,13 +42,14 @@ export const PatientSelector = ({
   onNewPatientChange,
   onConfirm,
 }: Props) => {
+  const td = useDashboardT();
   return (
     <div className="animate-in fade-in slide-in-from-top-4 duration-500 bg-white border border-blue-100 rounded-2xl p-4 md:p-6 space-y-4">
       <h3 className="font-bold text-secondary text-lg">
-        Who is this appointment for?
+        {td("dashboard.patient.bookFor")}
       </h3>
-      <p className="text-sm text-secondary/60">
-        You can book for yourself or a family member.
+      <p className="text-sm text-secondary">
+        {td("dashboard.patient.myself")}{" "}
       </p>
 
       {/* قائمة الـ patients الموجودين */}
@@ -69,7 +70,7 @@ export const PatientSelector = ({
             <p className="text-xs text-gray-400">{p.phone}</p>
             {p.is_self && (
               <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full mt-1 inline-block">
-                Myself
+                {td('dashboard.patient.myself')}
               </span>
             )}
           </button>
@@ -85,9 +86,9 @@ export const PatientSelector = ({
           }`}
         >
           <p className="font-semibold text-sm text-primary">
-            + Add new patient
+           {td('dashboard.patient.addNewPatient')}
           </p>
-          <p className="text-xs text-gray-400">Family member or someone else</p>
+          <p className="text-xs text-gray-400">{td('dashboard.patient.familyMember')}</p>
         </button>
       </div>
 
@@ -100,7 +101,7 @@ export const PatientSelector = ({
               type="text"
               value={newPatient.full_name}
               onChange={(e) => onNewPatientChange("full_name", e.target.value)}
-              placeholder="Enter full patient name"
+              placeholder={td('dashboard.patient.enterFullName')}
               className="w-full bg-transparent p-2 outline-none text-secondary placeholder:text-secondary/40"
             />
           </div>
@@ -110,20 +111,22 @@ export const PatientSelector = ({
               type="tel"
               value={newPatient.phone}
               onChange={(e) => onNewPatientChange("phone", e.target.value)}
-              placeholder="Mobile number"
+              placeholder={td('dashboard.patient.mobileNumber')}
               className="w-full bg-transparent p-2 outline-none text-secondary placeholder:text-secondary/40"
             />
           </div>
           <div className="flex items-center gap-3 border-b border-secondary/30 py-1 focus-within:border-primary transition-colors">
-           <FaTransgender className="text-secondary shrink-0" size={20}/>
+            <FaTransgender className="text-secondary shrink-0" size={20} />
             <select
               value={newPatient.gender}
               onChange={(e) => onNewPatientChange("gender", e.target.value)}
               className="w-full bg-transparent p-2 outline-none text-secondary placeholder:text-secondary/40"
             >
-              <option value="" className="text-secondary">Select gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
+              <option value="" className="text-secondary">
+                {td('dashboard.patient.selectGender')}
+              </option>
+              <option value="male">{td('dashboard.patient.male')}</option>
+              <option value="female">{td('dashboard.patient.female')}</option>
             </select>
           </div>
           <div className="flex items-center gap-2 pt-5">
@@ -135,7 +138,7 @@ export const PatientSelector = ({
               className="w-4 h-4 accent-primary"
             />
             <label htmlFor="is_self" className="text-sm text-secondary">
-              This is me (account holder)
+              {td('dashboard.patient.isSelf')}
             </label>
           </div>
         </div>
@@ -156,8 +159,8 @@ export const PatientSelector = ({
           {isCreating || isUpdating || isCreatingPatient
             ? "Processing..."
             : rescheduleId
-              ? "Confirm New Time"
-              : "Confirm My Appointment"}
+              ? td('dashboard.patient.confirmNewTime')
+              : td('dashboard.patient.confirmAppointment')}
         </button>
       </div>
     </div>

@@ -35,5 +35,6 @@
   "schedule": "Schedule",
   "date": "Date",
   "time": "Time",
-  "returnHome": "Return to Home"
+  "returnHome": "Return to Home",
+  "searchHolder": "Search by name..."
 }

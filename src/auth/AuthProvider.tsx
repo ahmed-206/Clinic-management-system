@@ -21,7 +21,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
   // دالة واحدة تتعامل مع كل شيء
   const refreshAuth = async (session: Session | null) => {
-      console.log('🔄 refreshAuth called, event session:', session?.user?.email);
 
     setLoading(true); 
     if (session?.user) {
@@ -33,13 +32,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setProfile(null);
     }
     setLoading(false);
-    console.log('✅ refreshAuth done, loading = false');
+   
   };
 
  
   const { data: authListener } = supabase.auth.onAuthStateChange(
     (event, session) => {
-      console.log('🎯 Auth event:', event);
       if (event === "TOKEN_REFRESHED") {
         if (session?.user) {
           fetchProfile(session.user.id).then((userProfile) => {

@@ -1,5 +1,5 @@
 import { LuSearch } from "react-icons/lu";
-
+import { useCommonT } from "../../hooks/useT";
 interface SearchBarProps {
   searchTerm: string;
   onSearchChange: (value: string) => void;
@@ -38,6 +38,7 @@ export const SearchBar = ({
   dateFilter,
   showAppointmentFilters = false,
 }: SearchBarProps) => {
+  const tc = useCommonT();
   return (
     <div className="flex flex-col md:flex-row gap-4 w-full mb-6">
       <div className="relative flex-1 max-w-md group">
@@ -49,7 +50,7 @@ export const SearchBar = ({
         </div>
         <input
           type="text"
-          placeholder="Search by name..."
+          placeholder={tc('searchHolder')}
           className=" w-full pl-12 pr-4 py-3 border border-gray-400 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm"
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}

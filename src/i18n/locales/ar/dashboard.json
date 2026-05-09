@@ -12,6 +12,7 @@
       "settings": "الإعدادات"
     },
     "patient": {
+      "bookNow": "احجز آلان",
       "appointment": "مواعيدي",
       "bookAppointment": "حجز موعد",
       "bookSubTitle": "اختر التخصص او قم بالبحث عن الدكتور",

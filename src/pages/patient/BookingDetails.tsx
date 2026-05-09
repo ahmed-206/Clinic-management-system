@@ -272,17 +272,17 @@ const BookingDetailsContent = () => {
         <div className="flex-1 text-center md:text-start space-y-1">
           <h2 className="text-xl md:text-2xl font-bold text-primary">
             {rescheduleId
-              ? "Reschedule Your Appointment"
+              ? td('dashboard.patient.rescheduleAppointment')
               : editId
-                ? "Modify Your Appointment"
-                : "Confirm Appointment"}
+                ? td('dashboard.patient.modifyAppointment')
+                : td('dashboard.patient.confirmAppointmentTitle')}
           </h2>
           <p className="text-primary-200 text-sm md:text-lg">
             {rescheduleId
-              ? "The doctor is unavailable on your original date. Please pick a new slot."
+              ? td('dashboard.patient.rescheduleMsg')
               : editId
-                ? "Choose a more suitable time for your visit."
-                : `You are booking a new session with Dr. ${doctorAvailability?.doctorName}`}
+                ? td('dashboard.patient.modifyMsg')
+                : `${td('dashboard.patient.bookingWith')} ${doctorAvailability?.doctorName}`}
           </p>
           {doctorAvailability?.doctorBio && (
             <p className="text-secondary leading-relaxed text-xs md:text-sm line-clamp-2 md:line-clamp-none">
@@ -353,8 +353,8 @@ const BookingDetailsContent = () => {
                     off.off_date.split("T")[0] ===
                     getLocalDateString(selectedDate!),
                 )
-                  ? "The doctor is on holiday"
-                  : "Not a working day"}
+                  ? td('dashboard.patient.doctorOnHoliday')
+                  : td('dashboard.patient.notWorkingDay')}
               </h3>
 
               <p className="text-secondary/50 text-sm text-center max-w-62.5">
@@ -363,8 +363,8 @@ const BookingDetailsContent = () => {
                     off.off_date.split("T")[0] ===
                     getLocalDateString(selectedDate!),
                 )
-                  ? "This day has been marked as a temporary holiday. Please choose another date."
-                  : "The doctor does not have scheduled hours for this day of the week."}
+                  ? td('dashboard.patient.holidayMsg')
+                  : td('dashboard.patient.notWorkingMsg')}
               </p>
 
               <div className="mt-4 px-4 py-1 bg-red-50 text-red-500 text-xs font-bold rounded-[8px] border border-red-100 uppercase tracking-wider">

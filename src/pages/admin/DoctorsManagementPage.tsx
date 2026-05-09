@@ -1,5 +1,4 @@
 import { useAdminDoctors } from "../../hooks/admin/useAdminDoctors";
-import { SearchBar } from "../../components/ui/SearchBar";
 import { EditDoctorModal } from "../../features/admin/EditDoctorModal";
 import {AddDoctorModal} from "../../features/admin/AddDoctorModal"
 import { LuPencil, LuUserRoundCheck, LuUserRoundX, LuBadgeCheck  } from 'react-icons/lu';
@@ -9,6 +8,8 @@ import { Button } from "../../components/ui/Button";
 import {type UserProfile } from "../../types/types";
 import { useState } from "react";
 import { useDashboardT, useCommonT } from "../../hooks/useT";
+import { DoctorFilters } from "../../components/ui/searchBar/index";
+import { SearchInput } from "../../components/ui/searchBar/index";
 
 
 export const DoctorsMangementPage = () => {
@@ -37,14 +38,15 @@ export const DoctorsMangementPage = () => {
          {td('dashboard.admin.addNewDoctor')}
        </Button>
     </div>
-      
-      <SearchBar
-        searchTerm={searchProps.searchTerm}
-        onSearchChange={searchProps.setSearchTerm}
-        selectedSpecialty={searchProps.specialtyFilter}
-        onSpecialtyChange={searchProps.setSpecialtyFilter}
-        specialties={allSpecialties}
-      />
+      <div className="flex flex-col md:flex-row gap-4 w-full mb-6">
+  <SearchInput value={searchProps.searchTerm} onChange={searchProps.setSearchTerm} />
+  <DoctorFilters
+    selectedSpecialty={searchProps.specialtyFilter}
+    onSpecialtyChange={searchProps.setSpecialtyFilter}
+    specialties={allSpecialties}
+  />
+</div>
+     
       <LoadingWrapper isLoading={actions.isUpdating || actions.isToggling}>
       <div className="bg-white rounded-2xl shadow-sm  overflow-hidden">
       <div className="overflow-x-auto">

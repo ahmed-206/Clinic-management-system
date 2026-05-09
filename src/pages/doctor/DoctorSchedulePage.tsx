@@ -175,7 +175,7 @@ const ScheduleForm = ({
         disabled={isSaving}
         className={`mt-8 w-full py-4 rounded-xl font-bold text-white shadow-lg transition-all ${isSaving ? "bg-gray-400" : "bg-primary hover:scale-[1.02] cursor-pointer"}`}
       >
-        {isSaving ? "Updating Schedule..." : "Save Weekly Schedule"}
+        {isSaving ? td('dashboard.doctor.updatingSchedule') : td('dashboard.doctor.saveSchedule')}
       </Button>
     </div>
   );
