@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/ui/Button";
 import { useDashboardT } from "../../hooks/useT";
+import { useSpecialtyTranslation } from '../../hooks/language/useSpecialtyTranslation';
+
 interface DoctorProps {
   id: string
   name: string;
@@ -9,6 +11,8 @@ interface DoctorProps {
 }
 
 export const DoctorCard = ({id, name, specialty, price_per_session}: DoctorProps) => {
+    const { translateSpecialty } = useSpecialtyTranslation();
+
   const td = useDashboardT();
   const navigate = useNavigate();
   return (
@@ -28,7 +32,7 @@ export const DoctorCard = ({id, name, specialty, price_per_session}: DoctorProps
       {/* اسم الدكتور والتخصص */}
       <div className="text-center mb-6">
         <h3 className="text-primary font-black text-lg leading-tight">{name}</h3>
-        <p className="text-secondary text-sm font-medium uppercase tracking-wider">{specialty}</p>
+        <p className="text-secondary text-sm font-medium uppercase tracking-wider">{translateSpecialty(specialty)}</p>
       </div>
     
       {/* زر الحجز باستخدام المكون الموحد */}

@@ -16,9 +16,9 @@ const SettingsPage = () => {
 
   // قائمة التبويبات   
   const tabs = [
-    { id: 'general', label: 'General Settings', icon: <LuSettings />},
-    { id: 'financial', label: 'Financials', icon: <LuCircleDollarSign /> },
-    { id: 'security', label: 'Security', icon: <LuLockKeyhole /> },
+    { id: 'general', label: td('dashboard.admin.generalSettings'), icon: <LuSettings />},
+    { id: 'financial', label: td('dashboard.admin.financials'), icon: <LuCircleDollarSign /> },
+    { id: 'security', label: td('dashboard.admin.security'), icon: <LuLockKeyhole /> },
   ];
 
   return (

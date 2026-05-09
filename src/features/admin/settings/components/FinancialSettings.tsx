@@ -3,7 +3,7 @@ import { LoadingSpinner } from "../../../../components/ui/LoadingSpinner";
 import type {  ClinicSettings, SettingsFormsProps } from "../../../../types/types";
 import { useState} from "react";
 import { Button } from "../../../../components/ui/Button";
-
+import { useDashboardT } from "../../../../hooks/useT";
 
 const FinancialForm = ({ settings, updateSettings, isUpdating }: SettingsFormsProps) => {
   const [formData, setFormData] = useState({
@@ -11,10 +11,10 @@ const FinancialForm = ({ settings, updateSettings, isUpdating }: SettingsFormsPr
     service_fee: settings.service_fee || 0,
     currency: settings.currency || "EGP",
   });
-
+const td = useDashboardT();
   return (
     <div className="space-y-6">
-      <h2 className="text-lg md:text-xl font-bold text-secondary">Pricing & Taxes</h2>
+      <h2 className="text-lg md:text-xl font-bold text-secondary">{td('dashboard.admin.pricing')}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
         <div className="p-4 border border-blue-100 bg-blue-50 rounded-2xl">
           <label htmlFor="clinic_vat" className="block text-xs md:text-sm font-semibold text-primary mb-2">

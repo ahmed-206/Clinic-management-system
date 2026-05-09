@@ -95,7 +95,19 @@
       "systemSettings": "System Settings",
       "generalSettings": "General Settings",
       "financials": "Financials",
-      "security": "Security"
+      "security": "Security",
+      "clinicProfile": "Clinic Profile",
+      "clinicName": "Clinic Name",
+      "clinicNumber": "Phone Number",
+      "clinicEmail": "Clinic Email",
+      "changePassword": "Change Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "updatePassword": "Update Password",
+      "passwordSuccess": "Password updated successfully!",
+      "pricing": "Pricing & Taxes",
+      "saving": "Saving...",
+      "save" : "Save Changes"
     },
     "doctor": {
       "welcomeBack": "Welcome Back,",

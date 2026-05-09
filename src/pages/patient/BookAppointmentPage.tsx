@@ -4,8 +4,10 @@ import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import { useState, useMemo } from "react";
 import { useDashboardT,useCommonT } from "../../hooks/useT";
 import { SearchInput } from "../../components/ui/searchBar/index";
-
+import { useSpecialtyTranslation } from "../../hooks/language/useSpecialtyTranslation";
 export const BookAppointmentPage = () => {
+    const { translateSpecialty } = useSpecialtyTranslation();
+
    const td = useDashboardT();
    const tc = useCommonT();
   const { data: doctors, isLoading, isError, error } = useDoctors();
@@ -17,6 +19,7 @@ export const BookAppointmentPage = () => {
   const specialties = useMemo(() => {
     if (!doctors) return ["All"];
     const uniqueSpecs = Array.from(
+      //set => لا تسمح بالقيم المكررة
       new Set(doctors.map((doc) => doc.specialty?.trim()).filter(Boolean).map((spec) => spec.charAt(0).toUpperCase() + spec.slice(1).toLowerCase()))
     );
     return ["All", ...uniqueSpecs.sort()];
@@ -35,7 +38,7 @@ export const BookAppointmentPage = () => {
   if (isLoading) return (
     <div className="h-[60vh] flex flex-col items-center justify-center">
       <LoadingSpinner size="lg" />
-      <p className="mt-4 text-gray-500 font-medium">Fetching our specialists...</p>
+      <p className="mt-4 text-gray-500 font-medium">{td('dashboard.patient.fetchingSpecialists')}</p>
     </div>
   );
   if (isError)
@@ -66,7 +69,7 @@ export const BookAppointmentPage = () => {
                   : "bg-white text-secondary border border-secondary/20 hover:border-primary hover:text-primary"
               }`}
             >
-              {spec === "All" ? td('dashboard.patient.allSpecialties') : spec}
+              {spec === "All" ? td('dashboard.patient.allSpecialties') :translateSpecialty(spec)}
             </button>
           ))}
         </div>
