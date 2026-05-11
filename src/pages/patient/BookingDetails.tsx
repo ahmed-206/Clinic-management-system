@@ -1,10 +1,11 @@
-import {  useMemo } from "react";
+import {  useMemo,useState,useEffect } from "react";
 import { useSessionStorage } from "../../hooks/useSessionStorage";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { FaUserDoctor } from "react-icons/fa6";
 import Calendar from "react-calendar";
 import { toast } from "sonner";
 import { useAuth } from "../../hooks/useAuth";
+import { patientService } from '../../api/patientService';
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import "react-calendar/dist/Calendar.css";
 import "../../calendar-style.css";
@@ -25,7 +26,7 @@ import {
   buildSlotsWithStatus,
 } from "../../utils/appointmentLogic";
 import { LuCalendarX } from "react-icons/lu";
-import type { DayOfWeek } from "../../types/types";
+import type { DayOfWeek, Patient } from "../../types/types";
 import { useDashboardT } from "../../hooks/useT";
 
 const BookingDetailsContent = () => {
@@ -57,9 +58,31 @@ const BookingDetailsContent = () => {
   });
   const [selectedTime, setSelectedTime] = useSessionStorage<string | null>("booking_selectedTime", null);
   const [selectedDateStr, setSelectedDateStr] = useSessionStorage<string | null>("booking_selectedDate", () => new Date().toISOString());
-  
+  const [existingPatient, setExistingPatient] = useState<Patient | null>(null);
+const [isCheckingPhone, setIsCheckingPhone] = useState(false);
   const selectedDate = selectedDateStr ? new Date(selectedDateStr) : null;
 
+  useEffect(() => {
+  if (!newPatient.phone || newPatient.phone.length < 11) {
+    setExistingPatient(null);
+    return;
+  }
+
+  const timeout = setTimeout(async () => {
+    setIsCheckingPhone(true);
+    try {
+      const found = await patientService.findPatientByPhone(
+        user!.id,
+        newPatient.phone
+      );
+      setExistingPatient(found);
+    } finally {
+      setIsCheckingPhone(false);
+    }
+  }, 600);
+
+  return () => clearTimeout(timeout);
+}, [newPatient.phone, user]);
   const availableSlots = useMemo(() => {
     if (!selectedDate || !doctorAvailability) return [];
 
@@ -397,6 +420,8 @@ const BookingDetailsContent = () => {
       setNewPatient((p) => ({ ...p, [field]: value }))
     }
     onConfirm={handleConfirmBooking}
+     existingPatient={existingPatient}
+  isCheckingPhone={isCheckingPhone}
   />
       )}
 

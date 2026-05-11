@@ -14,14 +14,27 @@ export const usePatients = () => {
     enabled: !!user?.id,
   });
 
-  const createPatientMutation = useMutation({
-    mutationFn: (payload: Omit<Patient, "id" | "created_at">) =>
-      patientService.createPatient(payload),
-    onSuccess: () => {
-      // بعد ما تضيف patient جديد — حدّث القائمة تلقائياً
-      queryClient.invalidateQueries({ queryKey: ["myPatients", user?.id] });
-    },
-  });
+ 
+const createPatientMutation = useMutation({
+  mutationFn: async (payload: Omit<Patient, 'id' | 'created_at'>) => {
+   
+    const existing = await patientService.findPatientByPhone(
+      payload.booked_by,
+      payload.phone
+    );
+
+    if (existing) {
+      
+      return existing as Patient;
+    }
+
+    
+    return patientService.createPatient(payload);
+  },
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['myPatients', user?.id] });
+  },
+});
 
   return {
     patients: patientsQuery.data ?? [],

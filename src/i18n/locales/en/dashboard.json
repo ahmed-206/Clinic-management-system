@@ -66,7 +66,9 @@
       "cancelledStatus": "Cancelled",
       "expiredStatus": "Expired",
       "noShowStatus": "No Show",
-      "completedStatus": "Completed"
+      "completedStatus": "Completed",
+      "existingPatientFound": "A patient with this number already exists:",
+      "useThisPatient": "Use this patient"
     },
     "admin": {
       "welcomeBack": "Welcome back, Admin",
@@ -107,7 +109,7 @@
       "passwordSuccess": "Password updated successfully!",
       "pricing": "Pricing & Taxes",
       "saving": "Saving...",
-      "save" : "Save Changes"
+      "save": "Save Changes"
     },
     "doctor": {
       "welcomeBack": "Welcome Back,",

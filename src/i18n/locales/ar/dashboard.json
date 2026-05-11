@@ -66,7 +66,9 @@
       "cancelledStatus": "ملغي",
       "expiredStatus": "منتهي",
       "noShowStatus": "لم يحضر",
-      "completedStatus": "مكتمل"
+      "completedStatus": "مكتمل",
+      "existingPatientFound": "يوجد مريض بهذا الرقم بالفعل:",
+"useThisPatient": "استخدم هذا المريض"
     },
     "admin": {
       "welcomeBack": "مرحباً بعودتك، المشرف",

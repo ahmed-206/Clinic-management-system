@@ -25,4 +25,15 @@ export const patientService = {
     if (error) throw error;
     return data;
   },
+
+  // دالة للبحث عن العنصر بواسطة رقم الموبايل
+async findPatientByPhone(userId: string, phone: string) {
+  const { data, error } = await supabase
+    .rpc('find_patient_by_phone', {
+      p_user_id: userId,
+      p_phone: phone,
+    });
+  if (error) throw error;
+  return data?.[0] ?? null; 
+},
 };
