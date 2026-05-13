@@ -8,6 +8,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [initialized, setInitialized] = useState(false);
 
   const fetchProfile = async (userId: string) => {
     const { data } = await supabase
@@ -20,9 +21,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
   // دالة واحدة تتعامل مع كل شيء
-  const refreshAuth = async (session: Session | null) => {
+  const refreshAuth = async (session: Session | null, isInitial: boolean) => {
 
-    setLoading(true); 
+    // فقط إظهار حالة التحميل في المرة الأولى
+    if (isInitial) {
+      setLoading(true);
+    }
+
     if (session?.user) {
       const userProfile = await fetchProfile(session.user.id);
       setUser(session.user);
@@ -31,8 +36,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(null);
       setProfile(null);
     }
-    setLoading(false);
-   
+
+    if (isInitial) {
+      setLoading(false);
+      setInitialized(true);
+    }
   };
 
  
@@ -47,7 +55,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
         return; 
       }
-      refreshAuth(session);
+
+      // INITIAL_SESSION هو الحدث الأول فقط — باقي الأحداث لا تحتاج إعادة تحميل
+      const isInitial = event === "INITIAL_SESSION";
+      refreshAuth(session, isInitial);
     }
   );
 
