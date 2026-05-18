@@ -1,16 +1,16 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, lazy, Suspense } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import type { AppointmentData, AppointmentStatus } from "../../types/types";
 import { doctorService } from "../../api/doctor/doctorService";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
-import PrescriptionModal from "../../features/doctor/PrescriptionModal";
 import { toast } from "sonner";
-import PatientDetailsModal from "../../components/ui/PatientDetailsModal";
 import { Button } from "../../components/ui/Button";
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import { formatDisplayDate, formatDisplayTime } from "../../utils/dateTimeFormate";
 import { useDashboardT,useCommonT } from "../../hooks/useT";
 import { SearchInput } from "../../components/ui/searchBar/index";
+const PrescriptionModal = lazy(() => import("../../features/doctor/PrescriptionModal"));
+const PatientDetailsModal = lazy(() => import("../../components/ui/PatientDetailsModal"));
 
 // Statuses that belong in the "upcoming" tab
 const UPCOMING_STATUSES: AppointmentStatus[] = [
@@ -234,6 +234,7 @@ const DoctorAppointmentPage = () => {
           </tbody>
         </table>
       </div>
+      <Suspense fallback={null}>
         <PatientDetailsModal
           appointment={isDetailsModalOpen ? selectedAppointment : null}
           onClose={() => {
@@ -241,7 +242,9 @@ const DoctorAppointmentPage = () => {
             setSelectedAppointment(null);
           }}
         />
+        </Suspense>
         {isPrescriptionModalOpen && selectedAppointment && (
+          <Suspense fallback={null}>
           <PrescriptionModal
             appointment={selectedAppointment}
             onClose={() => {
@@ -249,6 +252,7 @@ const DoctorAppointmentPage = () => {
               setSelectedAppointment(null);
             }}
           />
+          </Suspense>
         )}
       </div>
     </div>
