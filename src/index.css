@@ -8,17 +8,19 @@
 
   --font-main: var(--font-en); 
 
-  --color-primary: #004A7C;
-  --color-primary-100:#D0E4FF;
+  --color-primary: #00CECE;
+  --color-primary-100:#00ffff;
   --color-primary-200:   #7CAFE7;
-  --color-primary-300:   #296195;
-  --color-primary-foreground: #ffffff; /* نص أبيض فوق الأساسي */
+  --color-primary-300:   #00A8A8;
+  --color-primary-700:   #005050;
+  --color-primary-foreground: #ffffff; 
+  --color-heading: #324047;
 
 
   --color-secondary: #66798F;
 
   /* (Terracotta/Orange-brown) */
-  --color-tertiary: #713800;
+  --color-tertiary: #efefef;
   --color-tertiary-100: #FFB782;
   --color-tertiary-200: #E9995C;
 

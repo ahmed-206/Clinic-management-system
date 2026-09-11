@@ -1,0 +1,214 @@
+// features/patient/PatientSelector.tsx
+import { LuPhone, LuUserRound } from "react-icons/lu";
+import { FaTransgender } from "react-icons/fa";
+import type { Patient } from "@/types/types";
+import { useDashboardT } from "@/hooks/useT";
+interface NewPatientForm {
+  full_name: string;
+  phone: string;
+  gender: string;
+  is_self: boolean;
+}
+
+interface Props {
+  patients: Patient[];
+  selectedPatientId: string | null;
+  showNewPatientForm: boolean;
+  newPatient: NewPatientForm;
+  isCreating: boolean;
+  isUpdating: boolean;
+  isCreatingPatient: boolean;
+  rescheduleId: string | null;
+  onSelectPatient: (id: string) => void;
+  onShowNewForm: () => void;
+  onNewPatientChange: (
+    field: keyof NewPatientForm,
+    value: string | boolean,
+  ) => void;
+  onConfirm: () => void;
+  existingPatient: Patient | null;
+  isCheckingPhone: boolean;
+}
+
+export const PatientSelector = ({
+  patients,
+  selectedPatientId,
+  showNewPatientForm,
+  newPatient,
+  isCreating,
+  isUpdating,
+  isCreatingPatient,
+  rescheduleId,
+  onSelectPatient,
+  onShowNewForm,
+  onNewPatientChange,
+  onConfirm,
+  existingPatient,
+  isCheckingPhone,
+}: Props) => {
+  const td = useDashboardT();
+  return (
+    <div className="animate-in fade-in slide-in-from-top-4 duration-500 bg-white border border-blue-100 rounded-2xl p-4 md:p-6 space-y-4">
+      <h3 className="font-bold text-secondary text-lg">
+        {td("dashboard.patient.bookFor")}
+      </h3>
+      <p className="text-sm text-secondary">
+        {td("dashboard.patient.myself")}{" "}
+      </p>
+
+      {/* قائمة الـ patients الموجودين */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {patients.map((p) => (
+          <button
+            key={p.id}
+            onClick={() => onSelectPatient(p.id)}
+            className={`text-left p-3 rounded-xl border transition-all ${
+              selectedPatientId === p.id
+                ? "border-primary bg-white ring-2 ring-primary/20"
+                : "border-gray-200 bg-white hover:border-primary/40"
+            }`}
+          >
+            <p className="font-semibold text-sm text-secondary">
+              {p.full_name}
+            </p>
+            <p className="text-xs text-gray-400">{p.phone}</p>
+            {p.is_self && (
+              <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full mt-1 inline-block">
+                {td("dashboard.patient.myself")}
+              </span>
+            )}
+          </button>
+        ))}
+
+        {/* زرار إضافة patient جديد */}
+        <button
+          onClick={onShowNewForm}
+          className={`text-start p-3 rounded-xl border-2 border-primary transition-all ${
+            showNewPatientForm
+              ? "border-primary bg-white"
+              : "border-gray-300 hover:border-primary/40"
+          }`}
+        >
+          <p className="font-semibold text-sm text-primary">
+            {td("dashboard.patient.addNewPatient")}
+          </p>
+          <p className="text-xs text-gray-400">
+            {td("dashboard.patient.familyMember")}
+          </p>
+        </button>
+      </div>
+
+      
+      {/* فورم الـ patient الجديد */}
+{showNewPatientForm && (
+  <div className="space-y-4 pt-4 border-t border-blue-100">
+   
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="flex items-center gap-3 border-b border-secondary/30 py-1 focus-within:border-primary transition-colors">
+        <LuUserRound className="text-secondary shrink-0" size={20} />
+        <input
+          type="text"
+          value={newPatient.full_name}
+          onChange={(e) => onNewPatientChange("full_name", e.target.value)}
+          placeholder={td("dashboard.patient.enterFullName")}
+          className="w-full bg-transparent p-2 outline-none text-secondary placeholder:text-secondary/40"
+        />
+      </div>
+
+      <div className="flex items-center gap-3 border-b border-secondary/30 py-1 focus-within:border-primary transition-colors">
+        <LuPhone className="text-secondary shrink-0" size={20} />
+        <input
+          type="tel"
+          value={newPatient.phone}
+          onChange={(e) => onNewPatientChange("phone", e.target.value)}
+          placeholder={td("dashboard.patient.mobileNumber")}
+          className="w-full bg-transparent p-2 outline-none text-secondary placeholder:text-secondary/40"
+        />
+        {isCheckingPhone && (
+          <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin shrink-0" />
+        )}
+      </div>
+
+      <div className="flex items-center gap-3 border-b border-secondary/30 py-1 focus-within:border-primary transition-colors">
+        <FaTransgender className="text-secondary shrink-0" size={20} />
+        <select
+          value={newPatient.gender}
+          onChange={(e) => onNewPatientChange("gender", e.target.value)}
+          className="w-full bg-transparent p-2 outline-none text-secondary placeholder:text-secondary/40"
+        >
+          <option value="" className="text-secondary">
+            {td("dashboard.patient.selectGender")}
+          </option>
+          <option value="male">{td("dashboard.patient.male")}</option>
+          <option value="female">{td("dashboard.patient.female")}</option>
+        </select>
+      </div>
+
+      <div className="flex items-center gap-2 sm:pt-5">
+        <input
+          type="checkbox"
+          id="is_self"
+          checked={newPatient.is_self}
+          onChange={(e) => onNewPatientChange("is_self", e.target.checked)}
+          className="w-4 h-4 accent-primary"
+        />
+        <label htmlFor="is_self" className="text-sm text-secondary">
+          {td("dashboard.patient.isSelf")}
+        </label>
+      </div>
+    </div>
+
+    {existingPatient && (
+      <div className="animate-in zoom-in-95 duration-300 w-full bg-amber-50 border border-amber-200 rounded-xl p-4 mt-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-lg shrink-0 border border-amber-200">
+              {existingPatient.full_name.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                <p className="text-[10px] font-black text-amber-700 uppercase tracking-widest">
+                  {td("dashboard.patient.existingPatientFound")}
+                </p>
+              </div>
+              <p className="font-bold text-secondary">{existingPatient.full_name}</p>
+              <p className="text-xs text-secondary/60">{existingPatient.phone}</p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => onSelectPatient(existingPatient.id)}
+            className="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold rounded-xl transition-all shadow-sm shadow-amber-200 active:scale-95"
+          >
+            {td("dashboard.patient.useThisPatient")}
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+)}
+
+      {/* زرار الـ confirm */}
+      <div className="pt-4 border-t border-blue-100">
+        <button
+          onClick={onConfirm}
+          disabled={
+            (!selectedPatientId && !showNewPatientForm) ||
+            isCreating ||
+            isUpdating ||
+            isCreatingPatient
+          }
+          className="w-full py-4 text-lg font-bold bg-primary text-white rounded-2xl hover:bg-primary/90 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all"
+        >
+          {isCreating || isUpdating || isCreatingPatient
+            ? "Processing..."
+            : rescheduleId
+              ? td("dashboard.patient.confirmNewTime")
+              : td("dashboard.patient.confirmAppointment")}
+        </button>
+      </div>
+    </div>
+  );
+};

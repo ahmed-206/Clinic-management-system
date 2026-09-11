@@ -1,7 +1,7 @@
 import { HashLink } from "react-router-hash-link";
 import { Link } from "react-router-dom";
 import { motion, type Variants } from "framer-motion"; 
-import logoWhite from '../../assets/heroImg/doctori2.png'
+import logoWhite from '@/assets/heroImg/doctori2.png'
 import { useTranslation } from "react-i18next";
 export const Footer = () => {
   const {t} = useTranslation('landing')
@@ -30,7 +30,7 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="w-full py-12 md:py-16 bg-primary mt-auto text-white border-t border-white/10 overflow-hidden">
+    <footer className="w-full py-12 md:py-16 bg-primary-300 mt-auto text-white border-t border-white/10 overflow-hidden">
       <motion.div 
         className="container mx-auto px-6 lg:px-12 text-center"
         initial="hidden"

@@ -1,5 +1,5 @@
 import { LuSearch } from "react-icons/lu";
-import { useCommonT } from "../../hooks/useT";
+import { useCommonT } from "@/hooks/useT";
 interface SearchBarProps {
   searchTerm: string;
   onSearchChange: (value: string) => void;

@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 const ROLE_REDIRECTS: Record<string, string> = {
   patient: "/dashboard",
@@ -24,3 +24,4 @@ export const GuestOnly = () => {
 
   return <Outlet />;
 };
+

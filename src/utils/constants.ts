@@ -1,4 +1,4 @@
-import { type DayOfWeek } from "../types/types";
+import { type DayOfWeek } from "@/types/types";
 export const DAYS : { id: DayOfWeek; name: string }[] = [
   { id: 0, name: "Sunday" },
   { id: 1, name: "Monday" },

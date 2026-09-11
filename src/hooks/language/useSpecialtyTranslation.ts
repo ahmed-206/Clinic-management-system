@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import type { MedicalSpecialty } from '../../constants/medicalSpecialties';
+import type { MedicalSpecialty } from '@/constants/medicalSpecialties';
 
 export const useSpecialtyTranslation = () => {
   const { t } = useTranslation('common');

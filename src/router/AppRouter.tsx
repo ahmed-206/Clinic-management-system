@@ -1,77 +1,77 @@
 import { lazy, Suspense } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { PublicLayout } from "../components/layout/PublicLayout";
-import { Signup } from "../pages/SignupPage";
-import { Login } from "../pages/LoginPage";
-import { RequireRole } from "../components/RequireRole";
-import { GuestOnly } from "../components/GuestOnly";
-import { DashboardLayout } from "../components/layout/DashboardLayout";
-import { HomePage } from "../pages/Home";
-import { Unauthorized } from "../pages/Unauthorized";
+import { PublicLayout } from "@/components/layout/PublicLayout";
+import { Signup } from "@/features/auth/pages/SignupPage";
+import { Login } from "@/features/auth/pages/LoginPage";
+import { RequireRole } from "@/components/RequireRole";
+import { GuestOnly } from "@/components/GuestOnly";
+import { DashboardLayout } from "@/components/layout/DashboardLayout";
+import { HomePage } from "@/features/marketing/pages/Home";
+import { Unauthorized } from "@/features/public/pages/Unauthorized";
 
 // import patient pages
 const PatientAppointmentsPage = lazy(() =>
-  import("../pages/patient/PatientAppointmentsPage").then((m) => ({
+  import("@/features/patient/pages/PatientAppointmentsPage").then((m) => ({
     default: m.PatientAppointmentsPage,
   })),
 );
 
 const BookAppointmentPage = lazy(() =>
-  import("../pages/patient/BookAppointmentPage").then((m) => ({
+  import("@/features/patient/pages/BookAppointmentPage").then((m) => ({
     default: m.BookAppointmentPage,
   })),
 );
 
 const BookingDetails = lazy(() =>
-  import("../pages/patient/BookingDetails").then((m) => ({
+  import("@/features/patient/pages/BookingDetails").then((m) => ({
     default: m.BookingDetails,
   })),
 );
 
 // import doctor pages
 const DoctorDashboardPage = lazy(() =>
-  import("../pages/doctor/DoctorDashboardPage").then((m) => ({
+  import("@/features/doctor/pages/DoctorDashboardPage").then((m) => ({
     default: m.DoctorDashboardPage,
   })),
 );
 
-const DoctorAppointment = lazy(() => import("../pages/doctor/DoctorAppointmentPage"));
-const DoctorSchedulePage = lazy(() => import("../pages/doctor/DoctorSchedulePage"));
+const DoctorAppointment = lazy(() => import("@/features/doctor/pages/DoctorAppointmentPage"));
+const DoctorSchedulePage = lazy(() => import("@/features/doctor/pages/DoctorSchedulePage"));
 const DoctorProfilePage = lazy(() =>
-  import("../pages/doctor/DoctorProfile").then((m) => ({
+  import("@/features/doctor/pages/DoctorProfile").then((m) => ({
     default: m.DoctorProfilePage,
   })),
 );
 
 // import admin pages
 const AdminDashboard = lazy(() =>
-  import("../pages/admin/AdminDashboard").then((m) => ({
+  import("@/features/admin/pages/AdminDashboard").then((m) => ({
     default: m.AdminDashboard,
   })),
 );
 const DoctorsMangementPage = lazy(() =>
-  import("../pages/admin/DoctorsManagementPage").then((m) => ({
+  import("@/features/admin/pages/DoctorsManagementPage").then((m) => ({
     default: m.DoctorsMangementPage,
   })),
 );
 const PatientsManagementPage = lazy(() =>
-  import("../pages/admin/PatientsManagementPage").then((m) => ({
+  import("@/features/admin/pages/PatientsManagementPage").then((m) => ({
     default: m.PatientsManagementPage,
   })),
 );
 const AppointmentsManagementPage = lazy(() =>
-  import("../pages/admin/AppointmentsManagementPage").then((m) => ({
+  import("@/features/admin/pages/AppointmentsManagementPage").then((m) => ({
     default: m.AppointmentsManagementPage,
   })),
 );
 
-const SettingsPage = lazy(() => import("../pages/admin/SettingsPage/SettingsPage"));
+const SettingsPage = lazy(() => import("@/features/admin/pages/settings/SettingsPage"));
 
 
-import PrivacyPolicy from "../pages/PrivacyPolicy";
-import TermsOfService from "../pages/TermsOfService";
-import ContactUs from "../pages/ContactUs";
-import { LoadingSpinner } from "../components/ui/LoadingSpinner";
+import PrivacyPolicy from "@/features/legal/pages/PrivacyPolicy";
+import TermsOfService from "@/features/legal/pages/TermsOfService";
+import ContactUs from "@/features/contact/pages/ContactUs";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 const rout = createBrowserRouter([
   {

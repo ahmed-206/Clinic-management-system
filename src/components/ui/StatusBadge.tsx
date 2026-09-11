@@ -1,4 +1,4 @@
-import type { AppointmentStatus } from "../../types/types";
+import type { AppointmentStatus } from "@/types/types";
 
 interface StatusBadgeProps {
   status: AppointmentStatus;

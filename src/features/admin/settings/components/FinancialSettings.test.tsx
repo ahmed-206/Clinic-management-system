@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import { FinancialSettings } from "./FinancialSettings";
+import { FinancialSettings } from "@/features/admin/settings/components/FinancialSettings";
 import { BrowserRouter} from "react-router-dom";
 
 const mockUpdate = vi.fn();
-vi.mock("../../../../hooks/admin/useSettings.ts", () => ({
+vi.mock("@/features/admin/hooks/useSettings", () => ({
     useSettings : () => ({
         isLoading: false,
         isUpdating: false,

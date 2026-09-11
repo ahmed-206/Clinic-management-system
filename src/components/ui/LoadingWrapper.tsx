@@ -1,4 +1,4 @@
-import { LoadingSpinner } from "./LoadingSpinner";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 interface Props {
   isLoading: boolean;
   children: React.ReactNode;

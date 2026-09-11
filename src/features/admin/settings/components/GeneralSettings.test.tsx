@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import { GeneralSettings } from "./GeneralSettings";
+import { GeneralSettings } from "@/features/admin/settings/components/GeneralSettings";
 import { BrowserRouter} from "react-router-dom";
 
 const mockUpdate = vi.fn();
-vi.mock("../../../../hooks/admin/useSettings", () => ({
+vi.mock("@/features/admin/hooks/useSettings", () => ({
     useSettings: () => ({
         isLoading: false,
         isUpdating: false,

@@ -5,7 +5,7 @@ import type {
   NavKeys,
   LandingKeys,
   DashboardKeys,
-} from "../i18n/types";
+} from "@/i18n/types";
 
 //  hook لكل namespace — autocomplete كامل
 export const useFormT = () => {

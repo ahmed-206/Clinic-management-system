@@ -1,12 +1,12 @@
 import { useState } from "react";
-import supabase from "../../../../supabase";
+import supabase from "@/supabase";
 import { toast } from "sonner";
 import {
   LuLockKeyhole,
   
 } from "react-icons/lu";
-import { Button } from "../../../../components/ui/Button";
-import { useDashboardT } from "../../../../hooks/useT";
+import { Button } from "@/components/ui/Button";
+import { useDashboardT } from "@/hooks/useT";
 export const SecuritySettings = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

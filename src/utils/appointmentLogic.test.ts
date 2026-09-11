@@ -4,13 +4,13 @@ import {
   getLocalDateString,
   combineDateAndTime,
   buildSlotsWithStatus,
-} from "./appointmentLogic";
-import { toLocalISODate } from "./dateTimeFormate";
+} from "@/utils/appointmentLogic";
+import { toLocalISODate } from "@/utils/dateTimeFormate";
 import type {
   TimeOff,
   DoctorAvailability,
   AppointmentData,
-} from "../types/types";
+} from "@/types/types";
 
 describe("getDayStatus logic", () => {
   it("should return isHoliday: true when the date matches a doctor's time off", () => {

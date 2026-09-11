@@ -1,11 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import { menuConfig } from "../../constants/menuConfig";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { menuConfig } from "@/constants/menuConfig";
 import { BiLogOutCircle } from "react-icons/bi";
 import { LuMenu, LuX } from "react-icons/lu";
-import logoWhite from '../../assets/heroImg/doctori2.png'
-import { useDashboardT, useNavT } from "../../hooks/useT";
+import logoWhite from '@/assets/heroImg/doctori2.png'
+import { useDashboardT, useNavT } from "@/hooks/useT";
 export const Sidebar = () => {
   const td = useDashboardT();
   const tn = useNavT()
@@ -55,7 +55,7 @@ export const Sidebar = () => {
               onClick={() => setIsOpen(false)}
               className={`flex items-center gap-4 px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                 isActive
-                  ? "bg-primary-100 text-primary shadow-lg translate-x-1"
+                  ? "bg-white text-primary shadow-lg translate-x-1"
                   : "text-white/70 hover:bg-white/5 hover:text-white"
               }`}
             >

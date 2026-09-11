@@ -1,9 +1,9 @@
 import { useState} from "react";
-import { useSettings } from "../../../../hooks/admin/useSettings";
-import type { SettingsFormsProps, ClinicSettings } from "../../../../types/types";
-import { LoadingSpinner } from "../../../../components/ui/LoadingSpinner";
-import { Button } from "../../../../components/ui/Button";
-import { useDashboardT } from "../../../../hooks/useT";
+import { useSettings } from "@/features/admin/hooks/useSettings";
+import type { SettingsFormsProps, ClinicSettings } from "@/types/types";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { Button } from "@/components/ui/Button";
+import { useDashboardT } from "@/hooks/useT";
 const GeneralForm = ({ settings, updateSettings, isUpdating }: SettingsFormsProps) => {
   const [formData, setFormData] = useState({
     clinic_name: settings.clinic_name || "",

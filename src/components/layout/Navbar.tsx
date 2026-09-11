@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { HashLink } from "react-router-hash-link";
 import { LuCircleUser, LuMenu, LuX } from "react-icons/lu";
-import { Button } from "../ui/Button";
+import { Button } from "@/components/ui/Button";
 import { AnimatePresence, motion } from "framer-motion";
-import logo from '../../assets/heroImg/doctori.png';
-import { NotificationBell } from "../ui/NotificationBell";
-import { LanguageToggle } from "../ui/LanguageToggle";
+import logo from '@/assets/heroImg/doctori.png';
+import { NotificationBell } from "@/components/ui/NotificationBell";
+import { LanguageToggle } from "@/components/ui/LanguageToggle";
 import { useTranslation } from 'react-i18next';
 export const Navbar = () => {
   const {t} = useTranslation("nav")
@@ -33,7 +33,7 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="fixed w-full max-w-full  z-100 transition-all duration-300 bg-neutral-100 backdrop-blur-md border-b border-white/5">
+    <nav className="fixed w-full max-w-full  z-100 transition-all duration-300 bg-white backdrop-blur-md border-b border-white/5">
       <div className="container mx-auto px-4 md:px-10 h-16 md:h-18 flex items-center justify-between">
         {/* 1. Logo */}
         <div className="shrink-0">
@@ -45,13 +45,13 @@ export const Navbar = () => {
         </div>
 
         {/* 2. Desktop Links */}
-        <div className="hidden md:flex items-center gap-8 text-sm lg:text-base font-semibold  text-primary">
+        <div className="hidden md:flex items-center gap-8 text-sm lg:text-base font-semibold  text-primary-700">
           <Link
             to="/"
             className="relative group  transition-colors duration-200"
           >
             {t('home')}
-            <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+            <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-primary-700 transition-all duration-300 group-hover:w-full"></span>
           </Link>
           <HashLink
             smooth
@@ -59,7 +59,7 @@ export const Navbar = () => {
             className="relative group transition-colors duration-200"
           >
             {t('features')}
-            <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+            <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-primary-700 transition-all duration-300 group-hover:w-full"></span>
           </HashLink>
           <HashLink
             smooth
@@ -67,7 +67,7 @@ export const Navbar = () => {
             className="relative group transition-colors duration-200"
           >
             {t('howItWorks')}
-            <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+            <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-primary-700 transition-all duration-300 group-hover:w-full"></span>
           </HashLink>
         </div>
 

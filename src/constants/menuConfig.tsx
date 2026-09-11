@@ -9,7 +9,7 @@ import {
   LuUsersRound
 } from "react-icons/lu";
 
-import { type DashboardKeys } from "../i18n/types";
+import { type DashboardKeys } from "@/i18n/types";
 export interface MenuItem {
   name: DashboardKeys;
   path: string;

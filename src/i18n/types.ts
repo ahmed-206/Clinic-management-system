@@ -1,5 +1,5 @@
 
-import type { EnResources } from './locales/en';
+import type { EnResources } from '@/i18n/locales/en/index';
 
 //  1. كل namespace كـ type مستقل
 export type FormNS    = EnResources['form'];

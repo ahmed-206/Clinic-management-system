@@ -1,5 +1,5 @@
 import { type FallbackProps } from "react-error-boundary";
-import { getErrorMessage } from "../../utils/getErrorMessage";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 
 export const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   const message = getErrorMessage(error);

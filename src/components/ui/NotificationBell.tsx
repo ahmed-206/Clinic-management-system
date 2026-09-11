@@ -1,7 +1,7 @@
 // components/ui/NotificationBell.tsx
 import { useState, useRef, useEffect } from "react";
 import { LuBell, LuCheck } from "react-icons/lu";
-import { useNotifications } from "../../hooks/notification/useNotifications";
+import { useNotifications } from "@/features/notifications/hooks/useNotifications";
 import { formatDistanceToNow } from "date-fns";
 
 const TYPE_STYLES: Record<string, string> = {

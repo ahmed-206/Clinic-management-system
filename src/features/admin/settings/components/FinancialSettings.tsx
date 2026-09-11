@@ -1,9 +1,9 @@
-import { useSettings } from "../../../../hooks/admin/useSettings";
-import { LoadingSpinner } from "../../../../components/ui/LoadingSpinner";
-import type {  ClinicSettings, SettingsFormsProps } from "../../../../types/types";
+import { useSettings } from "@/features/admin/hooks/useSettings";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import type {  ClinicSettings, SettingsFormsProps } from "@/types/types";
 import { useState} from "react";
-import { Button } from "../../../../components/ui/Button";
-import { useDashboardT } from "../../../../hooks/useT";
+import { Button } from "@/components/ui/Button";
+import { useDashboardT } from "@/hooks/useT";
 
 const FinancialForm = ({ settings, updateSettings, isUpdating }: SettingsFormsProps) => {
   const [formData, setFormData] = useState({

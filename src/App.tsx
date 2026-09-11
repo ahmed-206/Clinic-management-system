@@ -1,10 +1,10 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import { ErrorFallback } from './components/ui/ErrorBoundary';
+import { ErrorFallback } from '@/components/ui/ErrorBoundary';
 
 
-import AppRouter from './router/AppRouter';
+import AppRouter from '@/router/AppRouter';
 import { Toaster } from 'sonner';
-import { AuthProvider } from './auth/AuthProvider'; 
+import { AuthProvider } from '@/features/auth/provider/AuthProvider'; 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 

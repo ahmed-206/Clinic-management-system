@@ -1,6 +1,6 @@
 // src/utils/exportUtils.ts
 import * as XLSX from 'xlsx';
-import { type AppointmentData } from '../types/types';
+import { type AppointmentData } from '@/types/types';
 export const exportToExcel = (data: AppointmentData[], fileName: string) => {
 
   // 1. تنظيف البيانات (نختار فقط الأعمدة التي تهم المستخدم)

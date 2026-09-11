@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import type{  AppointmentData, Medicine } from "../../types/types";
-import { useDoctorPrescription } from "../../hooks/doctor/useDoctordPrescription"; 
+import type{  AppointmentData, Medicine } from "@/types/types";
+import { useDoctorPrescription } from "@/features/doctor/hooks/useDoctorPrescription"; 
 import { LuHistory, LuStethoscope, LuPill,LuX } from "react-icons/lu";
-import { Button } from "./Button";
+import { Button } from "@/components/ui/Button";
 
 interface Props {
   appointment: AppointmentData | null;

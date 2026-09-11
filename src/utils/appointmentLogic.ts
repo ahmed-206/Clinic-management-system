@@ -1,5 +1,5 @@
-import type { TimeOff, DoctorAvailability, DayOfWeek, AppointmentData } from "../types/types";
-import { toLocalISODate } from "./dateTimeFormate";
+import type { TimeOff, DoctorAvailability, DayOfWeek, AppointmentData } from "@/types/types";
+import { toLocalISODate } from "@/utils/dateTimeFormate";
 
 /**
  * The IANA timezone we normalise all slot-time comparisons to.
