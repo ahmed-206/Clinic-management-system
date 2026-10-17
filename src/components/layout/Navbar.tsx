@@ -74,11 +74,12 @@ export const Navbar = () => {
         {/* 3. Actions */}
         <div className="flex items-center gap-2 md:gap-4">
           {user ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
+              <LanguageToggle />
               <NotificationBell />
               <Link
                 to={getDashboardPath()}
-                className="p-2 text-secondary/80 hover:text-white hover:bg-secondary/30 rounded-full transition-all duration-400"
+                className="p-2 mr-1 text-secondary/80 hover:text-white hover:bg-secondary/30 rounded-full transition-all duration-400"
               >
                 <LuCircleUser size={22} />
               </Link>
@@ -89,22 +90,24 @@ export const Navbar = () => {
               >
                 {t('logout')}
               </Button>
-              <LanguageToggle />
             </div>
           ) : (
-            <div className="hidden md:flex items-center gap-4">
+            <div className="hidden md:flex items-center">
+              <LanguageToggle />
               <Link
+
                 to="/login"
                 className="text-md font-bold text-secondary hover:text-primary transition-colors duration-200 px-3 py-2"
               >
+                <Button variant="outline" className="text-primary">
                 {t('login')}
+                </Button>
               </Link>
               <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button variant="primary" className="w-full text-primary">
                   {t('signUp')}
                 </Button>
               </Link>
-              <LanguageToggle />
             </div>
           )}
 

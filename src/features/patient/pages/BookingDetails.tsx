@@ -15,7 +15,7 @@ import { useAppointment } from "@/features/appointments/hooks/useAppointment";
 import { getErrorMessage } from "@/utils/getErrorMessage";
 import { useDoctorSchedule } from "@/features/doctor/hooks/useDoctorSchedule";
 import { LuTriangleAlert, LuFilePenLine } from "react-icons/lu";
-import { LiaMoneyBillWaveSolid } from "react-icons/lia";
+
 import { PatientSelector } from "@/features/patient/components/PatientSelector";
 import { usePatients } from "@/features/patient/hooks/usePatients";
 
@@ -265,60 +265,52 @@ const [isCheckingPhone, setIsCheckingPhone] = useState(false);
       {/* Doctor Header Card */}
 
       <div
-        className={`rounded-[25px] md:rounded-[30px] p-4 md:p-6 shadow-sm border flex flex-col md:flex-row gap-4 md:gap-6 items-center text-center md:text-start transition-all duration-500 ${
+        className={`rounded-[25px] md:rounded-[30px] p-4 md:p-6 shadow-sm  flex flex-col md:flex-row gap-4 md:gap-6 items-center text-center md:text-start transition-all duration-500 ${
           rescheduleId
-            ? "bg-orange-50 border-orange-200"
+            ? "bg-primary"
             : editId
-              ? "bg-blue-50 border-blue-200"
-              : "bg-white border-gray-100"
+              ? "bg-primary "
+              : "bg-primary"
         }`}
       >
-        {/* صورة الطبيب / الأيقونة */}
+        
         <div
-          className={`w-20 h-20 md:w-24 md:h-24 rounded-full shrink-0 flex items-center justify-center text-2xl transition-colors ${
+          className={`w-20 h-20 md:w-18 md:h-18 rounded-full shrink-0 flex items-center justify-center text-2xl transition-colors ${
             rescheduleId
-              ? "bg-orange-200 text-orange-600"
+              ? "bg-white text-primary"
               : editId
-                ? "bg-blue-200 text-blue-600"
-                : "bg-neutral-200 text-primary"
+                ? "bg-white text-primary"
+                : "bg-white text-primary"
           }`}
         >
           {rescheduleId ? (
-            <LuTriangleAlert />
+            <LuTriangleAlert size={36}/>
           ) : editId ? (
-            <LuFilePenLine />
+            <LuFilePenLine size={36}/>
           ) : (
-            <FaUserDoctor size={48} />
+            <FaUserDoctor size={36} />
           )}
         </div>
 
         <div className="flex-1 text-center md:text-start space-y-1">
-          <h2 className="text-xl md:text-2xl font-bold text-primary">
+          <h2 className="text-xl md:text-2xl font-bold text-white">
             {rescheduleId
               ? td('dashboard.patient.rescheduleAppointment')
               : editId
                 ? td('dashboard.patient.modifyAppointment')
                 : td('dashboard.patient.confirmAppointmentTitle')}
           </h2>
-          <p className="text-heading text-sm md:text-lg">
+          <p className="text-white text-sm md:text-lg">
             {rescheduleId
               ? td('dashboard.patient.rescheduleMsg')
               : editId
                 ? td('dashboard.patient.modifyMsg')
                 : `${td('dashboard.patient.bookingWith')} ${doctorAvailability?.doctorName}`}
           </p>
-          {doctorAvailability?.doctorBio && (
-            <p className="text-secondary leading-relaxed text-xs md:text-sm line-clamp-2 md:line-clamp-none">
-              {doctorAvailability.doctorBio}
-            </p>
-          )}
+       
+          
         </div>
-        <div className="w-full md:w-auto pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-gray-100 md:pl-6">
-          <div className="flex justify-between flex-col items-center text-secondary">
-            <LiaMoneyBillWaveSolid className="text-primary" size={28} />
-            <span>{td('dashboard.patient.sessionPrice')} {doctorAvailability?.doctorPrice} EGP</span>
-          </div>
-        </div>
+        
       </div>
 
       {/* Selection Section */}

@@ -44,9 +44,9 @@ export const LoginForm = () => {
   const labelStyle =
     "text-md font-medium text-secondary  tracking-widest";
   return (
-    <div className="min-h-screen bg-neutral-100 flex items-center justify-center p-4 py-20">
+    <div className="min-h-screen bg-primary flex items-center justify-center p-4 py-24">
       <div className="relative w-full max-w-sm">
-        <div className="bg-white/4 border border-white/8 backdrop-blur-xl rounded-2xl p-8 shadow-[0_8px_20px_rgba(0,0,0,0.4)]">
+        <div className="bg-white border border-white/8 backdrop-blur-xl rounded-2xl p-8 shadow-[0_8px_20px_rgba(0,0,0,0.4)]">
           <div className="mb-8 text-center">
             <h2 className="text-xl font-bold text-primary tracking-widest mb-2">
               {tf('login.title')}

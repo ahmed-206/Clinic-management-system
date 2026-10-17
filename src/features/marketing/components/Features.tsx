@@ -89,11 +89,11 @@ export const Features = () => {
             viewport={{ once: true }}
             transition={{ delay: i * 0.08, duration: 0.5 }}
             whileHover={{ y: -6 }}
-            className="group relative p-6 bg-white border border-neutral-100 rounded-2xl hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 flex flex-col gap-4"
+            className="group relative p-6 bg-white border border-secondary/20 rounded-2xl hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 flex flex-col gap-4"
           >
           
 
-            <div className="w-11 h-11 rounded-xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
+            <div className="w-11 h-11 rounded-xl bg-primary/20 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
               {f.icon}
             </div>
 

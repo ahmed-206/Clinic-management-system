@@ -30,19 +30,15 @@ interface StatCardProps {
   title: string;
   value: number | string;
   icon: React.ReactNode;
-  gradient: string;
+  
   trend?: string;
 }
 
-const StatCard = ({ title, value, icon, gradient, trend }: StatCardProps) => (
-  <div className={`relative rounded-2xl p-5 overflow-hidden text-white ${gradient} shadow-lg`}>
-    {/* background circle decoration */}
-    <div className="absolute -right-4 -top-4 w-24 h-24 rounded-full bg-white/10" />
-    <div className="absolute -right-1 -top-1 w-14 h-14 rounded-full bg-white/10" />
-
-    <div className="relative z-10 flex flex-col gap-4">
-      <div className="flex justify-between items-start">
-        <div className="p-2.5 bg-white/20 rounded-xl backdrop-blur-sm">
+const StatCard = ({ title, value, icon,  trend }: StatCardProps) => (
+  <div className={`relative rounded-2xl bg-white p-3 overflow-hidden  border border-secondary/20 shadow-lg`}>
+    <div className="z-10 flex flex-col gap-2">
+      <div className="flex  items-center gap-2">
+        <div className="p-2.5 bg-secondary/10 rounded-full text-primary backdrop-blur-sm">
           {icon}
         </div>
         {trend && (
@@ -51,12 +47,12 @@ const StatCard = ({ title, value, icon, gradient, trend }: StatCardProps) => (
             {trend}
           </span>
         )}
-      </div>
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-widest text-white/70 mb-1">
+        <p className="text-xs font-semibold  tracking-widest text-secondary mb-1">
           {title}
         </p>
-        <h3 className="text-3xl font-bold tracking-tight">{value}</h3>
+      </div>
+      <div>
+        <h3 className="text-2xl font-bold  text-primary">{value}</h3>
       </div>
     </div>
   </div>
@@ -114,7 +110,7 @@ export const AdminDashboard = () => {
   const maxCount = Math.max(...(stats?.chartData?.map((d) => d.count) ?? [1]));
 
   return (
-    <div className="p-4 md:p-8 bg-neutral-100 min-h-screen rounded-xl space-y-6">
+    <div className="p-4 md:p-8  min-h-screen rounded-xl space-y-6">
 
       {/* ── Header ── */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
@@ -135,25 +131,25 @@ export const AdminDashboard = () => {
           title={td('dashboard.admin.totalDoctors')}
           value={stats?.mainStats.doctors || 0}
           icon={<LuStethoscope size={20} />}
-          gradient="bg-gradient-to-br from-primary to-primary/70"
+          
         />
         <StatCard
           title={td('dashboard.admin.totalPatients')}
           value={stats?.mainStats.patients || 0}
           icon={<LuUsersRound size={20} />}
-          gradient="bg-gradient-to-br from-blue-500 to-blue-400"
+          
         />
         <StatCard
           title={td('dashboard.admin.appointmentsToday')}
           value={stats?.mainStats.todayAppointments || 0}
           icon={<LuCalendarDays size={20} />}
-          gradient="bg-gradient-to-br from-violet-500 to-violet-400"
+         
         />
         <StatCard
           title={td('dashboard.admin.totalRevenue')}
           value={`${(stats?.mainStats.revenue || 0).toLocaleString()} ${tc('currency')}`}
           icon={<LuCircleDollarSign size={20} />}
-          gradient="bg-gradient-to-br from-emerald-500 to-emerald-400"
+         
         />
       </div>
 

@@ -40,24 +40,24 @@ const tc = useCommonT();
         <p className="text-secondary font-medium">{td('dashboard.doctor.whatsHappening')}</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
         <StatCard 
-          label={td('dashboard.doctor.todaysAppointments')}
+          title={td('dashboard.doctor.todaysAppointments')}
           value={stats?.todayCount} 
           icon={<LuClock3 className="text-primary group-hover:text-white" size={28} />}
         />
         <StatCard 
-          label={td('dashboard.doctor.upcomingTotal')} 
+          title={td('dashboard.doctor.upcomingTotal')} 
           value={stats?.upcomingCount} 
           icon={<LuCalendar className="text-primary group-hover:text-white" size={28} />}
         />
         <StatCard 
-          label={td('dashboard.doctor.canceled')}
+          title={td('dashboard.doctor.canceled')}
           value={stats?.cancelledCount} 
           icon={<LuCircleX className="text-primary group-hover:text-white" size={28} />}
         />
         <StatCard 
-          label={td('dashboard.doctor.doctorRating')}
+          title={td('dashboard.doctor.doctorRating')}
           value="4.7" 
           icon={<LuStar className="text-primary group-hover:text-white fill-primary group-hover:fill-white" size={28} />}
         />
@@ -75,7 +75,7 @@ const tc = useCommonT();
           </span>
         </div>
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
-          <table className="w-full text-start border-collapse min-w-[500px]">
+          <table className="w-full text-start border-collapse min-w-125">
             <thead className="bg-primary text-white">
               <tr className="border-b-2 border-gray-200">
                 <th className="py-3 px-4 font-bold text-start">{tc('time')}</th>

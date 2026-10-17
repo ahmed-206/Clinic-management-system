@@ -17,7 +17,7 @@ export const HowItWorks = () => {
   { returnObjects: true }
 ) as Record<string, { n: string; title: string; desc: string }>;
 
-// ✅ حوّله لـ array
+
 const steps = Object.values(stepsObj);;
   return (
     <section id="how-it-works" className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24">
@@ -72,7 +72,7 @@ const steps = Object.values(stepsObj);;
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08, duration: 0.4 }}
-              className="group relative bg-white p-7 rounded-2xl border border-neutral-100 shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 flex flex-col items-center text-center overflow-hidden"
+              className="group relative bg-white p-7 rounded-2xl border border-secondary/20 shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 flex flex-col items-center text-center overflow-hidden"
             >
               <div className="relative mb-5">
                 <div className=" rounded-2xl bg-primary/5 flex items-center justify-center text-base font-bold text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 w-12 h-12">

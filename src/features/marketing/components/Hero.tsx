@@ -1,89 +1,73 @@
-
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import d1copy from '@/assets/heroImg/doc.png'
+import d1copy from '@/assets/heroImg/doctori.png';
 import { FaArrowRight } from 'react-icons/fa';
 
 import { useLandingT } from '@/hooks/useT';
 
 export const Hero = () => {
-const tl = useLandingT()
+  const tl = useLandingT();
 
   return (
-    <section className="relative w-full min-h-[80vh] md:min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-neutral-100 px-4 py-20">
-
-      <div className="absolute inset-0 z-0 ">
+    <section className="relative w-full min-h-[85vh] md:min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-neutral-100 px-4 py-12 md:py-24">
+      
     
-    {/* <div className="absolute top-0 left-1/2 -translate-x-1/2 w-250 h-75 bg-primary-100 rounded-[100%] blur-[120px] pointer-events-none" /> */}
-    
-  </div>
-     
 
       
-      <div className="relative z-10 flex flex-col items-center text-center gap-3 mb-2 mt-4">
+      <div className="relative z-10 flex flex-col items-center text-center max-w-5xl w-full mx-auto">
+        
+        {/* 1. العنوان الرئيسي */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-primary leading-[1.15] tracking-tight  "
+          className="text-6xl sm:text-6xl md:text-6xl lg:text-6xl font-bold text-primary leading-[1.2] tracking-tight px-2"
         >
-           {tl('heroTitle.part1')}
-          <br />
-          {tl('heroTitle.part2')}
-         
+          {tl('heroTitle.part1')}
+          <br className="hidden sm:block" /> {tl('heroTitle.part2')}
         </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-sm md:text-base lg:text-lg text-secondary font-medium  leading-relaxed max-w-2xl px-2"
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl flex items-center justify-center "
         >
-           {tl('heroSubTitle')}
-        </motion.p>
-      </div>
-
-     
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="relative z-10 w-full max-w-5xl"
-      >
-        
-        <div className="relative w-full aspect-video md:aspect-21/9   overflow-hidden ">
-          
-          
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={d1copy}
-              src={d1copy}
-              alt="Clinic"
-              initial={{ opacity: 0, scale: 1.04 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 1.2, ease: 'easeInOut' }}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          </AnimatePresence>
-
-         
-
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20">
-          
-            <Link
-              to="/dashboard/book"
-              className="inline-flex items-center gap-2 bg-primary border border-white backdrop-blur-md  text-white text-xs md:text-sm font-medium px-6 md:px-8 py-3 md:py-3.5 rounded-xl transition-all duration-200 hover:gap-3 shadow-lg"
-            >
-              {tl('heroButton')}
-              <FaArrowRight className="w-3 md:w-3.5 h-3 md:h-3.5" />
-            </Link>
+          <div className="relative w-full aspect-3/1 flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={d1copy}
+                src={d1copy}
+                alt="DOCTORi Logo"
+                initial={{ opacity: 0, scale: 1.02 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 1.2, ease: 'easeInOut' }}
+                className="w-full h-full object-contain"
+              />
+            </AnimatePresence>
           </div>
-        </div>
+        </motion.div>
 
-      
-      </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="z-20 "
+        >
+          <Link
+            to="/dashboard/book"
+            className="inline-flex items-center gap-2 bg-[#00c9c8] hover:bg-[#00b5b4] text-white text-xs sm:text-sm md:text-base font-semibold px-7 md:px-9 py-3 md:py-3.5 rounded-xl transition-all duration-200 hover:scale-105 shadow-md shadow-[#00c9c8]/20"
+          >
+            {tl('heroButton')}
+            <FaArrowRight className="w-3 md:w-3.5 h-3 md:h-3.5" />
+          </Link>
+        </motion.div>
+
+      </div>
 
     </section>
   );

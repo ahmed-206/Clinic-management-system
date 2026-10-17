@@ -1,20 +1,33 @@
+import { LuTrendingUp } from "react-icons/lu";
+
 interface StatCardProps {
-  label: string;
-  value: string | number | undefined;
+  title: string;
+  value: number | string | undefined;
   icon: React.ReactNode;
-  colorClass?: string;
+  
+  trend?: string;
 }
 
-export const StatCard = ({ label, value, icon, colorClass = "hover:bg-primary" }: StatCardProps) => (
-  <div className={`bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center flex-col text-center gap-5 transition-all duration-300 hover:shadow-lg group ${colorClass} hover:text-white`}>
-    <div className="p-4 bg-gray-50 rounded-xl group-hover:bg-white/20 transition-colors">
-      {icon}
-    </div>
-    <div>
-      <span className="text-3xl font-black text-secondary  block leading-none mb-1">
-        {value ?? 0}
-      </span>
-      <span className="text-sm font-medium opacity-70">{label}</span>
+export const StatCard = ({ title, value, icon,  trend }: StatCardProps) => (
+  <div className={`relative rounded-2xl bg-white p-3 overflow-hidden  border border-secondary/20 shadow-lg`}>
+    <div className="z-10 flex flex-col gap-2">
+      <div className="flex  items-center gap-2">
+        <div className="p-2.5 bg-secondary/10 rounded-full text-primary backdrop-blur-sm">
+          {icon}
+        </div>
+        {trend && (
+          <span className="flex items-center gap-1 text-[10px] font-bold bg-white/20 px-2 py-1 rounded-full">
+            <LuTrendingUp size={10} />
+            {trend}
+          </span>
+        )}
+        <p className="text-xs font-semibold  tracking-widest text-secondary mb-1">
+          {title}
+        </p>
+      </div>
+      <div>
+        <h3 className="text-2xl font-bold  text-primary">{value}</h3>
+      </div>
     </div>
   </div>
 );

@@ -43,7 +43,7 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
             : "bg-white border-gray-50 hover:shadow-md"
       }`}
     >
-      {/* 1. دائرة الحرف */}
+     
       <div className={`w-20 h-20 rounded-full shrink-0 flex items-center justify-center text-white text-3xl font-black shadow-inner transition-colors ${isFinalStatus ? "bg-gray-400" : "bg-primary"}`}>
         {appointment.doctor.name.charAt(0).toUpperCase()}
       </div>
