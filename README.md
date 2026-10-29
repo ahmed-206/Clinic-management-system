@@ -9,36 +9,7 @@
 > - **Doctor:** doctor@demo.com / demo1234
 > - **Patient:** patient@demo.com / demo1234
 
-##  Landing Page (Responsive View)
-<div align="center">
-  <img src="./screenshots/landingpage.jpg" width="800" alt="Landing Page Responsive">
-</div>
 
----
-
-##  Admin Dashboard
-<div align="center">
-  <img src="./screenshots/admin.jpg" width="800" alt="Admin Dashboard">
-</div>
-
----
-
-##  Doctor Dashboard
-<div align="center">
-  <img src="./screenshots/docDash1.jpg" width="400" />
-  <img src="./screenshots/docDash2.jpg" width="400" />
-  <img src="./screenshots/docDash3.jpg" width="400" />
-  <img src="./screenshots/docDash4.jpg" width="400" />
-</div>
-
----
-
-##  Patient Dashboard
-<div align="center">
-  <img src="./screenshots/patientDash1.jpg" width="500" />
-  <img src="./screenshots/patientDash2.jpg" width="500" />
-  <img src="./screenshots/patientDash4.jpg" width="500" />
-</div>
 
 ## Overview
 
@@ -136,11 +107,5 @@ Tests are written with Vitest and React Testing Library, covering core booking f
 
 ---
 
-## What I learned
 
-- Designing a role-based access system where three different user types share the same database but see completely different UIs
-- Using Supabase Row Level Security (RLS) policies to enforce data access rules at the database level rather than the application layer
-- Managing complex scheduling state (availability windows, conflict detection, time-off) with TanStack Query
-- Comprehensive Integration Testing: Writing automated tests for booking flows, covering complex edge cases such as concurrent bookings, invalid time slots, and real-time availability updates.
-- Responsive UI/UX Refinement: Polishing the visual identity and ensuring seamless accessibility across mobile and desktop devices.
 
