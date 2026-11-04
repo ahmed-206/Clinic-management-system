@@ -5,7 +5,7 @@ import { HashLink } from "react-router-hash-link";
 import { LuCircleUser, LuMenu, LuX } from "react-icons/lu";
 import { Button } from "@/components/ui/Button";
 import { AnimatePresence, motion } from "framer-motion";
-import logo from '@/assets/heroImg/doctori.png';
+import logo from '@/assets/heroImg/doctori2.png';
 import { NotificationBell } from "@/components/ui/NotificationBell";
 import { LanguageToggle } from "@/components/ui/LanguageToggle";
 import { useTranslation } from 'react-i18next';
@@ -32,8 +32,12 @@ export const Navbar = () => {
     }
   };
 
+  const isActive = (path: string) => {
+    if (path === "/") return location.pathname === "/" && location.hash === "";
+    return location.pathname + location.hash === path;
+  };
   return (
-    <nav className="fixed w-full max-w-full  z-100 transition-all duration-300 bg-white backdrop-blur-md border-b border-white/5">
+    <nav className="fixed w-full max-w-full  z-100 transition-all duration-300 bg-primary backdrop-blur-md border-b border-white/5">
       <div className="container mx-auto px-4 md:px-10 h-16 md:h-18 flex items-center justify-between">
         {/* 1. Logo */}
         <div className="shrink-0">
@@ -45,29 +49,40 @@ export const Navbar = () => {
         </div>
 
         {/* 2. Desktop Links */}
-        <div className="hidden md:flex items-center gap-8 text-sm lg:text-base font-semibold  text-primary-700">
+      <div className="hidden md:flex items-center gap-1 bg-white/25 backdrop-blur-md border border-white/40 rounded-full  text-sm lg:text-base font-medium text-white">
           <Link
             to="/"
-            className="relative group  transition-colors duration-200"
+            className={`px-5 py-2 rounded-full transition-all duration-200 ${
+              isActive("/") 
+                ? "bg-white/40 text-white shadow-sm font-semibold" 
+                : "hover:bg-white/20 text-white/80"
+            }`}
           >
             {t('home')}
-            <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-primary-700 transition-all duration-300 group-hover:w-full"></span>
           </Link>
+
           <HashLink
             smooth
             to="/#features"
-            className="relative group transition-colors duration-200"
+            className={`px-5 py-2 rounded-full transition-all duration-200 ${
+              isActive("/#features") 
+                ? "bg-white/40 text-white shadow-sm font-semibold" 
+                : "hover:bg-white/20 text-white/80"
+            }`}
           >
             {t('features')}
-            <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-primary-700 transition-all duration-300 group-hover:w-full"></span>
           </HashLink>
+
           <HashLink
             smooth
             to="/#how-it-works"
-            className="relative group transition-colors duration-200"
+            className={`px-5 py-2 rounded-full transition-all duration-200 ${
+              isActive("/#how-it-works") 
+                ? "bg-white/40 text-white shadow-sm font-semibold" 
+                : "hover:bg-white/20 text-white/80"
+            }`}
           >
             {t('howItWorks')}
-            <span className="absolute -bottom-1 start-0 w-0 h-0.5 bg-primary-700 transition-all duration-300 group-hover:w-full"></span>
           </HashLink>
         </div>
 
@@ -79,7 +94,7 @@ export const Navbar = () => {
               <NotificationBell />
               <Link
                 to={getDashboardPath()}
-                className="p-2 mr-1 text-secondary/80 hover:text-white hover:bg-secondary/30 rounded-full transition-all duration-400"
+                className="p-2 mr-1 text-white hover:text-white hover:bg-secondary/30 rounded-full transition-all duration-400"
               >
                 <LuCircleUser size={22} />
               </Link>
@@ -97,14 +112,14 @@ export const Navbar = () => {
               <Link
 
                 to="/login"
-                className="text-md font-bold text-secondary hover:text-primary transition-colors duration-200 px-3 py-2"
+                className="text-md font-bold text-white  transition-colors duration-200 "
               >
-                <Button variant="outline" className="text-primary">
+                <Button variant="">
                 {t('login')}
                 </Button>
               </Link>
               <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="primary" className="w-full text-primary">
+                <Button variant="secondary" className="w-full text-primary">
                   {t('signUp')}
                 </Button>
               </Link>
@@ -114,7 +129,7 @@ export const Navbar = () => {
           {/* 4. Mobile Menu Toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-primary hover:bg-white/8 rounded-lg transition-all duration-200"
+            className="md:hidden p-2 text-white hover:bg-white/8 rounded-lg transition-all duration-200"
             aria-label="Toggle Menu"
           >
             {isMobileMenuOpen ? <LuX size={22} /> : <LuMenu size={22} />}
@@ -126,15 +141,15 @@ export const Navbar = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-primary backdrop-blur-md border-t border-white/5 px-6 py-5 space-y-1"
+            initial={{ opacity: 0, y: -10, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: "auto" }}
+            exit={{ opacity: 0, y: -10, height: 0 }}
+            className="md:hidden mt-3 bg-white/30 backdrop-blur-md border border-white/30 rounded-2xl shadow-xl px-6 py-5 space-y-2 overflow-hidden"
           >
             {[
-              { label: "Home", to: "/", isHash: false },
-              { label: "Features", to: "/#features", isHash: true },
-              { label: "How it works", to: "/#how-it-works", isHash: true },
+              { label: t('home'), to: "/", isHash: false },
+              { label: t('features'), to: "/#features", isHash: true },
+              { label: t('howItWorks'), to: "/#how-it-works", isHash: true },
             ].map(({ label, to, isHash }) =>
               isHash ? (
                 <HashLink
@@ -142,7 +157,7 @@ export const Navbar = () => {
                   smooth
                   to={to}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center text-white  text-sm font-medium py-3 border-b border-white/5 transition-colors duration-200"
+                  className="block text-white text-sm font-medium py-2.5 border-b border-white/20 transition-colors duration-200"
                 >
                   {label}
                 </HashLink>
@@ -151,27 +166,27 @@ export const Navbar = () => {
                   key={label}
                   to={to}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center text-white/60 hover:text-white text-sm font-medium py-3 border-b border-white/5 transition-colors duration-200"
+                  className="block text-white text-sm font-medium py-2.5 border-b border-white/20 transition-colors duration-200"
                 >
                   {label}
                 </Link>
-              ),
+              )
             )}
 
-            <div className="pt-4 space-y-2">
+            <div className="pt-3 space-y-2">
               {!user ? (
                 <>
                   <Link
                     to="/login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-center w-full py-3 text-sm font-medium text-white/70 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all duration-200"
+                    className="flex items-center justify-center w-full py-2.5 text-sm font-medium text-white bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl transition-all duration-200"
                   >
                     {t('login')}
                   </Link>
                   <Link
                     to="/signup"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-center w-full py-3 text-sm font-bold text-primary bg-white  rounded-xl shadow-[0_4px_16px_rgba(37,99,235,0.3)] transition-all duration-200"
+                    className="flex items-center justify-center w-full py-2.5 text-sm font-bold text-gray-900 bg-white rounded-xl shadow-md transition-all duration-200"
                   >
                     {t('signUp')}
                   </Link>
@@ -180,7 +195,7 @@ export const Navbar = () => {
                 <Button
                   variant="danger"
                   onClick={handleLogout}
-                  className="w-full py-3 text-sm font-medium "
+                  className="w-full py-2.5 text-sm font-medium"
                 >
                   {t('logout')}
                 </Button>

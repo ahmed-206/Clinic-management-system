@@ -6,7 +6,7 @@ export const LanguageToggle = () => {
   return (
     <button
       onClick={toggleLanguage}
-      className="flex items-center  px-3 py-1.5 text-sm font-medium text-secondary hover:text-primary cursor-pointer transition-all"
+      className="flex items-center  px-3 py-1.5 text-sm font-medium text-white  cursor-pointer transition-all"
     >
       {isArabic ? (
         <>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import d1copy from '@/assets/heroImg/doctori.png';
+import d1copy from '@/assets/heroImg/doctori2.png';
 import { FaArrowRight } from 'react-icons/fa';
 
 import { useLandingT } from '@/hooks/useT';
@@ -10,7 +10,7 @@ export const Hero = () => {
   const tl = useLandingT();
 
   return (
-    <section className="relative w-full min-h-[85vh] md:min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-neutral-100 px-4 py-12 md:py-24">
+    <section className="relative w-full min-h-[85vh] md:min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-primary px-4 py-12 md:py-24">
       
     
 
@@ -22,7 +22,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="text-6xl sm:text-6xl md:text-6xl lg:text-6xl font-bold text-primary leading-[1.2] tracking-tight px-2"
+          className="text-6xl mt-8 sm:text-6xl md:text-6xl lg:text-6xl font-bold text-white leading-[1.2] tracking-tight px-2"
         >
           {tl('heroTitle.part1')}
           <br className="hidden sm:block" /> {tl('heroTitle.part2')}
@@ -35,7 +35,7 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl flex items-center justify-center "
         >
-          <div className="relative w-full aspect-3/1 flex items-center justify-center">
+          <div className="relative w-full aspect-4/1 flex items-center justify-center">
             <AnimatePresence mode="wait">
               <motion.img
                 key={d1copy}
@@ -60,7 +60,7 @@ export const Hero = () => {
         >
           <Link
             to="/dashboard/book"
-            className="inline-flex items-center gap-2 bg-[#00c9c8] hover:bg-[#00b5b4] text-white text-xs sm:text-sm md:text-base font-semibold px-7 md:px-9 py-3 md:py-3.5 rounded-xl transition-all duration-200 hover:scale-105 shadow-md shadow-[#00c9c8]/20"
+            className="inline-flex items-center gap-2 bg-white  text-primary text-xs sm:text-sm md:text-base font-semibold px-7 md:px-9 py-3 md:py-3.5 rounded-xl transition-all duration-200 hover:scale-105 shadow-md shadow-[#00c9c8]/20"
           >
             {tl('heroButton')}
             <FaArrowRight className="w-3 md:w-3.5 h-3 md:h-3.5" />
