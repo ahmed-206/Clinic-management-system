@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { HashLink } from "react-router-hash-link";
-import { LuCircleUser, LuMenu, LuX } from "react-icons/lu";
+import { LuCircleUser, LuMenu, LuX,  } from "react-icons/lu";
 import { Button } from "@/components/ui/Button";
 import { AnimatePresence, motion } from "framer-motion";
 import logo from '@/assets/heroImg/doctori2.png';
@@ -37,7 +37,7 @@ export const Navbar = () => {
     return location.pathname + location.hash === path;
   };
   return (
-    <nav className="fixed w-full max-w-full  z-100 transition-all duration-300 bg-primary backdrop-blur-md border-b border-white/5">
+    <nav className="fixed w-full max-w-full  z-100 transition-all duration-300 bg-primary backdrop-blur-md ">
       <div className="container mx-auto px-4 md:px-10 h-16 md:h-18 flex items-center justify-between">
         {/* 1. Logo */}
         <div className="shrink-0">
@@ -90,7 +90,10 @@ export const Navbar = () => {
         <div className="flex items-center gap-2 md:gap-4">
           {user ? (
             <div className="flex items-center">
+              
+              
               <LanguageToggle />
+              
               <NotificationBell />
               <Link
                 to={getDashboardPath()}
@@ -112,9 +115,9 @@ export const Navbar = () => {
               <Link
 
                 to="/login"
-                className="text-md font-bold text-white  transition-colors duration-200 "
+                className="text-md font-bold  duration-200 "
               >
-                <Button variant="">
+                <Button variant="outline">
                 {t('login')}
                 </Button>
               </Link>

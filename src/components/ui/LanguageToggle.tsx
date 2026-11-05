@@ -1,5 +1,6 @@
 import { useLanguage } from '@/hooks/language/useLanguage';
 
+
 export const LanguageToggle = () => {
   const { isArabic, toggleLanguage } = useLanguage();
 
@@ -10,11 +11,13 @@ export const LanguageToggle = () => {
     >
       {isArabic ? (
         <>
-          <span>EN</span>
+          <span>ENG</span>
+        
         </>
       ) : (
         <>
           <span>AR</span>
+        
         </>
       )}
     </button>
